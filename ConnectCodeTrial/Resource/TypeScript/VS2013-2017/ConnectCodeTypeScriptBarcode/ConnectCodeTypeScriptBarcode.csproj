@@ -1,0 +1,200 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <ProjectGuid>{993159B2-FF01-41AA-B7D4-F3D528D693C8}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <OutputPath>bin</OutputPath>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <DebugType>full</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+    <TypeScriptToolsVersion>1.0</TypeScriptToolsVersion>
+    <UseIISExpress>true</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+  </PropertyGroup>
+  <ItemGroup>
+    <Content Include="app.css" />
+    <Content Include="codabar.htm" />
+    <Content Include="uccean.htm" />
+    <Content Include="code128c.htm" />
+    <Content Include="code128auto.htm" />
+    <Content Include="code128b.htm" />
+    <Content Include="code128a.htm" />
+    <Content Include="code39ascii.htm" />
+    <Content Include="postnet.htm" />
+    <Content Include="upce.htm" />
+    <Content Include="upca.htm" />
+    <Content Include="ext5.htm" />
+    <Content Include="ext2.htm" />
+    <Content Include="ean8.htm" />
+    <Content Include="ean13.htm" />
+    <Content Include="gs1databar14.htm" />
+    <Content Include="i2of5.htm" />
+    <Content Include="industrial2of5.htm" />
+    <Content Include="itf14.htm" />
+    <Content Include="modifiedplessy.htm" />
+    <Content Include="code93.htm" />
+    <Content Include="code39.htm" />
+    <Content Include="default.htm" />
+    <Content Include="web.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <TypeScriptCompile Include="app-codabar.ts" />
+    <TypeScriptCompile Include="app-code128b.ts" />
+    <TypeScriptCompile Include="app-code128c.ts" />
+    <TypeScriptCompile Include="app-modifiedplessy.ts" />
+    <TypeScriptCompile Include="app-postnet.ts" />
+    <TypeScriptCompile Include="app-uccean.ts" />
+    <TypeScriptCompile Include="app-ext2.ts" />
+    <TypeScriptCompile Include="app-ext5.ts" />
+    <TypeScriptCompile Include="app-ean13.ts" />
+    <TypeScriptCompile Include="app-ean8.ts" />
+    <TypeScriptCompile Include="app-upca.ts" />
+    <TypeScriptCompile Include="app-upce.ts" />
+    <TypeScriptCompile Include="app-gs1databar14.ts" />
+    <TypeScriptCompile Include="app-i2of5.ts" />
+    <TypeScriptCompile Include="app-industrial2of5.ts" />
+    <TypeScriptCompile Include="app-itf14.ts" />
+    <TypeScriptCompile Include="app-code128a.ts" />
+    <TypeScriptCompile Include="app-code128auto.ts" />
+    <TypeScriptCompile Include="app-code93.ts" />
+    <TypeScriptCompile Include="app-code39ascii.ts" />
+    <TypeScriptCompile Include="app-code39.ts" />
+    <TypeScriptCompile Include="barcodescripts\codabar.ts" />
+    <TypeScriptCompile Include="barcodescripts\code128auto.ts" />
+    <TypeScriptCompile Include="barcodescripts\code128a.ts" />
+    <TypeScriptCompile Include="barcodescripts\code128b.ts" />
+    <TypeScriptCompile Include="barcodescripts\code128c.ts" />
+    <TypeScriptCompile Include="barcodescripts\gs1databar14.ts" />
+    <TypeScriptCompile Include="barcodescripts\upce.ts" />
+    <TypeScriptCompile Include="barcodescripts\upca.ts" />
+    <TypeScriptCompile Include="barcodescripts\ean8.ts" />
+    <TypeScriptCompile Include="barcodescripts\ean13.ts" />
+    <TypeScriptCompile Include="barcodescripts\ext5.ts" />
+    <TypeScriptCompile Include="barcodescripts\ext2.ts" />
+    <TypeScriptCompile Include="barcodescripts\uccean.ts" />
+    <TypeScriptCompile Include="barcodescripts\postnet.ts" />
+    <TypeScriptCompile Include="barcodescripts\modifiedplessy.ts" />
+    <TypeScriptCompile Include="barcodescripts\itf14.ts" />
+    <TypeScriptCompile Include="barcodescripts\industrial2of5.ts" />
+    <TypeScriptCompile Include="barcodescripts\i2of5.ts" />
+    <TypeScriptCompile Include="barcodescripts\code93.ts" />
+    <TypeScriptCompile Include="barcodescripts\code39ascii.ts" />
+    <TypeScriptCompile Include="barcodescripts\code39.ts" />
+    <TypeScriptCompile Include="barcodescripts\barcode.ts" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="barcodefonts\ConnectCode128_S3_Trial.eot" />
+    <Content Include="barcodefonts\ConnectCode128_S3_Trial.otf" />
+    <Content Include="barcodefonts\ConnectCode128_S3_Trial.woff" />
+    <Content Include="barcodefonts\ConnectCode39_S3_Trial.eot" />
+    <Content Include="barcodefonts\ConnectCode39_S3_Trial.otf" />
+    <Content Include="barcodefonts\ConnectCode39_S3_Trial.woff" />
+    <Content Include="barcodefonts\ConnectCode93_S3_Trial.eot" />
+    <Content Include="barcodefonts\ConnectCode93_S3_Trial.otf" />
+    <Content Include="barcodefonts\ConnectCode93_S3_Trial.woff" />
+    <Content Include="barcodefonts\ConnectCodeCodabar_S3_Trial.eot" />
+    <Content Include="barcodefonts\ConnectCodeCodabar_S3_Trial.otf" />
+    <Content Include="barcodefonts\ConnectCodeCodabar_S3_Trial.woff" />
+    <Content Include="barcodefonts\ConnectCodeGS1DEST_Trial.eot" />
+    <Content Include="barcodefonts\ConnectCodeGS1DEST_Trial.otf" />
+    <Content Include="barcodefonts\ConnectCodeGS1DEST_Trial.woff" />
+    <Content Include="barcodefonts\ConnectCodeGS1DSTO_Trial.eot" />
+    <Content Include="barcodefonts\ConnectCodeGS1DSTO_Trial.otf" />
+    <Content Include="barcodefonts\ConnectCodeGS1DSTO_Trial.woff" />
+    <Content Include="barcodefonts\ConnectCodeGS1DST_Trial.eot" />
+    <Content Include="barcodefonts\ConnectCodeGS1DST_Trial.otf" />
+    <Content Include="barcodefonts\ConnectCodeGS1DST_Trial.woff" />
+    <Content Include="barcodefonts\ConnectCodeGS1DTR_Trial.eot" />
+    <Content Include="barcodefonts\ConnectCodeGS1DTR_Trial.otf" />
+    <Content Include="barcodefonts\ConnectCodeGS1DTR_Trial.woff" />
+    <Content Include="barcodefonts\ConnectCodeGS1D_S3_Trial.eot" />
+    <Content Include="barcodefonts\ConnectCodeGS1D_S3_Trial.otf" />
+    <Content Include="barcodefonts\ConnectCodeGS1D_S3_Trial.woff" />
+    <Content Include="barcodefonts\ConnectCodeI2of5_S3_Trial.eot" />
+    <Content Include="barcodefonts\ConnectCodeI2of5_S3_Trial.otf" />
+    <Content Include="barcodefonts\ConnectCodeI2of5_S3_Trial.woff" />
+    <Content Include="barcodefonts\ConnectCodeIND2of5_S3_Trial.eot" />
+    <Content Include="barcodefonts\ConnectCodeIND2of5_S3_Trial.otf" />
+    <Content Include="barcodefonts\ConnectCodeIND2of5_S3_Trial.woff" />
+    <Content Include="barcodefonts\ConnectCodeITF_S3_Trial.eot" />
+    <Content Include="barcodefonts\ConnectCodeITF_S3_Trial.otf" />
+    <Content Include="barcodefonts\ConnectCodeITF_S3_Trial.woff" />
+    <Content Include="barcodefonts\ConnectCodeMSI_S3_Trial.eot" />
+    <Content Include="barcodefonts\ConnectCodeMSI_S3_Trial.otf" />
+    <Content Include="barcodefonts\ConnectCodeMSI_S3_Trial.woff" />
+    <Content Include="barcodefonts\ConnectCodePostnet_Trial.eot" />
+    <Content Include="barcodefonts\ConnectCodePostnet_Trial.otf" />
+    <Content Include="barcodefonts\ConnectCodePostnet_Trial.woff" />
+    <Content Include="barcodefonts\ConnectCodeUPCEAN_HRBS3_Trial.eot" />
+    <Content Include="barcodefonts\ConnectCodeUPCEAN_HRBS3_Trial.otf" />
+    <Content Include="barcodefonts\ConnectCodeUPCEAN_HRBS3_Trial.woff" />
+    <Content Include="barcodefonts\ConnectCodeUPCEAN_HRTS3_Trial.eot" />
+    <Content Include="barcodefonts\ConnectCodeUPCEAN_HRTS3_Trial.otf" />
+    <Content Include="barcodefonts\ConnectCodeUPCEAN_HRTS3_Trial.woff" />
+    <Content Include="barcodefonts\ConnectCodeUPCEAN_S3_Trial.eot" />
+    <Content Include="barcodefonts\ConnectCodeUPCEAN_S3_Trial.otf" />
+    <Content Include="barcodefonts\ConnectCodeUPCEAN_S3_Trial.woff" />
+    <None Include="web.Debug.config">
+      <DependentUpon>web.config</DependentUpon>
+    </None>
+    <None Include="web.Release.config">
+      <DependentUpon>web.config</DependentUpon>
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <PropertyGroup>
+    <RootNamespace>net.connectcode</RootNamespace>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyName>ConnectCodeTypeScriptBarcode</AssemblyName>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>22274</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:22274/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
+    <TypeScriptTarget>ES5</TypeScriptTarget>
+    <TypeScriptRemoveComments>false</TypeScriptRemoveComments>
+    <TypeScriptSourceMap>true</TypeScriptSourceMap>
+    <TypeScriptModuleKind>AMD</TypeScriptModuleKind>
+    <TypeScriptNoImplicitAny>True</TypeScriptNoImplicitAny>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'Release'">
+    <TypeScriptTarget>ES5</TypeScriptTarget>
+    <TypeScriptRemoveComments>true</TypeScriptRemoveComments>
+    <TypeScriptSourceMap>false</TypeScriptSourceMap>
+    <TypeScriptModuleKind>AMD</TypeScriptModuleKind>
+  </PropertyGroup>
+  <Import Project="$(VSToolsPath)\TypeScript\Microsoft.TypeScript.targets" Condition="Exists('$(VSToolsPath)\TypeScript\Microsoft.TypeScript.targets')" />
+</Project>

@@ -1,0 +1,16 @@
+C:\Users\james_000\Documents\Visual Studio 2013\TypeScriptHTMLApp1\TypeScriptHTMLApp1\bin\ConnectCodeTypeScriptBarcode.dll.config
+C:\Users\james_000\Documents\Visual Studio 2013\TypeScriptHTMLApp1\TypeScriptHTMLApp1\bin\ConnectCodeTypeScriptBarcode.dll
+C:\Users\james_000\Documents\Visual Studio 2013\TypeScriptHTMLApp1\TypeScriptHTMLApp1\bin\ConnectCodeTypeScriptBarcode.pdb
+C:\Users\james_000\Documents\Visual Studio 2013\TypeScriptHTMLApp1\TypeScriptHTMLApp1\obj\Debug\ConnectCodeTypeScriptBarcode.dll
+C:\Users\james_000\Documents\Visual Studio 2013\TypeScriptHTMLApp1\TypeScriptHTMLApp1\obj\Debug\ConnectCodeTypeScriptBarcode.pdb
+C:\vc5\ConnectCode\Barcode Fonts\ConnectCodeTypeScriptBarcode\ConnectCodeTypeScriptBarcode\bin\ConnectCodeTypeScriptBarcode.dll.config
+C:\vc5\ConnectCode\Barcode Fonts\ConnectCodeTypeScriptBarcode\ConnectCodeTypeScriptBarcode\bin\ConnectCodeTypeScriptBarcode.dll
+C:\vc5\ConnectCode\Barcode Fonts\ConnectCodeTypeScriptBarcode\ConnectCodeTypeScriptBarcode\bin\ConnectCodeTypeScriptBarcode.pdb
+C:\vc5\ConnectCode\Barcode Fonts\ConnectCodeTypeScriptBarcode\ConnectCodeTypeScriptBarcode\obj\Debug\ConnectCodeTypeScriptBarcode.dll
+C:\vc5\ConnectCode\Barcode Fonts\ConnectCodeTypeScriptBarcode\ConnectCodeTypeScriptBarcode\obj\Debug\ConnectCodeTypeScriptBarcode.pdb
+C:\vc5\ConnectCode\Barcode Fonts\ConnectCodeTypeScriptBarcode\ConnectCodeTypeScriptBarcode\obj\Debug\ConnectCodeTypeScriptBarcode.csprojResolveAssemblyReference.cache
+C:\vc5\ConnectCode\Barcode Fonts 2D\TypeScript\TypeScript2DBarcode\ConnectCodeTypeScriptBarcode\bin\ConnectCodeTypeScriptBarcode.dll.config
+C:\vc5\ConnectCode\Barcode Fonts 2D\TypeScript\TypeScript2DBarcode\ConnectCodeTypeScriptBarcode\bin\ConnectCodeTypeScriptBarcode.dll
+C:\vc5\ConnectCode\Barcode Fonts 2D\TypeScript\TypeScript2DBarcode\ConnectCodeTypeScriptBarcode\bin\ConnectCodeTypeScriptBarcode.pdb
+C:\vc5\ConnectCode\Barcode Fonts 2D\TypeScript\TypeScript2DBarcode\ConnectCodeTypeScriptBarcode\obj\Debug\ConnectCodeTypeScriptBarcode.dll
+C:\vc5\ConnectCode\Barcode Fonts 2D\TypeScript\TypeScript2DBarcode\ConnectCodeTypeScriptBarcode\obj\Debug\ConnectCodeTypeScriptBarcode.pdb

@@ -1,0 +1,61 @@
+StartFontMetrics 2.0
+Comment Panose 0 0 0 0 0 0 0 0 0 0
+FullName CCodeUPCEAN_S3_Trial
+FontName CCodeUPCEAN_S3_Trial
+FamilyName CCodeUPCEAN_S3_Trial
+Weight Normal
+Notice ConnectCode, 2006. All rights reserved.
+Version 001.001
+IsFixedPitch false
+ItalicAngle 0.00
+FontBBox 0 -200 420 1800
+Ascender 1800
+Descender -200
+XHeight 600
+CapHeight 1800
+UnderlinePosition -250
+UnderlineThickness 20
+EncodingScheme FontSpecific
+StartCharMetrics 40
+C 32 ; WX 500 ; N uni0020 ; B 0 0 0 0 ;
+C 43 ; WX 120 ; N _002Bh ; B 60 -200 120 1800 ;
+C 45 ; WX 300 ; N _002Dh ; B 60 -200 240 1800 ;
+C 48 ; WX 420 ; N zero ; B 25 -200 420 1800 ;
+C 49 ; WX 420 ; N _0031h ; B 120 -200 420 1800 ;
+C 50 ; WX 420 ; N _0032h ; B 120 -200 420 1800 ;
+C 51 ; WX 420 ; N _0033h ; B 60 -200 420 1800 ;
+C 52 ; WX 420 ; N _0034h ; B 60 -200 420 1800 ;
+C 53 ; WX 420 ; N _0035h ; B 25 -200 420 1800 ;
+C 54 ; WX 420 ; N _0036h ; B 60 -200 420 1800 ;
+C 55 ; WX 420 ; N _0037h ; B 60 -200 420 1800 ;
+C 56 ; WX 420 ; N _0038h ; B 60 -200 420 1800 ;
+C 57 ; WX 420 ; N _0039h ; B 25 -200 420 1800 ;
+C 60 ; WX 240 ; N _0028h ; B 0 -200 240 1800 ;
+C 91 ; WX 180 ; N _005Bh ; B 0 -200 180 1800 ;
+C 93 ; WX 180 ; N bracketright ; B 0 -200 180 1800 ;
+C 97 ; WX 420 ; N _00C4h ; B 0 -200 360 1800 ;
+C 98 ; WX 420 ; N _00C5h ; B 0 -200 360 1800 ;
+C 99 ; WX 420 ; N _00C6h ; B 0 -200 300 1800 ;
+C 100 ; WX 420 ; N _00C7h ; B 0 -200 360 1800 ;
+C 101 ; WX 420 ; N _00C8h ; B 0 -200 300 1800 ;
+C 102 ; WX 420 ; N _00C9h ; B 0 -200 360 1800 ;
+C 103 ; WX 420 ; N _00CAh ; B 0 -200 180 1800 ;
+C 104 ; WX 420 ; N _00CBh ; B 0 -200 300 1800 ;
+C 105 ; WX 420 ; N _00CCh ; B 0 -200 240 1800 ;
+C 106 ; WX 420 ; N _00CDh ; B 0 -200 300 1800 ;
+C 111 ; WX 420 ; N _0061h ; B 60 -200 420 1800 ;
+C 112 ; WX 420 ; N b ; B 60 -200 420 1800 ;
+C 113 ; WX 420 ; N c ; B 120 -200 420 1800 ;
+C 114 ; WX 420 ; N _0064h ; B 60 -200 420 1800 ;
+C 115 ; WX 420 ; N _0065h ; B 120 -200 420 1800 ;
+C 116 ; WX 420 ; N _0066h ; B 60 -200 420 1800 ;
+C 117 ; WX 420 ; N _0067h ; B 240 -200 420 1800 ;
+C 118 ; WX 420 ; N _0068h ; B 120 -200 420 1800 ;
+C 119 ; WX 420 ; N _0069h ; B 180 -200 420 1800 ;
+C 120 ; WX 420 ; N j ; B 120 -200 420 1800 ;
+C 123 ; WX 180 ; N braceleft ; B 0 -200 180 1800 ;
+C 125 ; WX 360 ; N _007Dh ; B 60 -200 360 1800 ;
+C -1 ; WX 180 ; N _256 ; B 0 0 180 800 ;
+C -1 ; WX 360 ; N _257 ; B 60 0 360 800 ;
+EndCharMetrics
+EndFontMetrics

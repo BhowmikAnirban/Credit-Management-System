@@ -1,0 +1,68 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Machine>CHINPINBOOC0CE</Machine>
+    <WindowsUser>jamesboo</WindowsUser>
+    <SolutionConfiguration>Release|AnyCPU</SolutionConfiguration>
+    <PackageArchitecture>neutral</PackageArchitecture>
+  </PropertyGroup>
+  <ItemGroup>
+    <AppXManifest Include="C:\vc5\ConnectCode\BarcodeFontsWindows8\Windows8BarcodeFonts\bin\Release\AppxManifest.xml">
+      <PackagePath>AppxManifest.xml</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+    </AppXManifest>
+  </ItemGroup>
+  <ItemGroup>
+    <AppxPackagedFile Include="C:\vc5\ConnectCode\BarcodeFontsWindows8\Windows8BarcodeFonts\bin\Release\Windows8BarcodeFonts.exe">
+      <PackagePath>Windows8BarcodeFonts.exe</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\vc5\ConnectCode\BarcodeFontsWindows8\Windows8BarcodeFonts\bin\Release\Windows8BarcodeFonts.pdb">
+      <PackagePath>Windows8BarcodeFonts.pdb</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\vc5\ConnectCode\BarcodeFontsWindows8\Windows8BarcodeFonts\ConnectCodeBarcodeFontsLibrary.dll">
+      <PackagePath>ConnectCodeBarcodeFontsLibrary.dll</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\vc5\ConnectCode\BarcodeFontsWindows8\Windows8BarcodeFonts\Fonts\ConnectCode39_S3_Trial.otf">
+      <PackagePath>Fonts\ConnectCode39_S3_Trial.otf</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\vc5\ConnectCode\BarcodeFontsWindows8\Windows8BarcodeFonts\Assets\Logo.png">
+      <PackagePath>Assets\Logo.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\vc5\ConnectCode\BarcodeFontsWindows8\Windows8BarcodeFonts\Assets\SmallLogo.png">
+      <PackagePath>Assets\SmallLogo.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\vc5\ConnectCode\BarcodeFontsWindows8\Windows8BarcodeFonts\Assets\SplashScreen.png">
+      <PackagePath>Assets\SplashScreen.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\vc5\ConnectCode\BarcodeFontsWindows8\Windows8BarcodeFonts\Assets\StoreLogo.png">
+      <PackagePath>Assets\StoreLogo.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\vc5\ConnectCode\BarcodeFontsWindows8\Windows8BarcodeFonts\Assets\LightGray.png">
+      <PackagePath>Assets\LightGray.png</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\vc5\ConnectCode\BarcodeFontsWindows8\Windows8BarcodeFonts\Assets\MediumGray.png">
+      <PackagePath>Assets\MediumGray.png</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\vc5\ConnectCode\BarcodeFontsWindows8\Windows8BarcodeFonts\Assets\DarkGray.png">
+      <PackagePath>Assets\DarkGray.png</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\vc5\ConnectCode\BarcodeFontsWindows8\Windows8BarcodeFonts\bin\Release\App.xaml">
+      <PackagePath>App.xaml</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\vc5\ConnectCode\BarcodeFontsWindows8\Windows8BarcodeFonts\bin\Release\Common\StandardStyles.xaml">
+      <PackagePath>Common\StandardStyles.xaml</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\vc5\ConnectCode\BarcodeFontsWindows8\Windows8BarcodeFonts\bin\Release\SplitPage.xaml">
+      <PackagePath>SplitPage.xaml</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\vc5\ConnectCode\BarcodeFontsWindows8\Windows8BarcodeFonts\bin\Release\resources.pri">
+      <PackagePath>resources.pri</PackagePath>
+    </AppxPackagedFile>
+  </ItemGroup>
+  <ItemGroup>
+  </ItemGroup>
+</Project>

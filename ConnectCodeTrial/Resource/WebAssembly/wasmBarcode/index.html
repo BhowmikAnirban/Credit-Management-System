@@ -1,0 +1,64 @@
+<!DOCTYPE html> 
+
+<html lang="en-us">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="format-detection" content="telephone=no">
+    <script type="text/javascript" src="wasmBarcode.js"></script>
+    <script type="text/javascript" src="connectcode.js"></script>
+
+    <style type="text/css" media="screen,print">
+      @font-face {
+        font-family: CCode128_S3_Trial;
+        src: url("fonts/ConnectCode128_S3_Trial.woff") format("woff");
+      }
+     .code128barcode {font-weight: normal; font-style: normal; line-height:normal; font-family: 'CCode128_S3_Trial', sans-serif; font-size: 32px}
+    </style>
+
+    <style type="text/css" media="screen,print">
+      @font-face {
+        font-family: CCodeUPCEAN_HRBS3_Trial;
+        src: url("fonts/ConnectCodeUPCEAN_HRBS3_Trial.woff") format("woff");
+      }
+     .ean13barcode {font-weight: normal; font-style: normal; line-height:normal; font-family: 'CCodeUPCEAN_HRBS3_Trial', sans-serif; font-size: 32px}
+    </style>
+
+</head>
+<body>
+<br />
+<strong>wasmBarcode</strong><br /><br />
+The wasmBarcode library (wasmBarcode.js and wasmBarcode.wasm) supports the creation of all the different types of linear barcodes as shown below. 
+
+<br><br >
+Input : 12345678<br>
+Barcode : Code128Auto<br>
+Check Digit : N.A.<br>
+Font Name : ConnectCode128_S3_Trial<br><br>
+
+Output : <br><br>
+<div style="width:5in">
+<center>
+<div class="code128barcode">12345678</div>
+<div class="code128barcode_text"></div>
+</center>
+</div>	
+<br>
+<i>Note : The trial font will add a few horizontal lines to the barcode.</i>
+<br /><br />
+Input : 12345678<br>
+Barcode : EAN13<br>
+Check Digit : N.A.<br>
+Human Readable (Extended Style) : 1 (On)<br>
+Font Name : ConnectCodeUPCEAN_HRBS3_Trial<br><br>
+
+Output : <br><br>
+<div style="width:5in">
+<center>
+<div class="ean13barcode">12345678</div>
+</center>
+</div>	
+<br>
+<i>Note : The trial font will add a few horizontal lines to the barcode.</i>
+
+</body>
+</html>

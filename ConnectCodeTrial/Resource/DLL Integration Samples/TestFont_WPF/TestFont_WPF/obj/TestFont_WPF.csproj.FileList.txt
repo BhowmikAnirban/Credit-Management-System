@@ -1,0 +1,16 @@
+obj\Debug\ResolveAssemblyReference.cache
+c:\vc6\TestFont_WPF\TestFont_WPF\obj\Debug\Window1.baml
+c:\vc6\TestFont_WPF\TestFont_WPF\obj\Debug\Window1.g.cs
+c:\vc6\TestFont_WPF\TestFont_WPF\obj\Debug\App.g.cs
+c:\vc6\TestFont_WPF\TestFont_WPF\obj\Debug\TestFont_WPF_MarkupCompile.cache
+obj\Debug\TestFont_WPF.g.resources
+obj\Debug\TestFont_WPF.Properties.Resources.resources
+obj\Debug\TestFont_WPF.csproj.GenerateResource.Cache
+.\bin\Debug\TestFont_WPF.exe
+.\bin\Debug\TestFont_WPF.pdb
+obj\Debug\TestFont_WPF.exe
+obj\Debug\TestFont_WPF.pdb
+C:\Documents and Settings\user.USER-91D819DF23\Desktop\ConnectCode\ConnectCodeDLLSamples\TestFont_WPF\TestFont_WPF\obj\Debug\Window1.baml
+C:\Documents and Settings\user.USER-91D819DF23\Desktop\ConnectCode\ConnectCodeDLLSamples\TestFont_WPF\TestFont_WPF\obj\Debug\Window1.g.cs
+C:\Documents and Settings\user.USER-91D819DF23\Desktop\ConnectCode\ConnectCodeDLLSamples\TestFont_WPF\TestFont_WPF\obj\Debug\App.g.cs
+C:\Documents and Settings\user.USER-91D819DF23\Desktop\ConnectCode\ConnectCodeDLLSamples\TestFont_WPF\TestFont_WPF\obj\Debug\TestFont_WPF_MarkupCompile.cache

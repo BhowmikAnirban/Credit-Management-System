@@ -1,0 +1,1 @@
+Please see the the Help File on the use of Powerscript (in PowerBuilder) to call the COM Library for generating barcodes.

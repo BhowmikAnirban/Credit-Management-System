@@ -1,0 +1,5 @@
+C:\Users\james_000\Documents\Visual Studio 2013\TypeScriptHTMLApp1\TypeScriptHTMLApp1\bin\TypeScriptBarcode.dll.config
+C:\Users\james_000\Documents\Visual Studio 2013\TypeScriptHTMLApp1\TypeScriptHTMLApp1\bin\TypeScriptBarcode.dll
+C:\Users\james_000\Documents\Visual Studio 2013\TypeScriptHTMLApp1\TypeScriptHTMLApp1\bin\TypeScriptBarcode.pdb
+C:\Users\james_000\Documents\Visual Studio 2013\TypeScriptHTMLApp1\TypeScriptHTMLApp1\obj\Debug\TypeScriptBarcode.dll
+C:\Users\james_000\Documents\Visual Studio 2013\TypeScriptHTMLApp1\TypeScriptHTMLApp1\obj\Debug\TypeScriptBarcode.pdb

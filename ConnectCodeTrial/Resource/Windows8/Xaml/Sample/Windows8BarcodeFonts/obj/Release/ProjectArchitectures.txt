@@ -1,0 +1,1 @@
+C:\vc5\ConnectCode\BarcodeFontsWindows8\Windows8BarcodeFonts\Windows8BarcodeFonts.csproj;neutral

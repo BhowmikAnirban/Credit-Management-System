@@ -1,0 +1,42 @@
+﻿<!DOCTYPE html>
+
+<html lang="en">
+<head>
+
+    <meta charset="utf-8" />
+    <title>TypeScript HTML App</title>
+    <link rel="stylesheet" href="app.css" type="text/css" />
+    <script src="barcodescripts/barcode.js"></script>
+    <script src="barcodescripts/i2of5.js"></script>
+
+    <style type="text/css" media="screen,print">
+        @font-face {
+            font-family: CCodeI2of5;
+            src: url("barcodefonts/ConnectCodeI2of5_S3_Trial.eot");
+            src: local("CCodeI2of5_S3_Trial"), url("barcodefonts/ConnectCodeI2of5_S3_Trial.otf") format("opentype"), url("barcodefonts/ConnectCodeI2of5_S3_Trial.woff") format("woff");
+        }
+
+        div.barcodeData {
+            white-space:pre; /*mandatory*/
+            font-weight: normal;
+            font-style: normal;
+            line-height: normal;
+            font-family: 'CCodeI2of5', sans-serif;
+            font-size: 32px;
+        }
+    </style>
+
+</head>
+<body>
+
+    <h2>I2of5 Barcode</h2>
+    <center>
+
+        <div class="barcodeData">12345678</div>
+        <div class="humanReadableText"></div>
+
+    </center>
+    <script src="app-i2of5.js"></script>
+</body>
+
+</html>

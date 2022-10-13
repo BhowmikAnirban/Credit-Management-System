@@ -1,0 +1,42 @@
+﻿<!DOCTYPE html>
+
+<html lang="en">
+<head>
+
+    <meta charset="utf-8" />
+    <title>TypeScript HTML App</title>
+    <link rel="stylesheet" href="app.css" type="text/css" />
+    <script src="barcodescripts/barcode.js"></script>
+    <script src="barcodescripts/itf14.js"></script>
+
+    <style type="text/css" media="screen,print">
+        @font-face {
+            font-family: CCodeITF;
+            src: url("barcodefonts/ConnectCodeITF_S3_Trial.eot");
+            src: local("CCodeITF_S3_Trial"), url("barcodefonts/ConnectCodeITF_S3_Trial.otf") format("opentype"), url("barcodefonts/ConnectCodeITF_S3_Trial.woff") format("woff");
+        }
+
+        div.barcodeData {
+            white-space:pre; /*mandatory*/
+            font-weight: normal;
+            font-style: normal;
+            line-height: normal;
+            font-family: 'CCodeITF', sans-serif;
+            font-size: 32px;
+        }
+    </style>
+
+</head>
+<body>
+
+    <h2>ITF14 Barcode</h2>
+    <center>
+
+        <div class="barcodeData">12345678</div>
+        <div class="humanReadableText"></div>
+
+    </center>
+    <script src="app-itf14.js"></script>
+</body>
+
+</html>

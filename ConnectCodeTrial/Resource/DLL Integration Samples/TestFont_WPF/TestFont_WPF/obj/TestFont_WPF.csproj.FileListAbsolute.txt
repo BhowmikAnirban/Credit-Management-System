@@ -1,0 +1,12 @@
+C:\Documents and Settings\user.USER-91D819DF23\Desktop\ConnectCode\BarcodeFontsTrial\Resource\DLL Integration Samples\TestFont_WPF\TestFont_WPF\obj\Debug\TestFont_WPF.exe
+C:\Documents and Settings\user.USER-91D819DF23\Desktop\ConnectCode\BarcodeFontsTrial\Resource\DLL Integration Samples\TestFont_WPF\TestFont_WPF\obj\Debug\TestFont_WPF.pdb
+C:\Documents and Settings\user.USER-91D819DF23\Desktop\ConnectCode\BarcodeFontsTrial\Resource\DLL Integration Samples\TestFont_WPF\TestFont_WPF\bin\Debug\TestFont_WPF.exe
+C:\Documents and Settings\user.USER-91D819DF23\Desktop\ConnectCode\BarcodeFontsTrial\Resource\DLL Integration Samples\TestFont_WPF\TestFont_WPF\bin\Debug\TestFont_WPF.pdb
+C:\Documents and Settings\user.USER-91D819DF23\Desktop\ConnectCode\BarcodeFontsTrial\Resource\DLL Integration Samples\TestFont_WPF\TestFont_WPF\obj\Debug\ResolveAssemblyReference.cache
+C:\Documents and Settings\user.USER-91D819DF23\Desktop\ConnectCode\BarcodeFontsTrial\Resource\DLL Integration Samples\TestFont_WPF\TestFont_WPF\obj\Debug\Window1.baml
+C:\Documents and Settings\user.USER-91D819DF23\Desktop\ConnectCode\BarcodeFontsTrial\Resource\DLL Integration Samples\TestFont_WPF\TestFont_WPF\obj\Debug\Window1.g.cs
+C:\Documents and Settings\user.USER-91D819DF23\Desktop\ConnectCode\BarcodeFontsTrial\Resource\DLL Integration Samples\TestFont_WPF\TestFont_WPF\obj\Debug\App.g.cs
+C:\Documents and Settings\user.USER-91D819DF23\Desktop\ConnectCode\BarcodeFontsTrial\Resource\DLL Integration Samples\TestFont_WPF\TestFont_WPF\obj\Debug\TestFont_WPF_MarkupCompile.cache
+C:\Documents and Settings\user.USER-91D819DF23\Desktop\ConnectCode\BarcodeFontsTrial\Resource\DLL Integration Samples\TestFont_WPF\TestFont_WPF\obj\Debug\TestFont_WPF.g.resources
+C:\Documents and Settings\user.USER-91D819DF23\Desktop\ConnectCode\BarcodeFontsTrial\Resource\DLL Integration Samples\TestFont_WPF\TestFont_WPF\obj\Debug\TestFont_WPF.Properties.Resources.resources
+C:\Documents and Settings\user.USER-91D819DF23\Desktop\ConnectCode\BarcodeFontsTrial\Resource\DLL Integration Samples\TestFont_WPF\TestFont_WPF\obj\Debug\TestFont_WPF.csproj.GenerateResource.Cache

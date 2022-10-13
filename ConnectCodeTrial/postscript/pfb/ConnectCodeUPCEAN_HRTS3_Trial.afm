@@ -1,0 +1,111 @@
+StartFontMetrics 2.0
+Comment Panose 0 0 0 0 0 0 0 0 0 0
+FullName CCodeUPCEAN_HRTS3_Trial
+FontName CCodeUPCEAN_HRTS3_Trial
+FamilyName CCodeUPCEAN_HRTS3_Trial
+Weight Normal
+Notice ConnectCode 2006. All Rights Reserved.
+Version 001.001
+IsFixedPitch false
+ItalicAngle 0.00
+FontBBox 0 -260 420 1980
+Ascender 1800
+Descender -520
+XHeight 600
+CapHeight 1800
+UnderlinePosition -550
+UnderlineThickness 20
+EncodingScheme FontSpecific
+StartCharMetrics 90
+C 32 ; WX 500 ; N uni0020 ; B 0 0 0 0 ;
+C 33 ; WX 420 ; N idieresis ; B 64 1353 355 1809 ;
+C 34 ; WX 420 ; N one ; B 118 1359 302 1805 ;
+C 35 ; WX 420 ; N two ; B 64 1360 355 1806 ;
+C 36 ; WX 420 ; N three ; B 86 1350 335 1806 ;
+C 37 ; WX 420 ; N four ; B 59 1354 361 1800 ;
+C 38 ; WX 420 ; N five ; B 86 1354 337 1799 ;
+C 39 ; WX 420 ; N six ; B 70 1355 352 1811 ;
+C 40 ; WX 420 ; N seven ; B 71 1354 348 1799 ;
+C 41 ; WX 420 ; N eight ; B 83 1353 337 1809 ;
+C 42 ; WX 420 ; N nine ; B 69 1354 350 1810 ;
+C 43 ; WX 120 ; N _002Bh ; B 60 0 120 1280 ;
+C 45 ; WX 300 ; N _002Dh ; B 60 0 240 1800 ;
+C 48 ; WX 420 ; N zero ; B 25 0 420 1809 ;
+C 49 ; WX 420 ; N _0031h ; B 118 0 420 1805 ;
+C 50 ; WX 420 ; N _0032h ; B 64 0 420 1806 ;
+C 51 ; WX 420 ; N _0033h ; B 60 0 420 1806 ;
+C 52 ; WX 420 ; N _0034h ; B 59 0 420 1800 ;
+C 53 ; WX 420 ; N _0035h ; B 25 0 420 1799 ;
+C 54 ; WX 420 ; N _0036h ; B 60 0 420 1811 ;
+C 55 ; WX 420 ; N _0037h ; B 60 0 420 1799 ;
+C 56 ; WX 420 ; N _0038h ; B 60 0 420 1809 ;
+C 57 ; WX 420 ; N _0039h ; B 25 0 420 1810 ;
+C 60 ; WX 240 ; N _003Ch ; B 0 0 240 1280 ;
+C 91 ; WX 180 ; N _005Bh ; B 0 0 180 1800 ;
+C 93 ; WX 180 ; N bracketright ; B 0 0 180 1800 ;
+C 97 ; WX 420 ; N _0062h ; B 0 0 360 1809 ;
+C 98 ; WX 420 ; N _0063h ; B 0 0 360 1805 ;
+C 99 ; WX 420 ; N _006Ah ; B 0 0 355 1806 ;
+C 100 ; WX 420 ; N _006Bh ; B 0 0 360 1806 ;
+C 101 ; WX 420 ; N _006Ch ; B 0 0 361 1800 ;
+C 102 ; WX 420 ; N _006Dh ; B 0 0 360 1799 ;
+C 103 ; WX 420 ; N _006Eh ; B 0 0 352 1811 ;
+C 104 ; WX 420 ; N _006Fh ; B 0 0 348 1799 ;
+C 105 ; WX 420 ; N _0070h ; B 0 0 337 1809 ;
+C 106 ; WX 420 ; N _0071h ; B 0 0 350 1810 ;
+C 111 ; WX 420 ; N _0072h ; B 60 0 420 1809 ;
+C 112 ; WX 420 ; N _0073h ; B 60 0 420 1805 ;
+C 113 ; WX 420 ; N _0074h ; B 64 0 420 1806 ;
+C 114 ; WX 420 ; N _0075h ; B 60 0 420 1806 ;
+C 115 ; WX 420 ; N _0076h ; B 59 0 420 1800 ;
+C 116 ; WX 420 ; N _0077h ; B 60 0 420 1799 ;
+C 117 ; WX 420 ; N _0078h ; B 70 0 420 1811 ;
+C 118 ; WX 420 ; N _0079h ; B 71 0 420 1799 ;
+C 119 ; WX 420 ; N _007Ah ; B 83 0 420 1809 ;
+C 120 ; WX 420 ; N _007Bh ; B 69 0 420 1810 ;
+C 123 ; WX 180 ; N braceleft ; B 0 0 180 1800 ;
+C 125 ; WX 360 ; N _007Dh ; B 60 0 360 1800 ;
+C 158 ; WX 420 ; N _017Eh ; B 180 0 420 1800 ;
+C 159 ; WX 420 ; N _0178h ; B 120 0 420 1800 ;
+C 160 ; WX 420 ; N _00A0h ; B 120 0 420 1800 ;
+C 161 ; WX 420 ; N _00A1h ; B 60 0 420 1800 ;
+C 162 ; WX 420 ; N _00A2h ; B 60 0 420 1800 ;
+C 163 ; WX 420 ; N _00A3h ; B 60 0 420 1800 ;
+C 164 ; WX 420 ; N _00A4h ; B 60 0 420 1800 ;
+C 165 ; WX 420 ; N _00A5h ; B 60 0 420 1800 ;
+C 166 ; WX 420 ; N _00A6h ; B 60 0 420 1800 ;
+C 167 ; WX 420 ; N _00A7h ; B 180 -20 420 1980 ;
+C 192 ; WX 420 ; N Agrave ; B 180 0 420 1800 ;
+C 193 ; WX 420 ; N Aacute ; B 120 0 420 1800 ;
+C 194 ; WX 420 ; N Acircumflex ; B 120 0 420 1800 ;
+C 195 ; WX 420 ; N Atilde ; B 60 0 420 1800 ;
+C 196 ; WX 420 ; N Adieresis ; B 60 0 420 1800 ;
+C 197 ; WX 420 ; N Aring ; B 60 0 420 1800 ;
+C 198 ; WX 420 ; N AE ; B 60 0 420 1800 ;
+C 199 ; WX 420 ; N Ccedilla ; B 60 0 420 1800 ;
+C 200 ; WX 420 ; N Egrave ; B 60 0 420 1800 ;
+C 201 ; WX 420 ; N Eacute ; B 180 -20 420 1980 ;
+C 207 ; WX 420 ; N Idieresis ; B 0 0 360 1800 ;
+C 208 ; WX 420 ; N _00C5h ; B 0 0 360 1800 ;
+C 209 ; WX 420 ; N _00C6h ; B 0 0 300 1800 ;
+C 210 ; WX 420 ; N _00C7h ; B 0 0 360 1800 ;
+C 211 ; WX 420 ; N _00C8h ; B 0 0 300 1800 ;
+C 212 ; WX 420 ; N _00C9h ; B 0 0 360 1800 ;
+C 213 ; WX 420 ; N _00CAh ; B 0 0 180 1800 ;
+C 214 ; WX 420 ; N _00CBh ; B 0 0 300 1800 ;
+C 215 ; WX 420 ; N _00CCh ; B 0 0 240 1800 ;
+C 216 ; WX 420 ; N _00CDh ; B 0 0 300 1800 ;
+C -1 ; WX 180 ; N _257 ; B 0 -260 180 800 ;
+C -1 ; WX 180 ; N _258 ; B 0 -260 180 800 ;
+C -1 ; WX 180 ; N _259 ; B 0 -260 180 800 ;
+C -1 ; WX 300 ; N _260 ; B 60 0 240 1800 ;
+C -1 ; WX 300 ; N _261 ; B 60 0 240 1800 ;
+C -1 ; WX 300 ; N _262 ; B 60 0 240 1800 ;
+C -1 ; WX 300 ; N _263 ; B 60 -260 240 1800 ;
+C -1 ; WX 300 ; N _264 ; B 60 -260 240 1800 ;
+C -1 ; WX 300 ; N _265 ; B 60 -260 240 1800 ;
+C -1 ; WX 300 ; N _266 ; B 60 0 240 1800 ;
+C -1 ; WX 300 ; N _267 ; B 60 0 240 1800 ;
+C -1 ; WX 500 ; N _268 ; B 0 0 0 0 ;
+EndCharMetrics
+EndFontMetrics

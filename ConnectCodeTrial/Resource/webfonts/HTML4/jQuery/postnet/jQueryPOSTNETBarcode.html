@@ -1,0 +1,51 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
+   "http://www.w3.org/TR/html4/strict.dtd">
+
+<html lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="format-detection" content="telephone=no">
+    <title>JQuery POSTNET Barcode Web Fonts</title>
+    <script type="text/javascript" src="js/external/jquery-1.4.2.min.js"></script>
+    <script type="text/javascript" src="js/connectcode-jquery-postnet.js"></script>
+    <script type="text/javascript">
+
+	$(document).ready(function() {
+
+		jQuery('.barcode').Encode_POSTNET();
+		jQuery('.barcode_text').Encode_POSTNET({humanReadableTextOutput : 1});
+
+	});
+    </script>
+
+<STYLE TYPE="text/css" media="screen,print">
+  @font-face {
+    font-family: CCodePostnet_Trial;
+    src: url("fonts/ConnectCodePostnet_Trial.eot");
+    src: local("CCodePostnet_Trial"), url("fonts/ConnectCodePostnet_Trial.otf") format("opentype"), url("fonts/ConnectCodePostnet_Trial.woff") format("woff");
+  }
+
+  .barcode {font-weight: normal; font-style: normal; line-height:normal; font-family: 'CCodePostnet_Trial', sans-serif; font-size: 12px}
+
+</STYLE>
+  </head>
+
+  <body>
+
+Input : 12345678<br>
+Barcode : Code39<br>
+Check Digit : N.A.<br>
+Font Name : ConnectCodePostnet_Trial<br><br>
+
+Output : <br><br>
+<div style="width:5in">
+<center>
+<div class=barcode>12345678</div>
+<div class=barcode_text>12345678</div>
+</center>
+</div>
+<br>
+<i>Note : The trial font will add a few horizontal lines to the barcode.</i>
+
+  </body>
+</html>

@@ -1,0 +1,14 @@
+C:\Documents and Settings\user.USER-91D819DF23\Desktop\ConnectCode\BarcodeFontsTrial\Resource\DLL Integration Samples\TestFont_VB_WPF\TestFont_VB_WPF\obj\Debug\TestFont_VB_WPF.exe
+C:\Documents and Settings\user.USER-91D819DF23\Desktop\ConnectCode\BarcodeFontsTrial\Resource\DLL Integration Samples\TestFont_VB_WPF\TestFont_VB_WPF\obj\Debug\TestFont_VB_WPF.xml
+C:\Documents and Settings\user.USER-91D819DF23\Desktop\ConnectCode\BarcodeFontsTrial\Resource\DLL Integration Samples\TestFont_VB_WPF\TestFont_VB_WPF\obj\Debug\TestFont_VB_WPF.pdb
+C:\Documents and Settings\user.USER-91D819DF23\Desktop\ConnectCode\BarcodeFontsTrial\Resource\DLL Integration Samples\TestFont_VB_WPF\TestFont_VB_WPF\bin\TestFont_VB_WPF.exe
+C:\Documents and Settings\user.USER-91D819DF23\Desktop\ConnectCode\BarcodeFontsTrial\Resource\DLL Integration Samples\TestFont_VB_WPF\TestFont_VB_WPF\bin\TestFont_VB_WPF.pdb
+C:\Documents and Settings\user.USER-91D819DF23\Desktop\ConnectCode\BarcodeFontsTrial\Resource\DLL Integration Samples\TestFont_VB_WPF\TestFont_VB_WPF\bin\TestFont_VB_WPF.xml
+C:\Documents and Settings\user.USER-91D819DF23\Desktop\ConnectCode\BarcodeFontsTrial\Resource\DLL Integration Samples\TestFont_VB_WPF\TestFont_VB_WPF\obj\Debug\ResolveAssemblyReference.cache
+C:\Documents and Settings\user.USER-91D819DF23\Desktop\ConnectCode\BarcodeFontsTrial\Resource\DLL Integration Samples\TestFont_VB_WPF\TestFont_VB_WPF\obj\Debug\Window1.baml
+C:\Documents and Settings\user.USER-91D819DF23\Desktop\ConnectCode\BarcodeFontsTrial\Resource\DLL Integration Samples\TestFont_VB_WPF\TestFont_VB_WPF\obj\Debug\Window1.g.vb
+C:\Documents and Settings\user.USER-91D819DF23\Desktop\ConnectCode\BarcodeFontsTrial\Resource\DLL Integration Samples\TestFont_VB_WPF\TestFont_VB_WPF\obj\Debug\App.g.vb
+C:\Documents and Settings\user.USER-91D819DF23\Desktop\ConnectCode\BarcodeFontsTrial\Resource\DLL Integration Samples\TestFont_VB_WPF\TestFont_VB_WPF\obj\Debug\TestFont_VB_WPF_MarkupCompile.cache
+C:\Documents and Settings\user.USER-91D819DF23\Desktop\ConnectCode\BarcodeFontsTrial\Resource\DLL Integration Samples\TestFont_VB_WPF\TestFont_VB_WPF\obj\Debug\TestFont_VB_WPF.g.resources
+C:\Documents and Settings\user.USER-91D819DF23\Desktop\ConnectCode\BarcodeFontsTrial\Resource\DLL Integration Samples\TestFont_VB_WPF\TestFont_VB_WPF\obj\Debug\TestFont_VB_WPF.Resources.resources
+C:\Documents and Settings\user.USER-91D819DF23\Desktop\ConnectCode\BarcodeFontsTrial\Resource\DLL Integration Samples\TestFont_VB_WPF\TestFont_VB_WPF\obj\Debug\TestFont_VB_WPF.vbproj.GenerateResource.Cache

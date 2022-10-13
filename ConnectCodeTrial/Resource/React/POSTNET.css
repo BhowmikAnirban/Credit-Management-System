@@ -1,0 +1,8 @@
+@font-face {
+    font-family: CCodePostnet_Trial;
+    src: url("fonts/ConnectCodePostnet_Trial.woff") format("woff");
+  }
+
+.POSTNET {width: 5in}
+.barcode {font-weight: normal; font-style: normal; line-height:normal; font-family: 'CCodePostnet_Trial', sans-serif; font-size: 12px}
+.barcode_text {font-weight: normal; font-style: normal; line-height:normal; font-family: sans-serif; font-size: 12px}

@@ -1,0 +1,50 @@
+﻿<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="format-detection" content="telephone=no">
+    <title>JQuery I2OF5 Barcode Web Fonts</title>
+    <script type="text/javascript" src="js/external/jquery-1.4.2.min.js"></script>
+    <script type="text/javascript" src="js/connectcode-jquery-i2of5.js"></script>
+    <script type="text/javascript">
+
+	$(document).ready(function() {
+
+		jQuery('.barcode').Encode_I2OF5({checkDigit :1 });
+		jQuery('.barcode_text').Encode_I2OF5({checkDigit :1,humanReadableTextOutput : 1 });
+
+	});
+    </script>
+
+<STYLE TYPE="text/css" media="screen,print">
+  @font-face {
+    font-family: CCodeI2of5_S3_Trial;
+    src: url("fonts/ConnectCodeI2of5_S3_Trial.eot");
+    src: local("CCodeI2of5_S3_Trial"), url("fonts/ConnectCodeI2of5_S3_Trial.otf") format("opentype"), url("fonts/ConnectCodeI2of5_S3_Trial.woff") format("woff");
+  }
+
+  .barcode {font-weight: normal; font-style: normal; line-height:normal; font-family: 'CCodeI2of5_S3_Trial', sans-serif; font-size: 32px}
+
+</STYLE>
+  </head>
+
+  <body>
+
+Input : 12345678<br>
+Barcode : I2OF5<br>
+Check Digit : 1 (On)<br>
+Font Name : ConnectCodeI2of5_S3_Trial<br><br>
+
+Output : <br><br>
+<div style="width:5in">
+<center>
+<div class=barcode>12345678</div>
+<div class=barcode_text>12345678</div>
+</center>
+</div>
+<br>
+<i>Note : The trial font will add a few horizontal lines to the barcode.</i>
+
+  </body>
+</html>

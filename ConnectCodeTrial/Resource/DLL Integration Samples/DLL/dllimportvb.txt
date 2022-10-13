@@ -1,0 +1,121 @@
+<DllImport("connectcodefont.dll")> _
+Public Shared Function Encode_Code128Auto(ByVal instr As String, ByVal outstr As System.Text.StringBuilder, ByVal outstrmax As Integer) As Integer
+
+End Function
+<DllImport("connectcodefont.dll")> _
+Public Shared Function Encode_Code39(ByVal instr As String, ByVal checkdigit As Integer, ByVal outstr As System.Text.StringBuilder, ByVal outstrmax As Integer) As Integer
+
+End Function
+<DllImport("connectcodefont.dll")> _
+Public Shared Function Encode_POSTNET(ByVal instr As String, ByVal checkdigit As Integer, ByVal outstr As System.Text.StringBuilder, ByVal outstrmax As Integer) As Integer
+
+End Function
+<DllImport("connectcodefont.dll")> _
+Public Shared Function Encode_Code93(ByVal instr As String, ByVal checkdigit As Integer, ByVal outstr As System.Text.StringBuilder, ByVal outstrmax As Integer) As Integer
+
+End Function
+<DllImport("connectcodefont.dll")> _
+Public Shared Function Encode_Codabar(ByVal instr As String, ByVal checkdigit As Integer, ByVal outstr As System.Text.StringBuilder, ByVal outstrmax As Integer) As Integer
+
+End Function
+<DllImport("connectcodefont.dll")> _
+Public Shared Function Encode_Code39Ascii(ByVal instr As String, ByVal checkdigit As Integer, ByVal outstr As System.Text.StringBuilder, ByVal outstrmax As Integer) As Integer
+
+End Function
+<DllImport("connectcodefont.dll")> _
+Public Shared Function Encode_I2of5(ByVal instr As String, ByVal checkdigit As Integer, ByVal outstr As System.Text.StringBuilder, ByVal outstrmax As Integer) As Integer
+
+End Function
+<DllImport("connectcodefont.dll")> _
+Public Shared Function Encode_ITF14(ByVal instr As String, ByVal checkdigit As Integer, ByVal bearer As Integer, ByVal outstr As System.Text.StringBuilder, ByVal outstrmax As Integer) As Integer
+
+End Function
+<DllImport("connectcodefont.dll")> _
+Public Shared Function Encode_Industrial2of5(ByVal instr As String, ByVal checkdigit As Integer, ByVal outstr As System.Text.StringBuilder, ByVal outstrmax As Integer) As Integer
+
+End Function
+<DllImport("connectcodefont.dll")> _
+Public Shared Function Encode_ModifiedPlessy(ByVal instr As String, ByVal checkdigit As Integer, ByVal outstr As System.Text.StringBuilder, ByVal outstrmax As Integer) As Integer
+
+End Function
+<DllImport("connectcodefont.dll")> _
+Public Shared Function Encode_EAN13(ByVal instr As String, ByVal humantext As Integer, ByVal outstr As System.Text.StringBuilder, ByVal outstrmax As Integer) As Integer
+
+End Function
+<DllImport("connectcodefont.dll")> _
+Public Shared Function RetrieveOptionalString_EAN13(ByVal instr As String, ByVal humantext As Integer, ByVal strtype As Integer, ByVal outstr As System.Text.StringBuilder, ByVal outstrmax As Integer) As Integer
+
+End Function
+<DllImport("connectcodefont.dll")> _
+Public Shared Function Encode_UPCA(ByVal instr As String, ByVal humantext As Integer, ByVal outstr As System.Text.StringBuilder, ByVal outstrmax As Integer) As Integer
+
+End Function
+<DllImport("connectcodefont.dll")> _
+Public Shared Function Encode_EAN8(ByVal instr As String, ByVal outstr As System.Text.StringBuilder, ByVal outstrmax As Integer) As Integer
+
+End Function
+<DllImport("connectcodefont.dll")> _
+Public Shared Function Encode_UCCEAN(ByVal instr As String, ByVal outstr As System.Text.StringBuilder, ByVal outstrmax As Integer) As Integer
+
+End Function
+<DllImport("connectcodefont.dll")> _
+Public Shared Function Encode_Code128A(ByVal instr As String, ByVal outstr As System.Text.StringBuilder, ByVal outstrmax As Integer) As Integer
+
+End Function
+<DllImport("connectcodefont.dll")> _
+Public Shared Function Encode_Code128B(ByVal instr As String, ByVal outstr As System.Text.StringBuilder, ByVal outstrmax As Integer) As Integer
+
+End Function
+<DllImport("connectcodefont.dll")> _
+Public Shared Function Encode_Code128C(ByVal instr As String, ByVal outstr As System.Text.StringBuilder, ByVal outstrmax As Integer) As Integer
+
+End Function
+<DllImport("connectcodefont.dll")> _
+Public Shared Function Encode_UPCE(ByVal instr As String, ByVal humantext As Integer, ByVal outstr As System.Text.StringBuilder, ByVal outstrmax As Integer) As Integer
+
+End Function
+<DllImport("connectcodefont.dll")> _
+Public Shared Function Encode_EXT2(ByVal instr As String, ByVal outstr As System.Text.StringBuilder, ByVal outstrmax As Integer) As Integer
+
+End Function
+<DllImport("connectcodefont.dll")> _
+Public Shared Function Encode_EXT5(ByVal instr As String, ByVal outstr As System.Text.StringBuilder, ByVal outstrmax As Integer) As Integer
+
+End Function
+
+<DllImport("connectcodefont.dll")> _
+Public Shared Function Encode_GS1DataBar14(ByVal instr As String, ByVal outstr As System.Text.StringBuilder, ByVal outstrmax As Integer) As Integer
+
+End Function
+
+<DllImport("connectcodefont.dll")> _
+Public Shared Function Encode_GS1DataBarLimited(ByVal instr As String, ByVal outstr As System.Text.StringBuilder, ByVal outstrmax As Integer) As Integer
+
+End Function
+
+<DllImport("connectcodefont.dll")> _
+Public Shared Function Encode_GS1DataBarExpanded(ByVal instr As String, ByVal outstr As System.Text.StringBuilder, ByVal outstrmax As Integer) As Integer
+
+End Function
+
+<DllImport("connectcodefont.dll")> _
+Public Shared Function Encode_GS1DataBarTruncated(ByVal instr As String, ByVal outstr As System.Text.StringBuilder, ByVal outstrmax As Integer) As Integer
+
+End Function
+
+<DllImport("connectcodefont.dll")> _
+Public Shared Function Encode_GS1DataBarStacked(ByVal instr As String, ByVal outstr As System.Text.StringBuilder, ByVal outstrmax As Integer) As Integer
+
+End Function
+
+<DllImport("connectcodefont.dll")> _
+Public Shared Function Encode_GS1DataBarStackedOmni(ByVal instr As String, ByVal outstr As System.Text.StringBuilder, ByVal outstrmax As Integer) As Integer
+
+End Function
+
+<DllImport("connectcodefont.dll")> _
+Public Shared Function Encode_GS1DataBarExpandedStacked(ByVal instr As String, ByVal numSegmentsPerRow As Integer, ByVal outstr As System.Text.StringBuilder, ByVal outstrmax As Integer) As Integer
+
+End Function
+
+

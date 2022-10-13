@@ -1,0 +1,10 @@
+C:\Documents and Settings\user.USER-91D819DF23\Desktop\ConnectCode\BarcodeFontsTrial\Resource\DLL Integration Samples\TestFontVB\TestFontVB\obj\Debug\TestFontVB.exe
+C:\Documents and Settings\user.USER-91D819DF23\Desktop\ConnectCode\BarcodeFontsTrial\Resource\DLL Integration Samples\TestFontVB\TestFontVB\obj\Debug\TestFontVB.xml
+C:\Documents and Settings\user.USER-91D819DF23\Desktop\ConnectCode\BarcodeFontsTrial\Resource\DLL Integration Samples\TestFontVB\TestFontVB\obj\Debug\TestFontVB.pdb
+C:\Documents and Settings\user.USER-91D819DF23\Desktop\ConnectCode\BarcodeFontsTrial\Resource\DLL Integration Samples\TestFontVB\TestFontVB\bin\Debug\TestFontVB.exe
+C:\Documents and Settings\user.USER-91D819DF23\Desktop\ConnectCode\BarcodeFontsTrial\Resource\DLL Integration Samples\TestFontVB\TestFontVB\bin\Debug\TestFontVB.pdb
+C:\Documents and Settings\user.USER-91D819DF23\Desktop\ConnectCode\BarcodeFontsTrial\Resource\DLL Integration Samples\TestFontVB\TestFontVB\bin\Debug\TestFontVB.xml
+C:\Documents and Settings\user.USER-91D819DF23\Desktop\ConnectCode\BarcodeFontsTrial\Resource\DLL Integration Samples\TestFontVB\TestFontVB\obj\Debug\ResolveAssemblyReference.cache
+C:\Documents and Settings\user.USER-91D819DF23\Desktop\ConnectCode\BarcodeFontsTrial\Resource\DLL Integration Samples\TestFontVB\TestFontVB\obj\Debug\TestFontVB.Form1.resources
+C:\Documents and Settings\user.USER-91D819DF23\Desktop\ConnectCode\BarcodeFontsTrial\Resource\DLL Integration Samples\TestFontVB\TestFontVB\obj\Debug\TestFontVB.Resources.resources
+C:\Documents and Settings\user.USER-91D819DF23\Desktop\ConnectCode\BarcodeFontsTrial\Resource\DLL Integration Samples\TestFontVB\TestFontVB\obj\Debug\TestFontVB.vbproj.GenerateResource.Cache

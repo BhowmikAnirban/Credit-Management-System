@@ -1,0 +1,42 @@
+StartFontMetrics 2.0
+Comment Panose 0 0 0 0 0 0 0 0 0 0
+FullName CCodeCodabar_S3_Trial
+FontName CCodeCodabar_S3_Trial
+FamilyName CCodeCodabar_S3_Trial
+Weight Normal
+Notice ConnectCode 2006. All Rights Reserved.
+Version 001.001
+IsFixedPitch false
+ItalicAngle 0.00
+FontBBox 0 -200 780 1800
+Ascender 1800
+Descender -200
+XHeight 600
+CapHeight 1800
+UnderlinePosition -250
+UnderlineThickness 20
+EncodingScheme FontSpecific
+StartCharMetrics 21
+C 32 ; WX 500 ; N space ; B 0 0 0 0 ;
+C 36 ; WX 720 ; N dollar ; B 0 -200 660 1800 ;
+C 43 ; WX 840 ; N plus ; B 0 -200 780 1800 ;
+C 45 ; WX 720 ; N hyphen ; B 0 -200 660 1800 ;
+C 46 ; WX 840 ; N period ; B 0 -200 780 1800 ;
+C 47 ; WX 840 ; N slash ; B 0 -200 780 1800 ;
+C 48 ; WX 720 ; N _0030h ; B 0 -200 678 1800 ;
+C 49 ; WX 720 ; N _0031h ; B 0 -200 659 1800 ;
+C 50 ; WX 720 ; N _0032h ; B 0 -200 678 1800 ;
+C 51 ; WX 720 ; N _0033h ; B 0 -200 659 1800 ;
+C 52 ; WX 720 ; N _0034h ; B 0 -200 678 1800 ;
+C 53 ; WX 720 ; N _0035h ; B 0 -200 660 1800 ;
+C 54 ; WX 720 ; N _0036h ; B 0 -200 678 1800 ;
+C 55 ; WX 720 ; N _0037h ; B 0 -200 678 1800 ;
+C 56 ; WX 720 ; N _0038h ; B 0 -200 660 1800 ;
+C 57 ; WX 720 ; N _0039h ; B 0 -200 660 1800 ;
+C 58 ; WX 840 ; N _003Ah ; B 0 -200 780 1800 ;
+C 65 ; WX 840 ; N A ; B 0 -200 780 1800 ;
+C 66 ; WX 840 ; N B ; B 0 -200 780 1800 ;
+C 67 ; WX 840 ; N C ; B 0 -200 780 1800 ;
+C 68 ; WX 840 ; N D ; B 0 -200 780 1800 ;
+EndCharMetrics
+EndFontMetrics

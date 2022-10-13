@@ -1,0 +1,8 @@
+C:\Documents and Settings\user.USER-91D819DF23\Desktop\ConnectCode\BarcodeFontsTrial\Resource\DLL Integration Samples\TestFont\TestFont\obj\Debug\TestFont.exe
+C:\Documents and Settings\user.USER-91D819DF23\Desktop\ConnectCode\BarcodeFontsTrial\Resource\DLL Integration Samples\TestFont\TestFont\obj\Debug\TestFont.pdb
+C:\Documents and Settings\user.USER-91D819DF23\Desktop\ConnectCode\BarcodeFontsTrial\Resource\DLL Integration Samples\TestFont\TestFont\obj\Debug\ResolveAssemblyReference.cache
+C:\Documents and Settings\user.USER-91D819DF23\Desktop\ConnectCode\BarcodeFontsTrial\Resource\DLL Integration Samples\TestFont\TestFont\obj\Debug\TestFont.Form1.resources
+C:\Documents and Settings\user.USER-91D819DF23\Desktop\ConnectCode\BarcodeFontsTrial\Resource\DLL Integration Samples\TestFont\TestFont\obj\Debug\TestFont.Properties.Resources.resources
+C:\Documents and Settings\user.USER-91D819DF23\Desktop\ConnectCode\BarcodeFontsTrial\Resource\DLL Integration Samples\TestFont\TestFont\obj\Debug\TestFont.csproj.GenerateResource.Cache
+C:\Documents and Settings\user.USER-91D819DF23\Desktop\ConnectCode\BarcodeFontsTrial\Resource\DLL Integration Samples\TestFont\TestFont\bin\Debug\TestFont.exe
+C:\Documents and Settings\user.USER-91D819DF23\Desktop\ConnectCode\BarcodeFontsTrial\Resource\DLL Integration Samples\TestFont\TestFont\bin\Debug\TestFont.pdb

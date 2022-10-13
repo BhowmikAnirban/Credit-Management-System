@@ -1,0 +1,153 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>splitPage</title>
+
+    <!-- WinJS references -->
+    <link href="//Microsoft.WinJS.1.0/css/ui-dark.css" rel="stylesheet" />
+    <script src="//Microsoft.WinJS.1.0/js/base.js"></script>
+    <script src="//Microsoft.WinJS.1.0/js/ui.js"></script>
+
+    <link href="/css/default.css" rel="stylesheet" />
+    <link href="/pages/split/split.css" rel="stylesheet" />
+    <script src="/js/data.js"></script>
+    <script src="/pages/split/split.js"></script>
+
+    <script src="/barcodes/connectcode-javascript-codabar.js"></script>
+    <script src="/barcodes/connectcode-javascript-code39.js"></script>
+    <script src="/barcodes/connectcode-javascript-code39ascii.js"></script>
+    <script src="/barcodes/connectcode-javascript-code93.js"></script>
+    <script src="/barcodes/connectcode-javascript-code128a.js"></script>
+    <script src="/barcodes/connectcode-javascript-code128b.js"></script>
+    <script src="/barcodes/connectcode-javascript-code128c.js"></script>
+    <script src="/barcodes/connectcode-javascript-code128auto.js"></script>
+    <script src="/barcodes/connectcode-javascript-ean13.js"></script>
+    <script src="/barcodes/connectcode-javascript-ean8.js"></script>
+    <script src="/barcodes/connectcode-javascript-ext2.js"></script>
+    <script src="/barcodes/connectcode-javascript-ext5.js"></script>
+    <script src="/barcodes/connectcode-javascript-gs1databar14.js"></script>
+    <script src="/barcodes/connectcode-javascript-i2of5.js"></script>
+    <script src="/barcodes/connectcode-javascript-industrial2of5.js"></script>
+    <script src="/barcodes/connectcode-javascript-itf14.js"></script>
+    <script src="/barcodes/connectcode-javascript-modifiedplessy.js"></script>
+    <script src="/barcodes/connectcode-javascript-postnet.js"></script>
+    <script src="/barcodes/connectcode-javascript-uccean.js"></script>
+    <script src="/barcodes/connectcode-javascript-upca.js"></script>
+    <script src="/barcodes/connectcode-javascript-upce.js"></script>
+
+    <STYLE TYPE="text/css" media="screen,print">
+      @font-face {
+        font-family: CCode39_S3_Trial;
+        src: url("/Fonts/ConnectCode39_S3_Trial.ttf");
+      }
+
+      @font-face {
+        font-family: CCode128_S3_Trial;
+        src: url("/Fonts/ConnectCode128_S3_Trial.ttf");
+      }
+
+      @font-face {
+        font-family: CCode93_S3_Trial;
+        src: url("/Fonts/ConnectCode93_S3_Trial.ttf");
+      }
+
+     @font-face {
+        font-family: CCodeMSI_S3_Trial;
+        src: url("/Fonts/ConnectCodeMSI_S3_Trial.ttf");
+      }
+
+     @font-face {
+        font-family: CCodeCodabar_S3_Trial;
+        src: url("/Fonts/ConnectCodeCodabar_S3_Trial.ttf");
+      }
+     
+     @font-face {
+        font-family: CCodeUPCEAN_S3_Trial;
+        src: url("/Fonts/ConnectCodeUPCEAN_S3_Trial.ttf");
+      }
+
+     @font-face {
+        font-family: CCodeUPCEAN_HRBS3_Trial;
+        src: url("/Fonts/ConnectCodeUPCEAN_HRBS3_Trial.ttf");
+      }
+
+     @font-face {
+        font-family: CCodeI2of5_S3_Trial;
+        src: url("/Fonts/ConnectCodeI2of5_S3_Trial.ttf");
+      }
+
+     @font-face {
+        font-family: CCodeIND2of5_S3_Trial;
+        src: url("/Fonts/ConnectCodeIND2of5_S3_Trial.ttf");
+      }
+
+     @font-face {
+        font-family: CCodeITF_S3_Trial;
+        src: url("/Fonts/ConnectCodeITF_S3_Trial.ttf");
+      }
+
+     @font-face {
+        font-family: CCodeGS1D_S3_Trial;
+        src: url("/Fonts/ConnectCodeGS1D_S3_Trial.ttf");
+      }
+
+    .barcode {font-weight: normal; font-style: normal; line-height:normal; font-family: 'CCode39_S3_Trial', sans-serif; font-size: 32px}
+
+</STYLE>
+
+</head>
+<body>
+    <!-- This template is used to display each item in the ListView declared below. -->
+    <div class="itemtemplate" data-win-control="WinJS.Binding.Template">
+        <div class="item">
+            <!--
+            <img class="item-image" src="#" data-win-bind="src: backgroundImage; alt: title" />
+            -->
+            <div class="item-info">
+                <h3 class="item-title win-type-ellipsis" data-win-bind="textContent: title"></h3>
+                <!--
+                <h6 class="item-subtitle win-type-ellipsis" data-win-bind="textContent: subtitle"></h6>
+                -->
+                <h4 class="item-description" data-win-bind="textContent: description"></h4>
+            </div>
+        </div>
+    </div>
+
+    <!-- The content that will be loaded and displayed. -->
+    <div class="splitpage fragment">
+        <header aria-label="Header content" role="banner">
+            <button class="win-backbutton" aria-label="Back" disabled type="button"></button>
+            <h1 class="titlearea win-type-ellipsis">
+                <span class="pagetitle"></span>
+            </h1>
+        </header>
+        <div class="itemlistsection" aria-label="List column">
+            <div class="itemlist win-selectionstylefilled" aria-label="List of this group's items" data-win-control="WinJS.UI.ListView" data-win-options="{ selectionMode: 'single', swipeBehavior: 'none', tapBehavior: 'toggleSelect' }"></div>
+        </div>
+        <div class="articlesection" aria-atomic="true" aria-label="Item detail column" aria-live="assertive">
+            <article>
+                <header class="header">
+                    <div class="text">
+                        <h2 class="article-title win-type-ellipsis" data-win-bind="textContent: title"></h2>
+                        <h4 class="article-input" data-win-bind="textContent: input"></h4>
+                        <h4 class="article-input" data-win-bind="textContent: checkDigit"></h4>
+                        <h4 class="article-input" data-win-bind="textContent: humanReadable"></h4>
+                        <h4 class="article-input" data-win-bind="textContent: fontName"></h4>
+                        <h4 class="article-input" data-win-bind="textContent: fontSize"></h4>
+                        <br />Output : <br />
+                        <textarea rows="2" id="barcodeOutput" class="barcode" style="height:90px;width:550px">12345678</textarea>
+
+                    </div>
+                    <!--
+                    <img class="article-image" src="#" data-win-bind="src: backgroundImage; alt: title" />
+                    -->
+                </header>
+                <br />Description : <br /><br />
+                <div class="article-description" data-win-bind="innerHTML: description"></div>
+                <div class="article-content" data-win-bind="innerHTML: content"></div>
+            </article>
+        </div>
+    </div>
+</body>
+</html>

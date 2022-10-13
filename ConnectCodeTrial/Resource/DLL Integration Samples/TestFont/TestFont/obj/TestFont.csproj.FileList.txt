@@ -1,0 +1,8 @@
+bin\Debug\TestFont.exe
+bin\Debug\TestFont.pdb
+obj\Debug\ResolveAssemblyReference.cache
+obj\Debug\TestFont.Form1.resources
+obj\Debug\TestFont.Properties.Resources.resources
+obj\Debug\TestFont.csproj.GenerateResource.Cache
+obj\Debug\TestFont.exe
+obj\Debug\TestFont.pdb

@@ -1,0 +1,131 @@
+StartFontMetrics 2.0
+Comment Panose 0 0 0 0 0 0 0 0 0 0
+FullName CCode128_S3_Trial
+FontName CCode128_S3_Trial
+FamilyName CCode128_S3_Trial
+Weight Normal
+Notice ConnectCode 2006. All Rights Reserved.
+Version 001.001
+IsFixedPitch false
+ItalicAngle 0.00
+FontBBox 0 -200 780 1800
+Ascender 1800
+Descender -200
+XHeight 600
+CapHeight 1800
+UnderlinePosition -250
+UnderlineThickness 20
+EncodingScheme FontSpecific
+StartCharMetrics 110
+C 32 ; WX 660 ; N space ; B 0 -200 540 1800 ;
+C 33 ; WX 660 ; N exclam ; B 0 -200 540 1800 ;
+C 34 ; WX 660 ; N quotedbl ; B 0 -200 600 1800 ;
+C 35 ; WX 660 ; N numbersign ; B 0 -200 480 1800 ;
+C 36 ; WX 660 ; N dollar ; B 0 -200 540 1800 ;
+C 37 ; WX 660 ; N percent ; B 0 -200 540 1800 ;
+C 38 ; WX 660 ; N ampersand ; B 0 -200 480 1800 ;
+C 39 ; WX 660 ; N quotesingle ; B 0 -200 540 1800 ;
+C 40 ; WX 660 ; N parenleft ; B 0 -200 540 1800 ;
+C 41 ; WX 660 ; N parenright ; B 0 -200 480 1800 ;
+C 42 ; WX 660 ; N asterisk ; B 0 -200 540 1800 ;
+C 43 ; WX 660 ; N plus ; B 0 -200 540 1800 ;
+C 44 ; WX 660 ; N comma ; B 0 -200 540 1800 ;
+C 45 ; WX 660 ; N hyphen ; B 0 -200 540 1800 ;
+C 46 ; WX 660 ; N period ; B 0 -200 600 1800 ;
+C 47 ; WX 660 ; N slash ; B 0 -200 540 1800 ;
+C 48 ; WX 660 ; N zero ; B 0 -200 540 1800 ;
+C 49 ; WX 660 ; N one ; B 0 -200 635 1800 ;
+C 50 ; WX 660 ; N two ; B 0 -200 600 1800 ;
+C 51 ; WX 660 ; N three ; B 0 -200 635 1800 ;
+C 52 ; WX 660 ; N four ; B 0 -200 600 1800 ;
+C 53 ; WX 660 ; N five ; B 0 -200 635 1800 ;
+C 54 ; WX 660 ; N six ; B 0 -200 540 1800 ;
+C 55 ; WX 660 ; N seven ; B 0 -200 635 1800 ;
+C 56 ; WX 660 ; N eight ; B 0 -200 540 1800 ;
+C 57 ; WX 660 ; N nine ; B 0 -200 635 1800 ;
+C 58 ; WX 660 ; N colon ; B 0 -200 600 1800 ;
+C 59 ; WX 660 ; N semicolon ; B 0 -200 540 1800 ;
+C 60 ; WX 660 ; N less ; B 0 -200 540 1800 ;
+C 61 ; WX 660 ; N equal ; B 0 -200 600 1800 ;
+C 62 ; WX 660 ; N greater ; B 0 -200 480 1800 ;
+C 63 ; WX 660 ; N question ; B 0 -200 600 1800 ;
+C 64 ; WX 660 ; N at ; B 0 -200 600 1800 ;
+C 65 ; WX 660 ; N A ; B 0 -200 635 1800 ;
+C 66 ; WX 660 ; N B ; B 0 -200 480 1800 ;
+C 67 ; WX 660 ; N C ; B 0 -200 600 1800 ;
+C 68 ; WX 660 ; N D ; B 0 -200 480 1800 ;
+C 69 ; WX 660 ; N E ; B 0 -200 635 1800 ;
+C 70 ; WX 660 ; N F ; B 0 -200 600 1800 ;
+C 71 ; WX 660 ; N G ; B 0 -200 480 1800 ;
+C 72 ; WX 660 ; N H ; B 0 -200 480 1800 ;
+C 73 ; WX 660 ; N I ; B 0 -200 635 1800 ;
+C 74 ; WX 660 ; N J ; B 0 -200 480 1800 ;
+C 75 ; WX 660 ; N K ; B 0 -200 600 1800 ;
+C 76 ; WX 660 ; N L ; B 0 -200 600 1800 ;
+C 77 ; WX 660 ; N M ; B 0 -200 635 1800 ;
+C 78 ; WX 660 ; N N ; B 0 -200 600 1800 ;
+C 79 ; WX 660 ; N O ; B 0 -200 635 1800 ;
+C 80 ; WX 660 ; N P ; B 0 -200 600 1800 ;
+C 81 ; WX 660 ; N Q ; B 0 -200 600 1800 ;
+C 82 ; WX 660 ; N R ; B 0 -200 600 1800 ;
+C 83 ; WX 660 ; N S ; B 0 -200 480 1800 ;
+C 84 ; WX 660 ; N T ; B 0 -200 600 1800 ;
+C 85 ; WX 660 ; N U ; B 0 -200 635 1800 ;
+C 86 ; WX 660 ; N V ; B 0 -200 480 1800 ;
+C 87 ; WX 660 ; N W ; B 0 -200 600 1800 ;
+C 88 ; WX 660 ; N X ; B 0 -200 600 1800 ;
+C 89 ; WX 660 ; N Y ; B 0 -200 480 1800 ;
+C 90 ; WX 660 ; N Z ; B 0 -200 600 1800 ;
+C 91 ; WX 660 ; N bracketleft ; B 0 -200 600 1800 ;
+C 92 ; WX 660 ; N backslash ; B 0 -200 600 1800 ;
+C 93 ; WX 660 ; N bracketright ; B 0 -200 600 1800 ;
+C 94 ; WX 660 ; N asciicircum ; B 0 -200 600 1800 ;
+C 95 ; WX 660 ; N underscore ; B 0 -200 420 1800 ;
+C 96 ; WX 660 ; N grave ; B 0 -200 540 1800 ;
+C 97 ; WX 660 ; N a ; B 0 -200 635 1800 ;
+C 98 ; WX 660 ; N b ; B 0 -200 600 1800 ;
+C 99 ; WX 660 ; N c ; B 0 -200 540 1800 ;
+C 100 ; WX 660 ; N d ; B 0 -200 600 1800 ;
+C 101 ; WX 660 ; N e ; B 0 -200 635 1800 ;
+C 102 ; WX 660 ; N f ; B 0 -200 540 1800 ;
+C 103 ; WX 660 ; N g ; B 0 -200 420 1800 ;
+C 104 ; WX 660 ; N h ; B 0 -200 600 1800 ;
+C 105 ; WX 660 ; N i ; B 0 -200 540 1800 ;
+C 106 ; WX 660 ; N j ; B 0 -200 600 1800 ;
+C 107 ; WX 660 ; N k ; B 0 -200 600 1800 ;
+C 108 ; WX 660 ; N l ; B 0 -200 635 1800 ;
+C 109 ; WX 660 ; N m ; B 0 -200 600 1800 ;
+C 110 ; WX 660 ; N n ; B 0 -200 540 1800 ;
+C 111 ; WX 660 ; N o ; B 0 -200 635 1800 ;
+C 112 ; WX 660 ; N p ; B 0 -200 540 1800 ;
+C 113 ; WX 660 ; N q ; B 0 -200 540 1800 ;
+C 114 ; WX 660 ; N r ; B 0 -200 600 1800 ;
+C 115 ; WX 660 ; N s ; B 0 -200 540 1800 ;
+C 116 ; WX 660 ; N t ; B 0 -200 540 1800 ;
+C 117 ; WX 660 ; N u ; B 0 -200 635 1800 ;
+C 118 ; WX 660 ; N v ; B 0 -200 540 1800 ;
+C 119 ; WX 660 ; N w ; B 0 -200 540 1800 ;
+C 120 ; WX 660 ; N x ; B 0 -200 600 1800 ;
+C 121 ; WX 660 ; N y ; B 0 -200 600 1800 ;
+C 122 ; WX 660 ; N z ; B 0 -200 600 1800 ;
+C 123 ; WX 660 ; N braceleft ; B 0 -200 600 1800 ;
+C 124 ; WX 660 ; N bar ; B 0 -200 480 1800 ;
+C 125 ; WX 660 ; N braceright ; B 0 -200 600 1800 ;
+C 126 ; WX 660 ; N asciitilde ; B 0 -200 600 1800 ;
+C 127 ; WX 660 ; N _0127 ; B 0 -200 480 1800 ;
+C 129 ; WX 660 ; N _0129 ; B 0 -200 480 1800 ;
+C 227 ; WX 660 ; N _0127 ; B 0 -200 480 1800 ;
+C 228 ; WX 660 ; N Euro ; B 0 -200 600 1800 ;
+C 229 ; WX 660 ; N _0129 ; B 0 -200 480 1800 ;
+C 230 ; WX 660 ; N ae ; B 0 -200 600 1800 ;
+C 231 ; WX 660 ; N florin ; B 0 -200 600 1800 ;
+C 232 ; WX 660 ; N quotedblbase ; B 0 -200 600 1800 ;
+C 233 ; WX 660 ; N ellipsis ; B 0 -200 600 1800 ;
+C 234 ; WX 660 ; N dagger ; B 0 -200 600 1800 ;
+C 235 ; WX 660 ; N daggerdbl ; B 0 -200 540 1800 ;
+C 236 ; WX 660 ; N circumflex ; B 0 -200 420 1800 ;
+C 237 ; WX 660 ; N perthousand ; B 0 -200 540 1800 ;
+C 238 ; WX 780 ; N Scaron ; B 0 -200 780 1800 ;
+C 239 ; WX 660 ; N idieresis ; B 0 -200 540 1800 ;
+EndCharMetrics
+EndFontMetrics

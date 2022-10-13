@@ -1,0 +1,10 @@
+obj\Debug\ResolveAssemblyReference.cache
+obj\Debug\TestFontVB.Form1.resources
+obj\Debug\TestFontVB.Resources.resources
+obj\Debug\TestFontVB.vbproj.GenerateResource.Cache
+bin\Debug\TestFontVB.exe
+bin\Debug\TestFontVB.pdb
+bin\Debug\TestFontVB.xml
+obj\Debug\TestFontVB.exe
+obj\Debug\TestFontVB.xml
+obj\Debug\TestFontVB.pdb

@@ -1,0 +1,8 @@
+@font-face {
+    font-family: CCodeUPCEAN_S3_Trial;
+    src: url("fonts/ConnectCodeUPCEAN_S3_Trial.woff") format("woff");
+  }
+
+.EXT5 {width: 5in}
+.barcode {font-weight: normal; font-style: normal; line-height:normal; font-family: 'CCodeUPCEAN_S3_Trial', sans-serif; font-size: 32px}
+.barcode_text {font-weight: normal; font-style: normal; line-height:normal; font-family: sans-serif; font-size: 28px}

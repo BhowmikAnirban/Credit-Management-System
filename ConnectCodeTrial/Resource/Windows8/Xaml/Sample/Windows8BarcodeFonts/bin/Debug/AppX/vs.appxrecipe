@@ -1,0 +1,150 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Machine>CHINPINBOOC0CE</Machine>
+    <WindowsUser>jamesboo</WindowsUser>
+    <SolutionConfiguration>Debug|AnyCPU</SolutionConfiguration>
+    <PackageArchitecture>neutral</PackageArchitecture>
+    <RegisteredManifestChecksum>5F6332D186CA724A3075F4632F3E72A6951F514C6D24506112FFAF55C6CD9549</RegisteredManifestChecksum>
+    <RegisteredPackageMoniker>ConnectCodePteLtd.ConnectCodeBarcodeFonts_1.0.0.0_neutral__edaqrphw1n8ge</RegisteredPackageMoniker>
+    <RegisteredUserModeAppID>ConnectCodePteLtd.ConnectCodeBarcodeFonts_edaqrphw1n8ge!App</RegisteredUserModeAppID>
+    <RegisteredPackageID>ConnectCodePteLtd.ConnectCodeBarcodeFonts</RegisteredPackageID>
+    <RegisteredPackagePublisher>CN=ConnectCode</RegisteredPackagePublisher>
+    <RegisteredVersion>1.0.0.0</RegisteredVersion>
+  </PropertyGroup>
+  <ItemGroup>
+    <AppXManifest Include="C:\vc5\ConnectCode\Trial\BarcodeFontsWindows8\Windows8BarcodeFonts\bin\Debug\AppxManifest.xml">
+      <PackagePath>AppxManifest.xml</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+      <Modified>2012-08-29T09:07:25.229</Modified>
+    </AppXManifest>
+  </ItemGroup>
+  <ItemGroup>
+    <AppxPackagedFile Include="C:\vc5\ConnectCode\Trial\BarcodeFontsWindows8\Windows8BarcodeFonts\bin\Debug\Windows8BarcodeFonts.exe">
+      <PackagePath>Windows8BarcodeFonts.exe</PackagePath>
+      <Modified>2012-08-29T09:07:25.088</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\vc5\ConnectCode\Trial\BarcodeFontsWindows8\Windows8BarcodeFonts\bin\Debug\Windows8BarcodeFonts.pdb">
+      <PackagePath>Windows8BarcodeFonts.pdb</PackagePath>
+      <Modified>2012-08-29T09:07:25.010</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\vc5\ConnectCode\Trial\BarcodeFontsWindows8\Windows8BarcodeFonts\ConnectCodeBarcodeFontsLibrary.dll">
+      <PackagePath>ConnectCodeBarcodeFontsLibrary.dll</PackagePath>
+      <Modified>2012-08-21T07:25:59.505</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\vc5\ConnectCode\Trial\BarcodeFontsWindows8\Windows8BarcodeFonts\Fonts\ConnectCode128_S3_Trial.ttf">
+      <PackagePath>Fonts\ConnectCode128_S3_Trial.ttf</PackagePath>
+      <Modified>2011-11-10T07:29:54.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\vc5\ConnectCode\Trial\BarcodeFontsWindows8\Windows8BarcodeFonts\Fonts\ConnectCode39_S3_Trial.ttf">
+      <PackagePath>Fonts\ConnectCode39_S3_Trial.ttf</PackagePath>
+      <Modified>2011-11-10T07:29:48.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\vc5\ConnectCode\Trial\BarcodeFontsWindows8\Windows8BarcodeFonts\Fonts\ConnectCode93_S3_Trial.ttf">
+      <PackagePath>Fonts\ConnectCode93_S3_Trial.ttf</PackagePath>
+      <Modified>2007-06-14T23:57:22.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\vc5\ConnectCode\Trial\BarcodeFontsWindows8\Windows8BarcodeFonts\Fonts\ConnectCodeCodabar_S3_Trial.ttf">
+      <PackagePath>Fonts\ConnectCodeCodabar_S3_Trial.ttf</PackagePath>
+      <Modified>2007-06-14T23:57:18.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\vc5\ConnectCode\Trial\BarcodeFontsWindows8\Windows8BarcodeFonts\Fonts\ConnectCodeGS1DEST_Trial.ttf">
+      <PackagePath>Fonts\ConnectCodeGS1DEST_Trial.ttf</PackagePath>
+      <Modified>2009-01-30T12:13:40.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\vc5\ConnectCode\Trial\BarcodeFontsWindows8\Windows8BarcodeFonts\Fonts\ConnectCodeGS1DSTO_Trial.ttf">
+      <PackagePath>Fonts\ConnectCodeGS1DSTO_Trial.ttf</PackagePath>
+      <Modified>2009-01-30T12:16:18.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\vc5\ConnectCode\Trial\BarcodeFontsWindows8\Windows8BarcodeFonts\Fonts\ConnectCodeGS1DST_Trial.ttf">
+      <PackagePath>Fonts\ConnectCodeGS1DST_Trial.ttf</PackagePath>
+      <Modified>2009-01-30T12:15:22.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\vc5\ConnectCode\Trial\BarcodeFontsWindows8\Windows8BarcodeFonts\Fonts\ConnectCodeGS1DTR_Trial.ttf">
+      <PackagePath>Fonts\ConnectCodeGS1DTR_Trial.ttf</PackagePath>
+      <Modified>2011-06-30T04:56:32.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\vc5\ConnectCode\Trial\BarcodeFontsWindows8\Windows8BarcodeFonts\Fonts\ConnectCodeGS1D_S3_Trial.ttf">
+      <PackagePath>Fonts\ConnectCodeGS1D_S3_Trial.ttf</PackagePath>
+      <Modified>2008-10-17T02:33:32.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\vc5\ConnectCode\Trial\BarcodeFontsWindows8\Windows8BarcodeFonts\Fonts\ConnectCodeI2of5_S3_Trial.ttf">
+      <PackagePath>Fonts\ConnectCodeI2of5_S3_Trial.ttf</PackagePath>
+      <Modified>2007-06-15T00:23:28.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\vc5\ConnectCode\Trial\BarcodeFontsWindows8\Windows8BarcodeFonts\Fonts\ConnectCodeIND2of5_S3_Trial.ttf">
+      <PackagePath>Fonts\ConnectCodeIND2of5_S3_Trial.ttf</PackagePath>
+      <Modified>2007-06-15T00:24:38.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\vc5\ConnectCode\Trial\BarcodeFontsWindows8\Windows8BarcodeFonts\Fonts\ConnectCodeITF_S3_Trial.ttf">
+      <PackagePath>Fonts\ConnectCodeITF_S3_Trial.ttf</PackagePath>
+      <Modified>2007-06-14T23:57:06.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\vc5\ConnectCode\Trial\BarcodeFontsWindows8\Windows8BarcodeFonts\Fonts\ConnectCodeMSI_S3_Trial.ttf">
+      <PackagePath>Fonts\ConnectCodeMSI_S3_Trial.ttf</PackagePath>
+      <Modified>2007-06-14T23:56:58.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\vc5\ConnectCode\Trial\BarcodeFontsWindows8\Windows8BarcodeFonts\Fonts\ConnectCodeUPCEAN_HRBS3_Trial.ttf">
+      <PackagePath>Fonts\ConnectCodeUPCEAN_HRBS3_Trial.ttf</PackagePath>
+      <Modified>2007-06-14T23:56:50.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\vc5\ConnectCode\Trial\BarcodeFontsWindows8\Windows8BarcodeFonts\Fonts\ConnectCodeUPCEAN_HRTS3_Trial.ttf">
+      <PackagePath>Fonts\ConnectCodeUPCEAN_HRTS3_Trial.ttf</PackagePath>
+      <Modified>2007-06-14T23:56:46.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\vc5\ConnectCode\Trial\BarcodeFontsWindows8\Windows8BarcodeFonts\Fonts\ConnectCodeUPCEAN_S3_Trial.ttf">
+      <PackagePath>Fonts\ConnectCodeUPCEAN_S3_Trial.ttf</PackagePath>
+      <Modified>2007-06-14T23:56:40.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\vc5\ConnectCode\Trial\BarcodeFontsWindows8\Windows8BarcodeFonts\Assets\Logo.png">
+      <PackagePath>Assets\Logo.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+      <Modified>2012-03-15T12:42:52.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\vc5\ConnectCode\Trial\BarcodeFontsWindows8\Windows8BarcodeFonts\Assets\SmallLogo.png">
+      <PackagePath>Assets\SmallLogo.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+      <Modified>2012-03-15T12:42:52.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\vc5\ConnectCode\Trial\BarcodeFontsWindows8\Windows8BarcodeFonts\Assets\SplashScreen.png">
+      <PackagePath>Assets\SplashScreen.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+      <Modified>2012-03-15T12:42:52.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\vc5\ConnectCode\Trial\BarcodeFontsWindows8\Windows8BarcodeFonts\Assets\StoreLogo.png">
+      <PackagePath>Assets\StoreLogo.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+      <Modified>2012-03-15T12:42:52.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\vc5\ConnectCode\Trial\BarcodeFontsWindows8\Windows8BarcodeFonts\Assets\LightGray.png">
+      <PackagePath>Assets\LightGray.png</PackagePath>
+      <Modified>2011-12-12T14:08:56.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\vc5\ConnectCode\Trial\BarcodeFontsWindows8\Windows8BarcodeFonts\Assets\MediumGray.png">
+      <PackagePath>Assets\MediumGray.png</PackagePath>
+      <Modified>2011-12-12T14:08:56.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\vc5\ConnectCode\Trial\BarcodeFontsWindows8\Windows8BarcodeFonts\Assets\DarkGray.png">
+      <PackagePath>Assets\DarkGray.png</PackagePath>
+      <Modified>2011-12-12T14:08:56.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\vc5\ConnectCode\Trial\BarcodeFontsWindows8\Windows8BarcodeFonts\bin\Debug\App.xaml">
+      <PackagePath>App.xaml</PackagePath>
+      <Modified>2012-08-20T08:13:50.457</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\vc5\ConnectCode\Trial\BarcodeFontsWindows8\Windows8BarcodeFonts\bin\Debug\Common\StandardStyles.xaml">
+      <PackagePath>Common\StandardStyles.xaml</PackagePath>
+      <Modified>2012-06-26T08:19:20.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\vc5\ConnectCode\Trial\BarcodeFontsWindows8\Windows8BarcodeFonts\bin\Debug\SplitPage.xaml">
+      <PackagePath>SplitPage.xaml</PackagePath>
+      <Modified>2012-08-22T03:00:04.793</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\vc5\ConnectCode\Trial\BarcodeFontsWindows8\Windows8BarcodeFonts\bin\Debug\resources.pri">
+      <PackagePath>resources.pri</PackagePath>
+      <Modified>2012-08-29T09:03:54.932</Modified>
+    </AppxPackagedFile>
+  </ItemGroup>
+  <ItemGroup>
+  </ItemGroup>
+</Project>

@@ -1,0 +1,484 @@
+﻿<!DOCTYPE html>
+
+<html lang="en">
+<head>
+
+    <meta charset="utf-8" />
+    <title>TypeScript HTML App</title>
+    <link rel="stylesheet" href="app.css" type="text/css" />
+
+
+</head>
+<body>
+
+    <h3>Generate Barcodes with TypeScript and Web Fonts</h3>
+    <ul>
+        <li><a href=codabar.htm>Codabar Barcode</a></li>
+        <li><a href=code39.htm>Code39 Barcode</a></li>
+        <li><a href=code39ascii.htm>Code39 Ascii Barcode</a></li>
+        <li><a href=code93.htm>Code93 Barcode</a></li>
+        <li><a href=code128a.htm>Code128 A Barcode</a></li>
+        <li><a href=code128b.htm>Code128 B Barcode</a></li>
+        <li><a href=code128c.htm>Code128 C Barcode</a></li>
+        <li><a href=code128auto.htm>Code128 Auto Barcode</a></li>
+        <li><a href=uccean.htm>UCCEAN (GS1 128) Barcode</a></li>
+        <li><a href=i2of5.htm>I2of5 Barcode</a></li>
+        <li><a href=industrial2of5.htm>Industrial 2of5 Barcode</a></li>
+        <li><a href=itf14.htm>ITF14 Barcode</a></li>
+        <li><a href=modifiedplessy.htm>Modified Plessy Barcode</a></li>
+        <!--
+        <li><a href=postnet.html>POSTNET Barcode</a></li>
+        -->
+        <li><a href=ean13.htm>EAN13 Barcode</a></li>
+        <li><a href=ean8.htm>EAN8 Barcode</a></li>
+        <li><a href=upca.htm>UPCA Barcode</a></li>
+        <li><a href=upce.htm>UPCE Barcode</a></li>
+        <li><a href=ext2.htm>EXT2 Barcode</a></li>
+        <li><a href=ext5.htm>EXT5 Barcode</a></li>
+        <li><a href=gs1databar14.htm>GS1 Databar 14 Barcode</a></li>
+    </ul>
+
+    <h3>What is ConnectCode Barcode Web Fonts?</h3>
+
+    ConnectCode Barcode Web Fonts uses the Web Open Font Format (WOFF), an optimized font format recommended by World Wide Web Consortium (W3C), to deliver industry-compliant barcodes over Hypertext Markup Language (HTML) web pages. The solution of using fonts, instead of images, to generate barcodes over the web is efficient as it only requires a single font to be downloaded to the browser and multiple barcodes can be generated thereafter.
+    <br><br>
+    Barcode fonts also raster to the output device and are not limited to DPI (Dots per Inch) of the computer screen or image. This allows high quality barcodes that meet the requirements of all industry specifications to be created.
+    <br><br>
+    The web fonts are specified in HTML web pages using the Cascading Style Sheets (CSS) @font-face feature. The following illustrates a simple example of using barcode web fonts to generate a Code 39 barcode:
+    <br><br>
+    <table border=1 width="600">
+        <tr>
+            <td>
+                <br>
+                <pre>
+&lt;HTML>
+&lt;BODY>
+&lt;STYLE TYPE="text/css" media="screen,print">
+    @font-face {
+      font-family: CCode39_S3;
+      src: url("fonts/ConnectCode39_S3.woff") format("woff");
+    }
+    .barcode {font-family: 'CCode39_S3'; font-size: 32px}
+&lt;/STYLE>
+
+&lt;div id="barcode">*12345678*&lt;/div>
+&lt;/BODY>
+&lt;/HTML>
+                </pre>
+                <br>
+            </td>
+        </tr>
+    </table>
+    <br>
+    The ".woff" file is a W3C compliant web font provided as part of ConnectCode Barcode Web Font’s solution ( package ). The complete solution also includes barcode fonts in the Embedded Open Type (EOT) and Open Type (OTF) formats to support backward compatibility for legacy browsers.
+    <br><br>
+    Note:
+    <br><br>
+    The barcode web fonts make use of JavaScript to generate check characters and other start/stop characters, a process known as encodation. This page describes the use of TypeScript and the generated JavaScript library to perform the encodation process.
+    <br><br>
+    <h3>What is Microsoft TypeScript?</h3>
+
+    Microsoft TypeScript is an open source programming language developed by Microsoft to address the issues developers faced when developing large-scale JavaScript applications. It is a typed superset of JavaScript with optional static typing, and object oriented capabilities such as modules, interfaces and classes.
+    <br><br>
+    The static typing nature of the language enables an Integrated Development Environment (IDE) to easily support features such as code navigation, refactoring, and IntelliSense. This provides developers with a significantly more productive development environment.  The object oriented nature of the language enables developers to make use of decade proven techniques such as encapsulation, inheritance and modularity for building large scale systems.
+    <br><br>
+    As TypeScript ultimately compiles to plain JavaScript, it works with almost all existing Javascript libraries. All these factors contribute to the inevitable adoption of TypeScript for large scale Javascript application development.
+    <br><br>
+
+    <h3>What has Typescript got to do with the Barcode Web Fonts?</h3>
+
+    Many barcode symbologies require start/stop characters and sometimes check characters to be added as part of the barcode to comply with industry specifications. Some barcode specifications also have optimizing techniques for representing the input data efficiently. This entire process of converting input data to barcode characters and adding start/stop/check characters is commonly known as encodation.
+    <br><br>
+    ConnectCode provides the full barcode encodation library in TypeScript (with full source code). This provides users with the flexibility to decide for themselves on the various ways of integrating  the barcode solution with their applications. For example, the TypeScript libraries can be directly integrated into a TypeScript project or the generated JavaScript (from the TypeScript source) can be deployed in a HTML web page. It is also easy to include the generated JavaScript in a server side Node.js or cloud application.
+    <br><br>
+
+    <h3>Supported Browsers</h3>
+    <b>ConnectCode Certified</b>
+    <br>
+    <ul class="list">
+        <li>Internet Explorer 8 (Windows)</li>
+        <li>Internet Explorer 9 (Windows)</li>
+        <li>Internet Explorer 10 (Windows)</li>
+        <li>Internet Explorer 11 (Windows)</li>
+        <li>Microsoft Edge</li>
+        <li>Mozilla Firefox 22+ (Windows)</li>
+        <li>Opera 11+ (Windows)</li>
+        <li>Google Chrome 16+ (Windows)</li>
+        <li>Google Chrome 16+ (Mac OS X)</li>
+        <li>Safari 5.1+ (Mac OS X)</li>
+        <li>iOS 5.0+ Mobile Browser (iOS)</li>
+        <li>Windows Phone OS 8.0+ Mobile Browser (WP)</li>
+        <li>Android 3.1+ (Honeycomb) Mobile Browser (Android API Level 12+)</li>
+        <li>Mozilla Firefox Phone OS 1.0</li>
+    </ul>
+    + Current and newer versions
+    <br><br>
+    Please note that you may have noticed that our web fonts solution works on many more browsers.
+    However, we currently only provide technical support for the above-mentioned browsers.
+    <br><br>
+
+    <h3>Using the generated JavaScript Library with the Barcode Web Fonts</h3>
+
+    The following shows the complete source of a HTML web page creating a Code 39 barcode.
+    <br><br>
+    <table border=1 width="600">
+        <tr>
+            <td>
+                <br>
+<pre>
+&lt;html lang="en">
+&lt;head>
+&lt;meta charset="utf-8" />
+&lt;title>TypeScript HTML App&lt;/title>
+&lt;link rel="stylesheet" href="app.css" type="text/css" />
+&lt;script src="barcodescripts/barcode.js">&lt;/script>
+&lt;script src="barcodescripts/code39.js">&lt;/script>
+&lt;style type="text/css" media="screen,print">
+        @font-face {
+            font-family: CCode39;
+src: url("barcodefonts/ConnectCode39_S3_Trial.eot");
+src: local("CCode39_S3_Trial"), 
+	url("barcodefonts/ConnectCode39_S3_Trial.otf") format("opentype"), 
+        url("barcodefonts/ConnectCode39_S3_Trial.woff") format("woff");
+        }
+div.barcodeData {
+white-space:pre; /*mandatory*/
+font-weight: normal;
+font-style: normal;
+line-height: normal;
+font-family: 'CCode39', sans-serif;
+font-size: 32px;
+        }
+&lt;/style>
+&lt;/head>
+&lt;body>
+&lt;h2>Code39 Barcode&lt;/h2>
+&lt;center>
+&lt;div class="barcodeData">12345678&lt;/div>
+&lt;div class="humanReadableText">&lt;/div>
+&lt;/center>
+&lt;script src="app-code39.js">&lt;/script>
+&lt;/body>
+&lt;/html>
+</pre>
+                <br>
+            </td>
+        </tr>
+    </table>
+
+    <br>
+
+    <strong>Important</strong>
+    <br /><br />
+    The CSS "white-space:pre;" property as shown above is used to prevent whitespace characters from being collapsed by the browser. This is important as the generated barcodes may contain whitespace and we do not want these values to be altered by the browser.
+    <br /><br />
+    div.barcodeData {<br />
+    white-space:pre; /*mandatory*/<br />
+    .<br />
+    .<br />
+    .<br />
+    }<br />
+    <br /><br />
+    <strong>Note</strong>
+    <br /><br />
+    "barcode.js" is a JavaScript base class that provides common functionalities required for barcode generation. This is a file that will always need to be included in the HTML web page.
+    <br><br>
+    "code39.js" is the JavaScript file that performs generation of  a Code 39 barcode. For other barcodes, please use the appropriate JavaScript file.
+    <br><br>
+    "app-code39.js" is the file that will specify parameters such as check character inclusion during the encodation process.  The source of "app-code39.js" is shown below:
+    var Code39 = net.connectcode.Code39;
+    <br><br />
+
+
+    <table border=1 width="600">
+        <tr>
+            <td>
+<pre>
+window.onload = function () {
+varelementBarcode = document.getElementsByClassName("barcodeData");
+varelementHumanReadableText = document.getElementsByClassName("humanReadableText");
+for (var x = 0; x &lt;elementBarcode.length; x++) {
+	var barcode = new Code39(elementBarcode[x].innerHTML);
+	var result = barcode.encode();
+	var hrText = barcode.getHRText();
+	elementBarcode[x].innerHTML = result;
+	elementHumanReadableText[x].innerHTML = hrText;
+}
+};
+</pre>
+                <br>
+            </td>
+        </tr>
+    </table>
+
+    <br>
+
+    The following JavaScript Methods are available on all barcode classes:
+    <br><br>
+    <table border=1 width="600">
+        <tr>
+            <td>
+                <br>
+                encode() - encode and generate barcode characters <br>
+                getHRText() - return the Human Readable Text of a barcode<br><br>
+            </td>
+        </tr>
+    </table>
+    <br>
+
+    <h3>JavaScript Application Programming Interface</h3>
+    <table border=1 width="600">
+        <tr>
+            <td>
+                <br>
+                Codabar <br>
+                Javascript File - codabar.js<br>
+                Javascript Class - Codabar(data)<br>
+                data is of type string.
+                <br><br>
+                Code 39<br>
+                Javascript File - code39.js<br>
+                Javascript Class - Code39(data, checkDigit)<br>
+                data is of type string and checkDigit is of type boolean.
+                <br><br>
+                Code39 Ascii<br>
+                Javascript File - code39ascii.js<br>
+                Javascript Class - Code39ASCII(data, checkDigit)<br>
+                data is of type string and checkDigit is of type boolean.
+                <br><br>
+                Code93 <br>
+                Javascript File - code93.js<br>
+                Javascript Class - Code93(data, checkDigit)<br>
+                data is of type string and checkDigit is of type boolean.<br><br>
+
+                Code128 A <br>
+                Javascript File - code128a.js<br>
+                Javascript Class - Code128A(data) <br>
+                data is of type string.<br>
+                <br>
+                Code128 B <br>
+                Javascript File - code128b.js<br>
+                Javascript Class - Code128B(data) <br>
+                data is of type string.<br>
+                <br>
+                Code128 C <br>
+                Javascript File - code128c.js<br>
+                Javascript Class - Code128C(data)<br>
+                data is of type string.<br>
+                <br>
+                Code128 Auto<br>
+                Javascript File - code128auto.js<br>
+                Javascript Class - Code128Auto(data)<br>
+                data is of type string.<br>
+                <br>
+                UCCEAN <br>
+                Javascript File - uccean.js<br>
+                Javascript Class - UCCEAN(data, gs1Compliance) <br>
+                data is of type string and gs1Compliance is of type boolean.<br>
+                By default, gs1Compliance is true. Set the value to false to support legacy systems.<br>
+                <br>
+                I2of5 <br>
+                Javascript File - i2of5.js<br>
+                Javascript Class - I2of5(data, checkDigit)<br>
+                data is of type string.<br>
+                <br>
+                Industrial 2of5 <br>
+                Javascript File - industrial2of5.js<br>
+                Javascript Class - Industrial2of5(data, checkDigit)<br>
+                data is of type string and checkDigit is of type boolean.<br>
+                <br>
+                ITF14 <br>
+                Javascript File - itf14.js<br>
+                Javascript Class - ITF14(data, checkDigit, itfRectangle)<br>
+                data is of type string, checkDigit is of type boolean itfRectangle is of type boolean. itfRectangle specifies whether to use a rectangle to fully enclose the ITF14 barcode as specified in the specifications.<br>
+                <br>
+                Modified Plessy <br>
+                Javascript File - modifiedplessy.js<br>
+                Javascript Class - ModifiedPlessy(data, checkDigit)<br>
+                data is of type string and checkDigit is of type boolean.<br>
+                <br>
+                EAN13 <br>
+                Javascript File - ean13.js<br>
+                Javascript Class - EAN13(data, hr)<br>
+                data is of type string and hr is of type boolean. <br>
+                If a font with Embedded Human Readable Text (e.g. UPCEAN_HRBS3) font is used, the hr option must be set to true.<br>
+                <br>
+                EAN8 <br>
+                Javascript File - ean8.js<br>
+                Javascript Class - EAN8(data, hr)<br>
+                data is of type string and hr is of type boolean. <br>
+                If a font with Embedded Human Readable Text (e.g. UPCEAN_HRBS3) font is used, the hr option must be set to true.<br>
+                <br>
+                UPCA <br>
+                Javascript File - upca.js<br>
+                Javascript Class - UPCA(data, hr)<br>
+                data is of type string and hr is of type boolean. <br>
+                If a font with Embedded Human Readable Text (e.g. UPCEAN_HRBS3) font is used, the hr option must be set to true.<br>
+                <br>
+                UPCE <br>
+                Javascript File - upce.js<br>
+                Javascript Class - UPCE(data, hr)<br>
+                data is of type string and hr is of type boolean. <br>
+                If a font with Embedded Human Readable Text (e.g. UPCEAN_HRBS3) font is used, the hr option must be set to true.<br>
+                <br>
+                EXT2 <br>
+                Javascript File - ext2.js<br>
+                Javascript Class - EXT2(data)<br>
+                data is of type string. Embedded Human Readable Text (e.g. CCodeUPCEAN_HRBS3) fonts can be applied without any further options.<br>
+                <br>
+                EXT5 <br>
+                Javascript File - ext5.js<br>
+                Javascript Class - EXT5(data)<br>
+                data is of type string. Embedded Human Readable Text (e.g. CCodeUPCEAN_HRBS3) fonts can be applied without any further options.<br>
+                <br>
+                GS1 Databar 14 <br>
+                Javascript File - gs1databar14.js<br>
+                Javascript Class - GS1Databar14(data, linkage)<br>
+                data is of type string and linkage is of type boolean. If the linkage flag is set to false, then the GS1 Databar 14 stands alone, otherwise a 2D barcode component is associated with this GS1 Databar 14 barcode. <br>
+                <br>
+            </td>
+        </tr>
+    </table>
+    <br>
+    <h3>TypeScript Source</h3>
+
+    The complete source code of the TypeScript encodation library is provided in the ConnectCode Barcode Fonts package. Compilation of the source code requires Visual Studio 2013 (or above) with TypeScript installed. This source or the generated JavaScript code can be embedded into any application projects as long as the ConnectCode Barcode Fonts license is adhered to. A copy of the license can be found at the following:
+    <br><br>
+    http://www.barcoderesource.com/connectcodelicense.shtml
+    <br><br>
+    <b>Project File Location</b>
+    <br><br>
+    &lt;ConnectCode Barcode Fonts directory>\Resource\TypeScript\VS2013
+    <br><br>
+    <b>Important Project Settings</b>
+    <br><br>
+    ECMAScript 5 <br>
+    Allow implicit 'any' types (Off)<br>
+    AMD Module system<br>
+    <br>
+    <b>Implementation</b>
+    <br><br>
+    All barcode classes in the TypeScript library implement the interface below.
+    <br><br>
+    <table border=1 width="600">
+        <tr>
+            <td>
+<pre>
+module net {
+    export module connectcode {
+        export interface Barcode {
+            encode(): string;
+getHRText(): string;
+        }
+}
+</pre>
+
+            </td>
+        </tr>
+    </table>
+    <br>
+    With the interface, the library can be easily integrated while applying the different object oriented programming techniques.
+    <br><br>
+    The "encode" method  converts the input data and adds the necessary start/stop/check characters. The "getHRText" method is used after the "encode" method and returns the Human Readable Text portion of the barcode.
+    <br><br>
+    <h3>TypeScript Application Programming Interface</h3>
+    <table border=1 width="600">
+        <tr>
+            <td>
+                <br>
+                Codabar <br>
+                TypeScript File - codabar.ts<br>
+                TypeScript Class - Codabar(data: string) <br>
+                <br>
+                Code 39<br>
+                TypeScript File - code39.ts<br>
+                TypeScript Class - Code39(data: string, checkDigit: boolean=false) <br>
+                <br>
+                Code39 Ascii<br>
+                TypeScript File - code39ascii.ts<br>
+                TypeScript Class - Code39ASCII(data: string, checkDigit: boolean=false)<br>
+                <br>
+                Code93 <br>
+                TypeScript File - code93.ts<br>
+                TypeScript Class - Code93(data: string, checkDigit: boolean=false)<br>
+                <br>
+                Code128 A <br>
+                TypeScript File - code128a.ts<br>
+                TypeScript Class - Code128A(data: string) <br>
+                <br>
+                Code128 B <br>
+                TypeScript File - code128b.ts<br>
+                TypeScript Class - Code128B(data: string) <br>
+                <br>
+                Code128 C <br>
+                TypeScript File - code128c.ts<br>
+                TypeScript Class - Code128C(data: string)<br>
+                <br>
+                Code128 Auto<br>
+                TypeScript File - code128auto.ts<br>
+                TypeScript Class - Code128Auto(data: string)<br>
+                <br>
+                UCCEAN <br>
+                TypeScript File - uccean.ts<br>
+                TypeScript Class - UCCEAN(data: string, gs1Compliance: boolean=true) <br>
+                By default, gs1Compliance is true. Set the value to false to support legacy systems.<br>
+                <br>
+                I2of5 <br>
+                TypeScript File - i2of5.ts<br>
+                TypeScript Class - I2of5(data: string, checkDigit: boolean=false)<br>
+                <br>
+                Industrial 2of5 <br>
+                TypeScript File - industrial2of5.ts<br>
+                TypeScript Class - Industrial2of5(data: string, checkDigit: boolean=false)<br>
+                <br>
+                ITF14 <br>
+                TypeScript File - itf14.ts<br>
+                TypeScript Class - ITF14(data: string, checkDigit: boolean=false, itfRectangle: boolean=false)<br>
+                itfRectangle specifies whether to use a rectangle to fully enclose the ITF14 barcode as specified in the specifications.<br>
+                <br>
+                Modified Plessy <br>
+                TypeScript File - modifiedplessy.ts<br>
+                TypeScript Class - ModifiedPlessy(data: string, checkDigit: boolean=false)<br>
+                <br>
+                EAN13 <br>
+                TypeScript File - ean13.ts<br>
+                TypeScript Class - EAN13(data: string, hr:boolean=false)<br>
+                If a font with Embedded Human Readable Text (e.g. UPCEAN_HRBS3) font is used, the hr option must be set to true.<br>
+                <br>
+                EAN8 <br>
+                TypeScript File - ean8.ts<br>
+                TypeScript Class - EAN8(data: string, hr:boolean=false)<br>
+                If a font with Embedded Human Readable Text (e.g. UPCEAN_HRBS3) font is used, the hr option must be set to true.<br>
+                <br>
+                UPCA <br>
+                TypeScript File - upca.ts<br>
+                TypeScript Class - UPCA(data: string, hr:boolean=false)<br>
+                If a font with Embedded Human Readable Text (e.g. UPCEAN_HRBS3) font is used, the hr option must be set to true.<br>
+                <br>
+                UPCE <br>
+                TypeScript File - upce.ts<br>
+                TypeScript Class - UPCE(data: string, hr:boolean=false)<br>
+                If a font with Embedded Human Readable Text (e.g. UPCEAN_HRBS3) font is used, the hr option must be set to true.<br>
+                <br>
+                EXT2 <br>
+                TypeScript File - ext2.ts<br>
+                TypeScript Class - EXT2(data: string)<br>
+                data is of type string. Embedded Human Readable Text (e.g. CCodeUPCEAN_HRBS3) fonts can be applied without any further options.<br>
+                <br>
+                EXT5 <br>
+                TypeScript File - ext5.ts<br>
+                TypeScript Class - EXT5(data: string)<br>
+                data is of type string. Embedded Human Readable Text (e.g. CCodeUPCEAN_HRBS3) fonts can be applied without any further options.<br>
+                <br>
+                GS1 Databar 14 <br>
+                TypeScript File - gs1databar14.ts<br>
+                TypeScript Class - GS1Databar14(data: string, linkage: boolean=false)<br>
+                If the linkage flag is set to false, then the GS1 Databar 14 stands alone, otherwise a 2D barcode component is associated with this GS1 Databar 14 barcode. <br>
+                <br>
+            </td>
+        </tr>
+    </table>
+
+</body>
+
+</html>

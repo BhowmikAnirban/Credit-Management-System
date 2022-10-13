@@ -1,0 +1,1 @@
+Please refer to the Help file or https://www.barcoderesource.com/reactjs.shtml on how to setup the barcode fonts for your React applications.

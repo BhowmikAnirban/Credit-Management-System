@@ -1,0 +1,33 @@
+StartFontMetrics 2.0
+Comment Panose 0 0 0 0 0 0 0 0 0 0
+FullName CCodeIND2of5_S3_Trial
+FontName CCodeIND2of5_S3_Trial
+FamilyName CCodeIND2of5_S3_Trial
+Weight Normal
+Notice ConnectCode 2006. All Rights Reserved.
+Version 001.001
+IsFixedPitch false
+ItalicAngle 0.00
+FontBBox 0 -200 822 1800
+Ascender 1800
+Descender -200
+XHeight 600
+CapHeight 1800
+UnderlinePosition -250
+UnderlineThickness 20
+EncodingScheme FontSpecific
+StartCharMetrics 12
+C 48 ; WX 840 ; N space ; B 0 -200 822 1800 ;
+C 49 ; WX 840 ; N _0000h ; B 0 -200 780 1800 ;
+C 50 ; WX 840 ; N _0032h ; B 0 -200 822 1800 ;
+C 51 ; WX 840 ; N _0033h ; B 0 -200 780 1800 ;
+C 52 ; WX 840 ; N _0034h ; B 0 -200 780 1800 ;
+C 53 ; WX 840 ; N _0035h ; B 0 -200 780 1800 ;
+C 54 ; WX 840 ; N _0036h ; B 0 -200 822 1800 ;
+C 55 ; WX 840 ; N _0037h ; B 0 -200 780 1800 ;
+C 56 ; WX 840 ; N _0038h ; B 0 -200 780 1800 ;
+C 57 ; WX 840 ; N _0039h ; B 0 -200 822 1800 ;
+C 123 ; WX 480 ; N _007Bh ; B 0 -200 420 1800 ;
+C 125 ; WX 420 ; N _007Dh ; B 0 -200 420 1800 ;
+EndCharMetrics
+EndFontMetrics

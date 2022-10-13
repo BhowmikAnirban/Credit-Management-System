@@ -1,0 +1,60 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
+   "http://www.w3.org/TR/html4/strict.dtd">
+
+<html lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="format-detection" content="telephone=no">
+    <title>Javascript Code39Ascii Barcode Web Fonts</title>
+    <script type="text/javascript" src="js/connectcode-javascript-code39ascii.js"></script>
+
+<STYLE TYPE="text/css" media="screen,print">
+  @font-face {
+    font-family: CCode39_S3_Trial;
+    src: url("fonts/ConnectCode39_S3_Trial.eot");
+    src: local("CCode39_S3_Trial"), url("fonts/ConnectCode39_S3_Trial.otf") format("opentype"), url("fonts/ConnectCode39_S3_Trial.woff") format("woff");
+  }
+
+  #barcode {font-weight: normal; font-style: normal; line-height:normal; font-family: 'CCode39_S3_Trial', sans-serif; font-size: 32px}
+
+</STYLE>
+  </head>
+
+  <body>
+
+Input : 12345678<br>
+Barcode : Code39Ascii<br>
+Check Digit : 1 (On)<br>
+Font Name : ConnectCode39_S3_Trial<br><br>
+
+Output : <br><br>
+<div style="width:5in">
+<center>
+<div id="barcode">12345678</div>
+<div id="barcode_text"></div>
+</center>
+</div>	
+<br>
+<i>Note : The trial font will add a few horizontal lines to the barcode.</i>
+
+
+<script type="text/javascript">
+
+  function get_object(id) {
+   var object = null;
+   if (document.layers) {
+    object = document.layers[id];
+   } else if (document.all) {
+    object = document.all[id];
+   } else if (document.getElementById) {
+    object = document.getElementById(id);
+   }
+   return object;
+  }
+
+get_object("barcode").innerHTML=ConnectCode_Encode_Code39ASCII(get_object("barcode").innerHTML,1);
+get_object("barcode_text").innerHTML=Get_HRText();
+</script>
+
+  </body>
+</html>

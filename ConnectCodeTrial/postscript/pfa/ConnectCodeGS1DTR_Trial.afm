@@ -1,0 +1,40 @@
+StartFontMetrics 2.0
+Comment Panose 0 0 0 0 0 0 0 0 0 0
+FullName CCodeGS1DTR_Trial
+FontName CCodeGS1DTR_Trial
+FamilyName CCodeGS1DTR_Trial
+Weight Normal
+Notice ConnectCode 2008. All Rights Reserved.
+Version 001.001
+IsFixedPitch false
+ItalicAngle 0.00
+FontBBox 0 -200 540 580
+Ascender 580
+Descender -200
+XHeight 580
+CapHeight 580
+UnderlinePosition -250
+UnderlineThickness 20
+EncodingScheme AdobeStandardEncoding
+StartCharMetrics 19
+C 32 ; WX 660 ; N space ; B 0 0 0 0 ;
+C 65 ; WX 60 ; N A ; B 0 -200 60 580 ;
+C 66 ; WX 120 ; N B ; B 0 -200 120 580 ;
+C 67 ; WX 180 ; N C ; B 0 -200 180 580 ;
+C 68 ; WX 240 ; N D ; B 0 -200 240 580 ;
+C 69 ; WX 300 ; N E ; B 0 -200 300 580 ;
+C 70 ; WX 360 ; N F ; B 0 -200 360 580 ;
+C 71 ; WX 420 ; N G ; B 0 -200 420 580 ;
+C 72 ; WX 480 ; N H ; B 0 -200 480 580 ;
+C 73 ; WX 540 ; N I ; B 0 -200 540 580 ;
+C 97 ; WX 60 ; N a ; B 0 0 0 0 ;
+C 98 ; WX 120 ; N b ; B 0 431 120 497 ;
+C 99 ; WX 180 ; N c ; B 0 0 0 0 ;
+C 100 ; WX 240 ; N d ; B 0 0 0 0 ;
+C 101 ; WX 300 ; N e ; B 0 0 0 0 ;
+C 102 ; WX 360 ; N f ; B 0 0 0 0 ;
+C 103 ; WX 420 ; N g ; B 0 0 0 0 ;
+C 104 ; WX 480 ; N h ; B 0 0 0 0 ;
+C 105 ; WX 540 ; N i ; B 0 0 0 0 ;
+EndCharMetrics
+EndFontMetrics

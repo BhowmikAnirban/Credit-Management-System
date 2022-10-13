@@ -1,0 +1,1915 @@
+﻿<!DOCTYPE html>
+<html lang="en-US">
+
+<head>
+</head>
+<body>
+<h4>About WebAssembly</h4>
+WebAssembly is a web standard, developed by the World Wide Web Consortium (W3C), that defines an assembly-like binary code format (wasm) for execution in web pages. The executing code runs nearly as fast as native machine code and is meant to speed up performance of web applications significantly.
+<center>
+<br /><br /> 
+<img src=web-assembly.png />
+<br /><br />
+</center>
+As WebAssembly is a low level binary bytecode, it supports compilation from different programming languages including languages that have been around for many years such as C and C++. This enables many existing and commonly used libraries or applications to be compiled into WebAssembly easily. Besides being a compilation target for the different programming languages, WebAssembly also offers an alternative to web development in languages other than the JavaScript.
+ <br /><br />
+Since 2007, WebAssembly has been natively supported by all major browsers including Firefox, Chrome, Safari and Edge.
+ <br /><br />
+<h4>ConnectCode WebAssembly Barcode (wasmBarcode)</h4>
+ConnectCode WebAssembly Barcode is a package that generates industry compliant barcodes on web pages or applications using WebAssembly (wasm) modules and Web Fonts (WOFF - Web Open Font Format). 
+ <br /><br />
+The wasm barcode module encodes the input data (validates input data, adds check characters, adds start/stop characters) and generates output characters to be displayed as barcodes with the Web Fonts. 
+ <br /><br />
+<h5>Performance</h5>
+
+Barcode generation using WebAssembly is fast and runs at near native performance. This is due to a wasm module being compiled and optimized ahead of time instead of being interpreted real time. This improved performance is especially important in order to achieve high-performance web pages, applications or reports that need to generate multiple barcodes in one go. 
+ <br /><br />
+Furthermore, ConnectCode WebAssembly Barcodes uses WOFF fonts to display the barcodes. Once a font is downloaded by the browser, it is cached and can be applied to display different barcodes, eliminating redundant graphical rendering and rastering. This further speeds up the performance and improves the response time to display barcodes. 
+ <br /><br />
+
+<h4>Using Fonts to Display and Print barcodes</h4>
+
+Using fonts to display and print barcodes is well known and widely adopted in the auto-id industry.  As a font raster to the output device and are not limited to DPI (Dots per Inch) of the computer screen, a barcode generated using fonts is of the highest quality and can meet the strictest requirements required by the industry. 
+ <br /><br />
+<strong>Supported Browsers</strong>
+ <br /><br />
+WebAssembly is a new standard and is supported by modern browsers. ConnectCode WebAssembly Barcode (wasmBarcode) has been tested and certified to run on the following browsers. 
+<br /><br />
+<ul class="list list1">
+<li>Microsoft Edge 42.17134.1.0 (or above)</li>
+<li>Google Chrome 65.0.3325.181 (or above)</li>
+<li>Android Chromium 64.0.3282.137 (or above)</li>
+<li>macOS Safari 11.1 (or above)</li>
+<li>iOS Safari 11.3 (or above)</li>
+<li>Opera 54.0 (or above)</li>
+<li>Mozilla Firefox Quantum 59.0.2 (or above)</li>
+</ul>
+
+
+If browser support is a key concern for your web project or application, please check out our widely used JavaScript (or TypeScript) Barcode package. The JavaScript or TypeScript Barcode packages support many more browsers including older browsers such as Internet Explorer. We currently recommend the use of WebAssembly Barcodes on projects or applications that requires optimal performance on modern browsers.
+<br /><br />
+<h4>Tutorial on generating a Code 128 Auto barcode using WebAssembly</h4>
+In this tutorial we are going to use a WebAssembly Barcode module and WOFF (Web Open Font Format) Barcode Fonts included in the ConnectCode Barcode Fonts and Software package to generate a Code 128 Auto barcode. The steps involved creating a HTML5 page from scratch and then including the necessary JavaScript and wasm module files. A Javascript file is still required to load the wasm module and bridge the necessary API (Application Programming Interface) call from HTML to the wasm module. 
+<br /><br />
+Note
+<br />The "Resource" subfolder of ConnectCode Barcode Fonts and Software contains a “WebAssembly” subfolder that includes samples for generating all the different types of linear 1D barcodes.
+<br /><br />For our registered users, if you do not see the "WebAssembly" folder, please contact us for your free upgrade under your Software Maintenance License.
+<br /><br />
+<strong>Prerequisites</strong><br /><br />
+<ul class="list list1">
+<li>ConnectCode Barcode Fonts and Software is installed.</li>
+<li>A browser that supports WebAssembly and the File URI scheme. A browser that supports the File URI scheme is not required if you are using a web server to test your web pages.</li>
+</ul>
+
+
+1. Launch "Windows Explorer" and navigate to the folder where you have installed ConnectCode Barcode Fonts and Software. The default folder used for installation is "C:\Program Files (x86)\ConnectCode" (or "C:\Program Files (x86)\ConnectCodeTrial" if you are using the trial version). 
+<br /><br />
+2. Using "Windows Explorer", navigate to the "Resource\WebAssembly\Code128Auto" subfolder. If you want to generate other types of barcodes e.g. EAN13 barcode, simply navigate to the "Resource\WebAssembly\EAN13" folder. 
+<br /><br />
+3. The "Code128Auto" folder contains several files. We are going to use the following:
+<br /><br />
+<ul class="list list1">
+<li>fonts folder</li>
+<li>code128auto.js file</li>
+<li>code128auto.wasm file</li>
+</ul>
+
+
+<img src=wasmbarcode.png />
+<br /><br />
+The "code128auto.wasm" file is the WebAssembly module for the Code 128 Auto barcode. The "code128auto.js" file is the JavaScript file that you include in your HTML page to load and instantiate the wasm module. The JavaScript file also provides the bridge to create a Class object to invoke the wasm module.
+<br /><br />
+The “fonts” folder contains the WOFF barcode web fonts for the Code 128 Auto barcode. It contains web fonts with the ".woff" suffix. If you are a user of our Javascript (or Typescript module) package, you may have noticed that the ".eot" and ".otf" font files are not included in this folder. These font files which are included for browsers backward compatibility are not required as all the browsers that support WebAssembly also support WOFF fonts.
+<br /><br />
+Create a NEW "code128auto" folder on your desktop and copy the above folder and files into the "code128auto" folder. Please note we do not copy the "index.html" file as we are going to create one from scratch.
+<br /><br />
+4. Launch "Microsoft Notepad" and enter the following:
+    <br /><br />
+    <table style="border:1px solid gray">
+        <tr>
+            <td>
+<pre>
+
+&lt;!DOCTYPE html> 
+&lt;html lang="en-us">
+  &lt;head>
+    &lt;script type="text/javascript" src="code128auto.js"></script>		
+&lt;/head>
+&lt;body>
+
+&lt;div id="barcode">12345678&lt;/div>
+&lt;div id="barcode_text">&lt;/div>
+
+  &lt;/body>
+&lt;/html>
+&lt;/pre>
+            </td>
+        </tr>
+    </table>
+<br /><br />
+This is a HTML5 compliant web page which includes the "code128auto.js" file. Remember we have previously mentioned that the “code128auto.js” helps load and instantiate the WebAssembly module. We have also created two "div" elements. The "barcode" element supplies the input data and once the WebAssembly module encodes the input data, the output will be placed into this element. 
+<br /><br />
+The "barcode_text" element is a place holder for the Human Readable Text of the barcode, the text characters that we commonly see below a barcode. We recommend using the returned value provided by the wasm module as it displays the value encoded into the barcode. In some circumstances, mandatory check characters will be automatically added into your input data and the returned Human Readable Text value will reflect this. Some barcodes such as GS1 128 also have requirements on how to display the Human Readable Text which is strictly adhered to by the returned value of the wasm module.
+<br /><br />
+5. Click on "File->Save as" in "Notepad". Save the file as "index.html" into the "code128auto" folder on your Windows Desktop as shown below.
+  <br /><br />
+<img src=webassemblybarcode.png />
+<br /><br /> 
+<img src=wasm.png />
+<br /><br />
+
+Note
+<br />
+Remember to save the file with a ".html" suffix.
+<br /><br />
+6. Next we are going to enter the programming codes to generate the barcode. Enter the following Javascript into "index.html". 
+<br /><br />
+    <table style="border:1px solid gray">
+        <tr>
+            <td>
+<pre>
+
+	&lt;script  type="text/javascript" >
+	Module['onRuntimeInitialized'] = onRuntimeInitialized;
+	function onRuntimeInitialized() {
+
+		var barcodeobject = document.getElementById("barcode")
+		var barcodetextobject = document.getElementById("barcode_text")
+		var instance = new Module.Code128Auto(barcodeobject.innerHTML);		
+		barcodeobject.innerHTML=instance.encode();
+		barcodetextobject.innerHTML=instance.humanReadableText;
+		instance.delete();
+	}
+	&lt;/script>
+
+</pre>
+            </td>
+        </tr>
+    </table>
+<br /><br />
+
+You can place the contents as shown above below the following line.
+<br /><br />
+
+    <table style="border:1px solid gray">
+        <tr>
+            <td>
+<pre>
+
+    &lt;script type="text/javascript" src="code128auto.js">&lt;/script>		
+
+</pre>
+            </td>
+        </tr>
+    </table>
+<br /><br />
+
+What the script does is to define a callback function for "onRuntimeInitialized" which will be called only when the WebAssembly Barcode module has been loaded (by “code128auto.js”) completely. If your network is slow in loading the wasm module, you can be assured that the codes in the script will not be executed on an incomplete module. 
+<br /><br />
+The first two lines of the script gets the "barcode" and "barcode_text" DOM (Document Object Model) objects from the HTML page. Remember that the "barcode" div element contains our input data.
+<br /><br />
+The next four lines of Javascript codes call the wasm module and are explained below.
+<br /><br />
+    <table style="border:1px solid gray">
+        <tr>
+            <td>
+
+<pre>
+
+var instance = new Module.Code128Auto(barcodeobject.innerHTML);
+//Create an instance of the Code128Auto object from the wasm module and pass in 
+//barcodeobject.innerHTML as the input data (“12345678”).
+//Some barcodes such as Code39 allows you to specify whether the check digit is turned on. 		
+//You can specify 1 to turn it on or 0 to turn it off.
+//var instance = new Module.Code39(barcodeobject.innerHTML,1); 
+//The check digit is mandatory in the Code 128 barcode.
+
+barcodeobject.innerHTML=instance.encode();
+//The instance.encode method validates and removes unsupported characters, 
+//generates the check digit and adds the necessary start and stop characters.
+//The encoded output is placed back into barcodeobject.innterHTML.
+
+barcodetextobject.innerHTML=instance.humanReadableText;
+//When the encode function is called, the Human Readable Text 
+//(the characters that appears below a barcode), is also generated. 
+//You can retrieve the Human Readable Text output through the property above.
+
+instance.delete();
+//Removes the barcode object instance.
+//You can also call the following functions and continue to use the instance to 
+//generate barcodes with other input data before removing it.
+//instance.setInputData("1234567890");
+//instance.setCheckDigit(1); 
+//setCheckDigit function is only available for specific barcodes. 
+
+</pre>
+            </td>
+        </tr>
+    </table>
+
+ <br /><br />
+7. Save the "index.html" file. Upload the "code128auto" folder to your web server to test out the page with the different browsers. You can also use 
+the "emrun" command (from Emscripten) or other tools to view the HTML page via locally launched web server. 
+<br /><br />
+You should see the following output:
+<br /><br />
+    <table style="border:1px solid gray">
+        <tr>
+            <td>
+<pre>
+
+í,BXnOî
+12345678			
+
+</pre>
+            </td>
+        </tr>
+    </table>
+<br /><br />
+
+If you see other output, you are either using a browser that does not support wasm modules or the “file://” protocol.
+<br /><br />
+The first line contains the encoded output of the barcode. The second line contains the Human Readable Text of the barcode.
+<br /><br />
+8. Our final step is to apply the WOFF barcode font on the encoded output. Enter the following into "Notepad".
+<br /><br />
+    <table style="border:1px solid gray">
+        <tr>
+            <td>
+<pre>
+
+&lt;style type="text/css" media="screen,print">
+  @font-face {
+    font-family: CCode128_S3_Trial;
+    src: url("fonts/ConnectCode128_S3_Trial.woff") format("woff");
+  }
+  #barcode {font-weight: normal; font-style: normal; line-height:normal; 
+	font-family: 'CCode128_S3_Trial', sans-serif; font-size: 32px}		
+&lt;/style>
+
+</pre>
+            </td>
+        </tr>
+    </table>
+<br /><br />
+You can place the contents above just below the following line and before the script entered in step 6.
+<br /><br />
+    <table style="border:1px solid gray">
+        <tr>
+            <td>
+<pre>
+
+    &lt;script type="text/javascript" src="code128auto.js"></script>		
+
+</pre>
+            </td>
+        </tr>
+    </table>
+<br /><br />
+
+The "style" element specifies a "@font-face" tag to use the "ConnectCode128_S3_Trial.woff" web font. The font is then applied to the "barcode" object.
+<br /><br />
+9. Launch the "index.html" file in your browser again. You should see something similar to the screenshot below.
+<br /><br />
+ 
+This is a Code 128 Auto generated with a wasm barcode module and displayed with a WOFF Barcode Font. If you are using the trial version, you may see horizontal lines markings in the barcode. Please be assured that the horizontal lines do not affect the scanning of the barcode for testing purposes. Also, the fonts in the registered version do not contain the horizontal lines. 
+<br /><br />
+There are other things that may be of concern to you, for example, the centering of the Human Readable Text. You can now go back to open the "index.html" in the "C:\Program Files (x86)\ConnectCode\WebAssembly\Code128Auto" folder (or "C:\Program Files (x86)\ConnectCodeTrial\WebAssembly\Code128Auto").
+<br /><br />
+This HTML file illustrates how to center the Human Readable Text and define the barcode in a fixed width "div" element.
+<br /><br />
+You may have noticed that the HTML includes an additional "connectcode.js" file. This file implements the "onRuntimeInitialized" function that you have implemented in step 6 with some enhancements. The changes are highlighted below.
+<br /><br />
+The "connectcode.js" file looks like the following:
+<br /><br />
+    <table style="border:1px solid gray">
+        <tr>
+            <td>
+<pre>
+
+var elements=document.getElementsByClassName('barcode');
+var elementsHR=document.getElementsByClassName('barcode_text');
+var instance = new Module.Code128Auto();
+
+for (x=0;x<elements.length;x++)
+{
+	instance.inputData = elements[x].innerHTML;
+	elements[x].innerHTML=instance.encode();
+	elementsHR[x].innerHTML=instance.humanReadableText;				
+}
+
+instance.delete();
+
+</pre>
+            </td>
+        </tr>
+    </table>
+<br /><br />
+
+The code above loops through all "div" elements with the "class=barcode" attribute and then use the wasm module to generate the encoded barcode output for each of them. 
+<br /><br />
+The following shows how the HTML file looks like with multiple “barcode” div elements:
+<br /><br />
+    <table style="border:1px solid gray">
+        <tr>
+            <td>
+<pre>
+.
+.
+.
+&lt;head>
+&lt;style type="text/css" media="screen,print">
+  @font-face {
+    font-family: CCode128_S3_Trial;
+    src: url("fonts/ConnectCode128_S3_Trial.woff") format("woff");
+  }
+
+  .barcode {font-weight: normal; font-style: normal; line-height:normal; 
+	font-family: 'CCode128_S3_Trial', sans-serif; font-size: 32px}		
+
+&lt;/style>
+.
+.
+.
+
+&lt;/head>
+&lt;body>
+
+&lt;div style="width:5in">
+&lt;center>
+&lt;div class="barcode">1234567</div>
+&lt;div class="barcode_text"></div>
+&lt;/center>
+&lt;/div>
+
+&lt;br />&lt;br />
+
+&lt;div style="width:5in">
+&lt;center>
+&lt;div class="barcode">12345678</div>
+&lt;div class="barcode_text"></div>
+&lt;/center>
+&lt;/div>
+&lt;br />&lt;br />
+&lt;/body>
+.
+.
+.
+
+</pre>
+            </td>
+        </tr>
+    </table>
+<br /><br />
+
+The “style” element defines a font with a “font-size” of 32. You can easily change the size of the barcode by changing the “font-size”. Most of barcode fonts provided in ConnectCode Barcode Fonts and Software package also come with different font heights. With this 2 parameters and configuration, you will be able to generate barcodes that meet all the different requirements required by the auto-id industry.  
+
+
+<br /><br />
+<h4>WebAssembly Barcodes Application Programming Interface</h4>
+<br /><br />
+<h5>Component Library Files</h5>
+<ul class="list list1">
+<li>Codabar - codabar.js and codabar.wasm</li>
+<li>Code39 - code39.js and code39.wasm</li>
+<li>Code39 Ascii - code39ascii.js and code39.wasm</li>
+<li>Code93 - code93.js and code93.wasm</li>
+<li>Code128 A - code128a.js and code128a.wasm</li>
+<li>Code128 B - code128b.js and code128b.wasm</li>
+<li>Code128 C - code128c.js and code128c.wasm</li>
+<li>Code128 Auto - code128auto.js and code128auto.wasm</li>
+<li>UCCEAN - uccean.js and uccean.wasm</li>
+<li>I2of5 - i2of5.js and i2of5.wasm</li>
+<li>Industrial 2 of 5 - industrial2of5.js and industrial2of5.wasm</li>
+<li>ITF14 - itf14.js and itf14.wasm</li>
+<li>Modified Plessy - modifiedplessy.js and modifiedplessy.wasm</li>
+<li>EAN13 - ean13.js and ean13.wasm</li>
+<li>EAN8 - ean8.js and ean8.wasm</li>
+<li>UPCA - upca.js and upca.wasm</li>
+<li>UPCE - upce.js and upce.wasm</li>
+<li>EXT2 - ext2.js and ext2.wasm</li>
+<li>EXT5 - ext5.js and ext5.wasm</li>
+<li>GS1 Databar 14 - gs1databar14.js and gs1databar14.wasm</li>
+<li>wasmBarcode - wasmBarcode.js and wasmBarcode.wasm. This is a combined library that supports the creation of all the barcodes listed above.</li>
+</ul>
+
+<strong>Note - The wasmBarcode combined library is only available in ConnectCode Barcode Fonts Pack.</strong>
+<br /><br />
+<h5>Barcode API</h5>
+<strong>Codabar</strong>
+<br /><br />
+Files
+<br /><br />
+<ul class="list list1">
+<li>codabar.js</li>
+<li>codabar.wasm</li>
+</ul>
+Fonts 
+<br /><br />
+<ul class="list list1">
+
+<li>ConnectCodeCodabar_S1.woff</li>
+<li>ConnectCodeCodabar_S2.woff</li>
+<li>ConnectCodeCodabar_S3.woff</li>
+<li>ConnectCodeCodabar_S4.woff</li>
+<li>ConnectCodeCodabar_S5.woff</li>
+<li>ConnectCodeCodabar_S6.woff</li>
+<li>ConnectCodeCodabar_S7.woff</li>
+</ul>
+
+Usage<br /><br />
+JavaScript (calling wasm module)
+<br /><br />
+    <table style="border:1px solid gray">
+        <tr>
+            <td>
+<pre>
+
+var instance = new Module.Codabar("12345678",1);
+//First parameter is the input data and second parameter is whether to generate the check digit		
+//instance.setInputData("12345678");
+//instance.setCheckDigit(1);
+//var inputData = instance.getInputData();
+//var checkDigit = instance.getCheckDigit();
+barcodeobject.innerHTML=instance.encode();
+barcodetextobject.innerHTML=instance.humanReadableText;
+instance.delete();
+
+</pre>
+            </td>
+        </tr>
+    </table>
+<br /><br />
+
+CSS
+<br /><br />
+    <table style="border:1px solid gray">
+        <tr>
+            <td>
+<pre>
+
+&lt;style type="text/css" media="screen,print">
+  @font-face {
+    font-family: CCodeCodabar_S3;
+    src: url("fonts/ConnectCodeCodabar_S3.woff") format("woff");
+  }
+  #barcode {font-weight: normal; font-style: normal; line-height:normal; 
+	font-family: 'CCodeCodabar_S3', sans-serif; font-size: 32px}		
+&lt;/style>
+
+</pre>
+            </td>
+        </tr>
+    </table>
+<br /><br />
+<strong>Code39ASCII (Extended Code 39)</strong>
+<br /><br />
+Files
+<br /><br />
+<ul class="list list1">
+<li>code39ascii.js</li>
+<li>code39ascii.wasm</li>
+</ul>
+Fonts (Using the same fonts as Code39)
+<br /><br />
+<ul class="list list1">
+<li>ConnectCode39_S1.woff</li>
+<li>ConnectCode39_S2.woff</li>
+<li>ConnectCode39_S3.woff</li>
+<li>ConnectCode39_S4.woff</li>
+<li>ConnectCode39_S5.woff</li>
+<li>ConnectCode39_S6.woff</li>
+<li>ConnectCode39_S7.woff</li>
+<li>ConnectCode39_HS3.woff (Embedded Human Readable Text)</li>
+</ul>
+Usage
+<br /><br />
+JavaScript (invoking wasm module)
+<br /><br />
+    <table style="border:1px solid gray">
+        <tr>
+            <td>
+<pre>
+
+var instance = new Module.Code39ASCII("12345678",1);
+//First parameter is the input data and second parameter is whether to generate the check digit
+//instance.setInputData("12345678");
+//instance.setCheckDigit(1);
+//var inputData = instance.getInputData();
+//var checkDigit = instance.getCheckDigit();
+barcodeobject.innerHTML=instance.encode();
+barcodetextobject.innerHTML=instance.humanReadableText;
+instance.delete();
+
+</pre>
+            </td>
+        </tr>
+    </table>
+
+<br /><br />
+CSS
+<br /><br />
+    <table style="border:1px solid gray">
+        <tr>
+            <td>
+<pre>
+
+&lt;style type="text/css" media="screen,print">
+  @font-face {
+    font-family: CCode39_S3;
+    src: url("fonts/ConnectCode39_S3.woff") format("woff");
+  }
+  #barcode {font-weight: normal; font-style: normal; line-height:normal; font-family: 'CCode39_S3', sans-serif; font-size: 32px}
+&lt;/style>
+
+</pre>
+            </td>
+        </tr>
+    </table>
+
+
+<br /><br />
+<strong>Code93</strong>
+<br /><br />
+Files
+<br /><br />
+<ul class="list list1">
+<li>code93.js</li>
+<li>code93.wasm</li>
+</ul>
+Fonts 
+<br /><br />
+<ul class="list list1">
+<li>ConnectCodeCode93_S1.woff</li>
+<li>ConnectCodeCode93_S2.woff</li>
+<li>ConnectCodeCode93_S3.woff</li>
+<li>ConnectCodeCode93_S4.woff</li>
+<li>ConnectCodeCode93_S5.woff</li>
+<li>ConnectCodeCode93_S6.woff</li>
+<li>ConnectCodeCode93_S7.woff</li>
+</ul>
+Usage
+<br /><br />
+JavaScript (invoking wasm module)
+<br /><br />
+    <table style="border:1px solid gray">
+        <tr>
+            <td>
+<pre>
+
+var instance = new Module.Code93("12345678",1);
+//First parameter is the input data and second parameter is whether to generate the check digit
+//instance.setInputData("12345678");
+//instance.setCheckDigit(1);
+//var inputData = instance.getInputData();
+//var checkDigit = instance.getCheckDigit();
+barcodeobject.innerHTML=instance.encode();
+barcodetextobject.innerHTML=instance.humanReadableText;
+instance.delete();
+
+</pre>
+            </td>
+        </tr>
+    </table>
+<br /><br />
+CSS
+<br /><br />
+    <table style="border:1px solid gray">
+        <tr>
+            <td>
+<pre>
+
+&lt;style type="text/css" media="screen,print">
+  @font-face {
+    font-family: CCodeCode93_S3;
+    src: url("fonts/ConnectCodeCode93_S3.woff") format("woff");
+  }
+  #barcode {font-weight: normal; font-style: normal; line-height:normal; font-family: 'CCodeCode93_S3', sans-serif; font-size: 32px}
+&lt;/style>
+
+</pre>
+            </td>
+        </tr>
+    </table>
+<br /><br />
+
+<strong>Code128A</strong>
+<br /><br />
+Files
+<br /><br />
+<ul class="list list1">
+<li>code128a.js</li>
+<li>code128a.wasm</li>
+</ul>
+Fonts 
+<br /><br />
+<ul class="list list1">
+<li>ConnectCodeCode128_S1.woff</li>
+<li>ConnectCodeCode128 _S2.woff</li>
+<li>ConnectCodeCode128_S3.woff</li>
+<li>ConnectCodeCode128_S4.woff</li>
+<li>ConnectCodeCode128_S5.woff</li>
+<li>ConnectCodeCode128_S6.woff</li>
+<li>ConnectCodeCode128_S7.woff</li>
+</ul>
+Usage
+<br /><br />
+JavaScript (invoking wasm module)
+<br /><br />
+    <table style="border:1px solid gray">
+        <tr>
+            <td>
+<pre>
+
+var instance = new Module.Code128A("12345678");
+//instance.setInputData("12345678");
+//var inputData = instance.getInputData();
+barcodeobject.innerHTML=instance.encode();
+barcodetextobject.innerHTML=instance.humanReadableText;		
+instance.delete();
+
+</pre>
+            </td>
+        </tr>
+    </table>
+<br /><br />
+CSS
+<br /><br />
+    <table style="border:1px solid gray">
+        <tr>
+            <td>
+<pre>
+
+&lt;style type="text/css" media="screen,print">
+  @font-face {
+    font-family: CCodeCode128_S3;
+    src: url("fonts/ConnectCodeCode128_S3.woff") format("woff");
+  }
+  #barcode {font-weight: normal; font-style: normal; line-height:normal; font-family: 'CCodeCode128_S3', sans-serif; font-size: 32px}
+&lt;/style>
+
+</pre>
+            </td>
+        </tr>
+    </table>
+<br /><br />
+
+
+<strong>Code128B</strong>
+<br /><br />
+Files
+<br /><br />
+<ul class="list list1">
+<li>code128b.js</li>
+<li>code128b.wasm</li>
+</ul>
+Fonts 
+<br /><br />
+<ul class="list list1">
+<li>ConnectCodeCode128_S1.woff</li>
+<li>ConnectCodeCode128_S2.woff</li>
+<li>ConnectCodeCode128_S3.woff</li>
+<li>ConnectCodeCode128_S4.woff</li>
+<li>ConnectCodeCode128_S5.woff</li>
+<li>ConnectCodeCode128_S6.woff</li>
+<li>ConnectCodeCode128_S7.woff </li>
+<li>ConnectCodeCode128B _HS3.woff (Embedded Human Readable Text)</li>
+</ul>
+Usage
+<br /><br />
+JavaScript (invoking wasm module)
+<br /><br />
+    <table style="border:1px solid gray">
+        <tr>
+            <td>
+<pre>
+
+var instance = new Module.Codee128B("12345678");
+//instance.setInputData("12345678");
+//var inputData = instance.getInputData();
+barcodeobject.innerHTML=instance.encode();
+barcodetextobject.innerHTML=instance.humanReadableText;		
+instance.delete();
+
+</pre>
+            </td>
+        </tr>
+    </table>
+<br /><br />
+
+CSS
+<br /><br />
+    <table style="border:1px solid gray">
+        <tr>
+            <td>
+<pre>
+
+&lt;style type="text/css" media="screen,print">
+  @font-face {
+    font-family: CCodeCode128_S3;
+    src: url("fonts/ConnectCodeCode128_S3.woff") format("woff");
+  }
+  #barcode {font-weight: normal; font-style: normal; line-height:normal; font-family: 'CCodeCode128_S3', sans-serif; font-size: 32px}
+&lt;/style>
+
+</pre>
+            </td>
+        </tr>
+    </table>
+<br /><br />
+
+<strong>Code128C</strong>
+<br /><br />
+Files
+<br /><br />
+<ul class="list list1">
+<li>code128c.js</li>
+<li>code128c.wasm</li>
+</ul>
+Fonts 
+<br /><br />
+<ul class="list list1">
+<li>ConnectCodeCode128_S1.woff</li>
+<li>ConnectCodeCode128 _S2.woff</li>
+<li>ConnectCodeCode128_S3.woff</li>
+<li>ConnectCodeCode128 _S4.woff</li>
+<li>ConnectCodeCode128_S5.woff</li>
+<li>ConnectCodeCode128 _S6.woff</li>
+<li>ConnectCodeCode128 _S7.woff </li>
+</ul>
+Usage
+<br /><br />
+JavaScript (invoking wasm module)
+<br /><br />
+    <table style="border:1px solid gray">
+        <tr>
+            <td>
+<pre>
+
+var instance = new Module.Code128C("12345678");
+//instance.setInputData("12345678");
+//var inputData = instance.getInputData();
+barcodeobject.innerHTML=instance.encode();
+barcodetextobject.innerHTML=instance.humanReadableText;		
+instance.delete();
+
+</pre>
+            </td>
+        </tr>
+    </table>
+
+CSS
+<br /><br />
+    <table style="border:1px solid gray">
+        <tr>
+            <td>
+<pre>
+
+&lt;style type="text/css" media="screen,print">
+  @font-face {
+    font-family: CCodeCode128_S3;
+    src: url("fonts/ConnectCodeCode128_S3.woff") format("woff");
+  }
+  #barcode {font-weight: normal; font-style: normal; line-height:normal; font-family: 'CCodeCode128_S3', sans-serif; font-size: 32px}
+&lt;/style>
+
+</pre>
+            </td>
+        </tr>
+    </table>
+<br /><br />
+
+
+<strong>Code128Auto</strong>
+<br /><br />
+Files
+<br /><br />
+<ul class="list list1">
+<li>code128auto.js</li>
+<li>code128auto.wasm</li>
+</ul>
+Fonts 
+<br /><br />
+<ul class="list list1">
+<li>ConnectCodeCode128_S1.woff</li>
+<li>ConnectCodeCode128 _S2.woff</li>
+<li>ConnectCodeCode128 _S3.woff</li>
+<li>ConnectCodeCode128_S4.woff</li>
+<li>ConnectCodeCode128_S5.woff</li>
+<li>ConnectCodeCode128 _S6.woff</li>
+<li>ConnectCodeCode128_S7.woff </li>
+</ul>
+Usage
+<br /><br />
+JavaScript (invoking wasm module)
+<br /><br />
+    <table style="border:1px solid gray">
+        <tr>
+            <td>
+<pre>
+
+var instance = new Module.Code128Auto("12345678");
+//instance.setInputData("12345678");
+//var inputData = instance.getInputData();
+barcodeobject.innerHTML=instance.encode();
+barcodetextobject.innerHTML=instance.humanReadableText;		
+instance.delete();
+</pre>
+            </td>
+        </tr>
+    </table>
+<br /><br />
+
+CSS
+<br /><br />
+
+    <table style="border:1px solid gray">
+        <tr>
+            <td>
+<pre>
+
+&lt;style type="text/css" media="screen,print">
+  @font-face {
+    font-family: CCodeCode128_S3;
+    src: url("fonts/ConnectCodeCode128_S3.woff") format("woff");
+  }
+  #barcode {font-weight: normal; font-style: normal; line-height:normal; font-family: 'CCodeCode128_S3', sans-serif; font-size: 32px}
+&lt;/style>
+
+</pre>
+            </td>
+        </tr>
+    </table>
+
+<br /><br />
+
+
+<strong>EAN8</strong>
+<br /><br />
+Files
+<br /><br />
+<ul class="list list1">
+<li>ean8.js</li>
+<li>ean8.wasm</li>
+</ul>
+Fonts 
+<br /><br />
+Standard Fonts
+<br /><br />
+<ul class="list list1">
+<li>ConnectCodeUPCEAN_S1.woff</li>
+<li>ConnectCodeUPCEAN_S2.woff</li>
+<li>ConnectCodeUPCEAN_S3.woff</li>
+<li>ConnectCodeUPCEAN_S4.woff</li>
+<li>ConnectCodeUPCEAN_S5.woff</li>
+<li>ConnectCodeUPCEAN_S6.woff</li>
+<li>ConnectCodeUPCEAN_S7.woff </li>
+</ul>
+Embedded Human Readable Text at the bottom of the barcode
+<br /><br />
+<ul class="list list1">
+<li>ConnectCodeUPCEAN_HRBS1.woff</li>
+<li>ConnectCodeUPCEAN_HRBS2.woff</li>
+<li>ConnectCodeUPCEAN_HRBS3.woff</li>
+<li>ConnectCodeUPCEAN_HRBS4.woff</li>
+<li>ConnectCodeUPCEAN_HRBS5.woff</li>
+<li>ConnectCodeUPCEAN_HRBS6.woff</li>
+<li>ConnectCodeUPCEAN_HRBS7.woff </li>
+</ul>
+Embedded Human Readable Text on top of the barcode
+<br /><br />
+<ul class="list list1">
+<li>ConnectCodeUPCEAN_HRBT1.woff</li>
+<li>ConnectCodeUPCEAN_HRTS2.woff</li>
+<li>ConnectCodeUPCEAN_HRTS3.woff</li>
+</ul>
+Usage
+<br /><br />
+JavaScript (invoking wasm module)
+<br /><br />
+    <table style="border:1px solid gray">
+        <tr>
+            <td>
+<pre>
+
+var instance = new Module.EAN8("12345678",1); 
+//1-Extended Style EAN. Use with fonts with Embedded Human Readable Text. 		
+//0-Non Extended Style EAN. Use with standard fonts.
+//instance.setInputData("12345678");
+//var inputData = instance.getInputData();
+//instance.setExtendedStyle(1);
+//var extendedStyle=instance.getExtendedStyle();
+barcodeobject.innerHTML=instance.encode();
+barcodetextobject.innerHTML=instance.humanReadableText;
+instance.delete();
+</pre>
+            </td>
+        </tr>
+    </table>
+
+
+<br /><br />
+CSS
+<br /><br />
+    <table style="border:1px solid gray">
+        <tr>
+            <td>
+<pre>
+
+&lt;style type="text/css" media="screen,print">
+  @font-face {
+    font-family: CCodeCodeUPCEAN_S3;
+    src: url("fonts/ConnectCodeCodeUPCEAN_S3.woff") format("woff");
+  }
+  #barcode {font-weight: normal; font-style: normal; line-height:normal; font-family: 'CCodeCodeUPCEAN_S3', sans-serif; font-size: 32px}
+&lt;/style>
+
+</pre>
+            </td>
+        </tr>
+    </table>
+
+
+<br /><br />
+CSS – Extended Style (Fonts with Embedded Human Readable Text)
+<br /><br />
+    <table style="border:1px solid gray">
+        <tr>
+            <td>
+<pre>
+
+&lt;style type="text/css" media="screen,print">
+  @font-face {
+    font-family: CCodeCodeUPCEAN_HRBS3;
+    src: url("fonts/ConnectCodeCodeUPCEAN_HRBS3.woff") format("woff");
+  }
+  #barcode {font-weight: normal; font-style: normal; line-height:normal; font-family: 'CCodeCodeUPCEAN_HRBS3', sans-serif; font-size: 32px}
+&lt;/style>
+
+</pre>
+            </td>
+        </tr>
+    </table>
+
+
+<br /><br />
+<strong>EAN13</strong>
+<br /><br />
+Files
+<br /><br />
+<ul class="list list1">
+<li>ean13.js</li>
+<li>ean13.wasm</li>
+</ul>
+Fonts
+<br /><br />
+Standard Fonts 
+<br /><br />
+<ul class="list list1">
+<li>ConnectCodeUPCEAN_S1.woff</li>
+<li>ConnectCodeUPCEAN_S2.woff</li>
+<li>ConnectCodeUPCEAN_S3.woff</li>
+<li>ConnectCodeUPCEAN_S4.woff</li>
+<li>ConnectCodeUPCEAN_S5.woff</li>
+<li>ConnectCodeUPCEAN_S6.woff</li>
+<li>ConnectCodeUPCEAN_S7.woff </li>
+</ul>
+Embedded Human Readable Text at the bottom of the barcode
+<br /><br />
+<ul class="list list1">
+<li>ConnectCodeUPCEAN_HRBS1.woff</li>
+<li>ConnectCodeUPCEAN_HRBS2.woff</li>
+<li>ConnectCodeUPCEAN_HRBS3.woff</li>
+<li>ConnectCodeUPCEAN_HRBS4.woff</li>
+<li>ConnectCodeUPCEAN_HRBS5.woff</li>
+<li>ConnectCodeUPCEAN_HRBS6.woff</li>
+<li>ConnectCodeUPCEAN_HRBS7.woff </li>
+</ul>
+Embedded Human Readable Text on top of the barcode
+<br /><br />
+<ul class="list list1">
+<li>ConnectCodeUPCEAN_HRBT1.woff</li>
+<li>ConnectCodeUPCEAN_HRTS2.woff</li>
+<li>ConnectCodeUPCEAN_HRTS3.woff</li>
+</ul>
+Usage
+<br /><br />
+JavaScript (invoking wasm module)
+<br /><br />
+    <table style="border:1px solid gray">
+        <tr>
+            <td>
+<pre>
+
+var instance = new Module.EAN13("12345678",1); 
+//1-Extended Style EAN. Use with fonts with Embedded Human Readable Text. 		
+//0-Non Extended Style EAN. Use with standard fonts.
+//instance.setInputData("12345678");
+//var inputData = instance.getInputData();
+//instance.setExtendedStyle(1);
+//var extendedStyle=instance.getExtendedStyle();
+barcodeobject.innerHTML=instance.encode();
+barcodetextobject.innerHTML=instance.humanReadableText;
+instance.delete();
+
+</pre>
+            </td>
+        </tr>
+    </table>
+
+<br /><br />
+CSS
+<br /><br />
+    <table style="border:1px solid gray">
+        <tr>
+            <td>
+<pre>
+
+&lt;style type="text/css" media="screen,print">
+  @font-face {
+    font-family: CCodeCodeUPCEAN_S3;
+    src: url("fonts/ConnectCodeCodeUPCEAN_S3.woff") format("woff");
+  }
+  #barcode {font-weight: normal; font-style: normal; line-height:normal; font-family: 'CCodeCodeUPCEAN_S3', sans-serif; font-size: 32px}
+&lt;/style>
+
+</pre>
+            </td>
+        </tr>
+    </table>
+
+
+<br /><br />
+CSS – Extended Style (Fonts with Embedded Human Readable Text)
+<br /><br />
+    <table style="border:1px solid gray">
+        <tr>
+            <td>
+<pre>
+
+&lt;style type="text/css" media="screen,print">
+  @font-face {
+    font-family: CCodeCodeUPCEAN_HRBS3;
+    src: url("fonts/ConnectCodeCodeUPCEAN_HRBS3.woff") format("woff");
+  }
+  #barcode {font-weight: normal; font-style: normal; line-height:normal; font-family: 'CCodeCodeUPCEAN_HRBS3', sans-serif; font-size: 32px}
+&lt;/style>
+
+</pre>
+            </td>
+        </tr>
+    </table>
+
+
+<br /><br />
+<strong>EXT2</strong>
+<br /><br />
+Files
+<br /><br />
+<ul class="list list1">
+<li>ext2.js</li>
+<li>ext2.wasm</li>
+</ul>
+Fonts 
+<br /><br />
+Standard Fonts
+<br /><br />
+<ul class="list list1">
+<li>ConnectCodeUPCEAN_S1.woff</li>
+<li>ConnectCodeUPCEAN_S2.woff</li>
+<li>ConnectCodeUPCEAN_S3.woff</li>
+<li>ConnectCodeUPCEAN_S4.woff</li>
+<li>ConnectCodeUPCEAN_S5.woff</li>
+<li>ConnectCodeUPCEAN_S6.woff</li>
+<li>ConnectCodeUPCEAN_S7.woff </li>
+</ul>
+Embedded Human Readable Text at the bottom of the barcode
+<br /><br />
+<ul class="list list1">
+<li>ConnectCodeUPCEAN_HRBS1.woff</li>
+<li>ConnectCodeUPCEAN_HRBS2.woff</li>
+<li>ConnectCodeUPCEAN_HRBS3.woff</li>
+<li>ConnectCodeUPCEAN_HRBS4.woff</li>
+<li>ConnectCodeUPCEAN_HRBS5.woff</li>
+<li>ConnectCodeUPCEAN_HRBS6.woff</li>
+<li>ConnectCodeUPCEAN_HRBS7.woff </li>
+</ul>
+
+Embedded Human Readable Text on top of the barcode
+<br /><br />
+<ul class="list list1">
+<li>ConnectCodeUPCEAN_HRBT1.woff</li>
+<li>ConnectCodeUPCEAN_HRTS2.woff</li>
+<li>ConnectCodeUPCEAN_HRTS3.woff</li>
+</ul>
+Usage
+<br /><br />
+JavaScript (invoking wasm module)
+<br /><br />
+    <table style="border:1px solid gray">
+        <tr>
+            <td>
+<pre>
+
+var instance = new Module.EXT2("12"); 
+//Can be used with standard fonts and fonts with Embedded Human Readable Text		
+//instance.setInputData("12");
+//var inputData = instance.getInputData();
+barcodeobject.innerHTML=instance.encode();
+barcodetextobject.innerHTML=instance.humanReadableText;
+instance.delete();
+
+</pre>
+            </td>
+        </tr>
+    </table>
+<br /><br />
+
+CSS
+<br /><br />
+    <table style="border:1px solid gray">
+        <tr>
+            <td>
+<pre>
+
+&lt;style type="text/css" media="screen,print">
+  @font-face {
+    font-family: CCodeCodeUPCEAN_S3;
+    src: url("fonts/ConnectCodeCodeUPCEAN_S3.woff") format("woff");
+  }
+  #barcode {font-weight: normal; font-style: normal; line-height:normal; font-family: 'CCodeCodeUPCEAN_S3', sans-serif; font-size: 32px}
+&lt;/style>
+
+</pre>
+            </td>
+        </tr>
+    </table>
+<br /><br />
+CSS – Extended Style (Fonts with Embedded Human Readable Text at bottom of barcode)
+<br /><br />
+    <table style="border:1px solid gray">
+        <tr>
+            <td>
+<pre>
+
+&lt;style type="text/css" media="screen,print">
+  @font-face {
+    font-family: CCodeCodeUPCEAN_HRBS3;
+    src: url("fonts/ConnectCodeCodeUPCEAN_HRBS3.woff") format("woff");
+  }
+  #barcode {font-weight: normal; font-style: normal; line-height:normal; font-family: 'CCodeCodeUPCEAN_HRBS3', sans-serif; font-size: 32px}
+&lt;/style>
+
+</pre>
+            </td>
+        </tr>
+    </table>
+<br /><br />
+
+CSS – Extended Style (Fonts with Embedded Human Readable Text on top of barcode)
+<br /><br />
+    <table style="border:1px solid gray">
+        <tr>
+            <td>
+<pre>
+
+&lt;style type="text/css" media="screen,print">
+  @font-face {
+    font-family: CCodeCodeUPCEAN_HRTS3;
+    src: url("fonts/ConnectCodeCodeUPCEAN_HRTS3.woff") format("woff");
+  }
+  #barcode {font-weight: normal; font-style: normal; line-height:normal; font-family: 'CCodeCodeUPCEAN_HRTS3', sans-serif; font-size: 32px}
+&lt;/style>
+
+
+</pre>
+            </td>
+        </tr>
+    </table>
+<br /><br />
+<strong>EXT5</strong>
+<br /><br />
+Files
+<br /><br />
+<ul class="list list1">
+<li>ext5.js</li>
+<li>ext5.wasm</li>
+</ul>
+Fonts 
+<br /><br />
+Standard Fonts
+<br /><br />
+<ul class="list list1">
+<li>ConnectCodeUPCEAN_S1.woff</li>
+<li>ConnectCodeUPCEAN_S2.woff</li>
+<li>ConnectCodeUPCEAN_S3.woff</li>
+<li>ConnectCodeUPCEAN_S4.woff</li>
+<li>ConnectCodeUPCEAN_S5.woff</li>
+<li>ConnectCodeUPCEAN_S6.woff</li>
+<li>ConnectCodeUPCEAN_S7.woff </li>
+</ul>
+Embedded Human Readable Text at the bottom of the barcode
+<br /><br />
+<ul class="list list1">
+<li>ConnectCodeUPCEAN_HRBS1.woff</li>
+<li>ConnectCodeUPCEAN_HRBS2.woff</li>
+<li>ConnectCodeUPCEAN_HRBS3.woff</li>
+<li>ConnectCodeUPCEAN_HRBS4.woff</li>
+<li>ConnectCodeUPCEAN_HRBS5.woff</li>
+<li>ConnectCodeUPCEAN_HRBS6.woff</li>
+<li>ConnectCodeUPCEAN_HRBS7.woff </li>
+</ul>
+Embedded Human Readable Text on top of the barcode
+<br /><br />
+<ul class="list list1">
+<li>ConnectCodeUPCEAN_HRBT1.woff</li>
+<li>ConnectCodeUPCEAN_HRTS2.woff</li>
+<li>ConnectCodeUPCEAN_HRTS3.woff</li>
+</ul>
+Usage
+<br /><br />
+JavaScript (invoking wasm module)
+<br /><br />
+    <table style="border:1px solid gray">
+        <tr>
+            <td>
+<pre>
+
+var instance = new Module.EXT5("12345"); 
+//Can be used with standard fonts and fonts with Embedded Human Readable Text		
+//instance.setInputData("12345");
+//var inputData = instance.getInputData();
+barcodeobject.innerHTML=instance.encode();
+barcodetextobject.innerHTML=instance.humanReadableText;
+instance.delete();
+
+</pre>
+            </td>
+        </tr>
+    </table>
+<br /><br />
+
+CSS
+<br /><br />
+    <table style="border:1px solid gray">
+        <tr>
+            <td>
+<pre>
+
+&lt;style type="text/css" media="screen,print">
+  @font-face {
+    font-family: CCodeCodeUPCEAN_S3;
+    src: url("fonts/ConnectCodeCodeUPCEAN_S3.woff") format("woff");
+  }
+  #barcode {font-weight: normal; font-style: normal; line-height:normal; font-family: 'CCodeCodeUPCEAN_S3', sans-serif; font-size: 32px}
+&lt;/style>
+
+</pre>
+            </td>
+        </tr>
+    </table>
+<br /><br />
+CSS – Extended Style (Fonts with Embedded Human Readable Text at bottom of barcode)
+<br /><br />
+    <table style="border:1px solid gray">
+        <tr>
+            <td>
+<pre>
+
+&lt;style type="text/css" media="screen,print">
+  @font-face {
+    font-family: CCodeCodeUPCEAN_HRBS3;
+    src: url("fonts/ConnectCodeCodeUPCEAN_HRBS3.woff") format("woff");
+  }
+  #barcode {font-weight: normal; font-style: normal; line-height:normal; font-family: 'CCodeCodeUPCEAN_HRBS3', sans-serif; font-size: 32px}
+&lt;/style>
+
+</pre>
+            </td>
+        </tr>
+    </table>
+<br /><br />
+
+CSS – Extended Style (Fonts with Embedded Human Readable Text on top of barcode)
+<br /><br />
+    <table style="border:1px solid gray">
+        <tr>
+            <td>
+<pre>
+
+&lt;style type="text/css" media="screen,print">
+  @font-face {
+    font-family: CCodeCodeUPCEAN_HRTS3;
+    src: url("fonts/ConnectCodeCodeUPCEAN_HRTS3.woff") format("woff");
+  }
+  #barcode {font-weight: normal; font-style: normal; line-height:normal; font-family: 'CCodeCodeUPCEAN_HRTS3', sans-serif; font-size: 32px}
+&lt;/style>
+
+</pre>
+            </td>
+        </tr>
+    </table>
+<br /><br />
+
+<strong>GS1Databar14</strong>
+<br /><br />
+Files
+<br /><br />
+<ul class="list list1">
+<li>gs1databar14.js</li>
+<li>gs1databar14.wasm</li>
+</ul>
+Fonts 
+<br /><br />
+<ul class="list list1">
+<li>ConnectCodeGS1D_S1.woff</li>
+<li>ConnectCodeGS1D_S2.woff</li>
+<li>ConnectCodeGS1D_S3.woff</li>
+<li>ConnectCodeGS1D_S4.woff</li>
+<li>ConnectCodeGS1D_S5.woff</li>
+<li>ConnectCodeGS1D_S6.woff</li>
+<li>ConnectCodeGS1D_S7.woff</li>
+</ul>
+Usage
+<br /><br />
+JavaScript (invoking wasm module)
+<br /><br />
+    <table style="border:1px solid gray">
+        <tr>
+            <td>
+<pre>
+
+var instance = new Module.GS1Databar14("12345678",0);
+//0 – Set GS1Databar14 Linkage off
+//1 – Set GS1Databar14 Linkage on
+//instance.setInputData("12345678");
+//instance.setLinkage(1);
+//var inputData = instance.getInputData();
+//var checkDigit = instance.getLinkage();
+barcodeobject.innerHTML=instance.encode();
+barcodetextobject.innerHTML=instance.humanReadableText;		
+instance.delete();
+
+</pre>
+            </td>
+        </tr>
+    </table>
+<br /><br />
+CSS
+<br /><br />
+    <table style="border:1px solid gray">
+        <tr>
+            <td>
+<pre>
+
+&lt;style type="text/css" media="screen,print">
+  @font-face {
+    font-family: CCodeGS1D_S3;
+    src: url("fonts/ConnectCodeGS1D_S3.woff") format("woff");
+  }
+  #barcode {font-weight: normal; font-style: normal; line-height:normal; font-family: 'CCodeGS1D_S3', sans-serif; font-size: 32px}
+&lt;/style>
+
+</pre>
+            </td>
+        </tr>
+    </table>
+<br /><br />
+
+<strong>I2of5</strong>
+<br /><br />
+Files
+<br /><br />
+<ul class="list list1">
+<li>i2of5.js</li>
+<li>i2of5.wasm</li>
+</ul>
+Fonts 
+<br /><br />
+<ul class="list list1">
+<li>ConnectCodeI2of5_S1.woff</li>
+<li>ConnectCodeI2of5_S2.woff</li>
+<li>ConnectCodeI2of5_S3.woff</li>
+<li>ConnectCodeI2of5_S4.woff</li>
+<li>ConnectCodeI2of5_S5.woff</li>
+<li>ConnectCodeI2of5_S6.woff</li>
+<li>ConnectCodeI2of5_S7.woff</li>
+<li>ConnectCodeI2of5_HS3.woff (Embedded Human Readable Text)</li>
+</ul>
+Usage
+<br /><br />
+JavaScript (invoking wasm module)
+<br /><br />
+    <table style="border:1px solid gray">
+        <tr>
+            <td>
+<pre>
+
+var instance = new Module.I2of5("12345678",1);
+//First parameter is the input data and second parameter is whether to generate the check digit		
+//instance.setInputData("12345678");
+//instance.setCheckDigit(1);
+//var inputData = instance.getInputData();
+//var checkDigit = instance.getCheckDigit();
+barcodeobject.innerHTML=instance.encode();
+barcodetextobject.innerHTML=instance.humanReadableText;
+instance.delete();
+
+</pre>
+            </td>
+        </tr>
+    </table>
+
+<br /><br />
+CSS
+<br /><br />
+    <table style="border:1px solid gray">
+        <tr>
+            <td>
+<pre>
+
+&lt;style type="text/css" media="screen,print">
+  @font-face {
+    font-family: CCodeI2of5_S3;
+    src: url("fonts/ConnectCodeI2of5_S3.woff") format("woff");
+  }
+  #barcode {font-weight: normal; font-style: normal; line-height:normal; font-family: 'CCodeI2of5_S3', sans-serif; font-size: 32px}
+&lt;/style>
+
+</pre>
+            </td>
+        </tr>
+    </table>
+
+<br /><br />
+<strong>Industrial2of5</strong>
+<br /><br />
+Files
+<br /><br />
+<ul class="list list1">
+<li>industrial2of5.js</li>
+<li>industrial2of5.wasm</li>
+</ul>
+Fonts
+<br /><br />
+<ul class="list list1">
+<li>ConnectCodeIND2of5_S1.woff</li>
+<li>ConnectCodeIND2of5_S2.woff</li>
+<li>ConnectCodeIND2of5_S3.woff</li>
+<li>ConnectCodeIND2of5_S4.woff</li>
+<li>ConnectCodeIND2of5_S5.woff</li>
+<li>ConnectCodeIND2of5_S6.woff</li>
+<li>ConnectCodeIND2of5_S7.woff</li>
+</ul>
+Usage
+<br /><br />
+JavaScript (invoking wasm module)
+<br /><br />
+    <table style="border:1px solid gray">
+        <tr>
+            <td>
+<pre>
+
+var instance = new Module.Industrial2of5("12345678",1);
+//First parameter is the input data and second parameter is whether to generate the check digit		
+//instance.setInputData("12345678");
+//instance.setCheckDigit(1);
+//var inputData = instance.getInputData();
+//var checkDigit = instance.getCheckDigit();
+barcodeobject.innerHTML=instance.encode();
+barcodetextobject.innerHTML=instance.humanReadableText;
+instance.delete();
+
+</pre>
+            </td>
+        </tr>
+    </table>
+
+
+<br /><br />
+CSS
+<br /><br />
+    <table style="border:1px solid gray">
+        <tr>
+            <td>
+<pre>
+
+&lt;style type="text/css" media="screen,print">
+  @font-face {
+    font-family: CCodeIND2of5_S3;
+    src: url("fonts/ConnectCodeIND2of5_S3.woff") format("woff");
+  }
+  #barcode {font-weight: normal; font-style: normal; line-height:normal; font-family: 'CCodeIND2of5_S3', sans-serif; font-size: 32px}
+&lt;/style>
+
+</pre>
+            </td>
+        </tr>
+    </table>
+
+<br /><br />
+<strong>ITF14</strong>
+<br /><br />
+Files
+<br /><br />
+<ul class="list list1">
+<li>itf14.js</li>
+<li>itf14.wasm</li>
+</ul>
+Fonts
+<br /><br />
+<ul class="list list1">
+<li>ConnectCodeITF14_S1.woff</li>
+<li>ConnectCodeITF14_S2.woff</li>
+<li>ConnectCodeITF14_S3.woff</li>
+<li>ConnectCodeITF14_S4.woff</li>
+<li>ConnectCodeITF14_S5.woff</li>
+<li>ConnectCodeITF14_S6.woff</li>
+<li>ConnectCodeITF14_S7.woff</li>
+</ul>
+Usage
+<br /><br />
+JavaScript (invoking wasm module)
+<br /><br />
+    <table style="border:1px solid gray">
+        <tr>
+            <td>
+<pre>
+
+var instance = new Module.ITF14("12345678",1,1);
+//First parameter is the input data and second parameter is whether to generate the check digit
+//Third parameter specifies whether to use rectangle (1) bearers bar or top/bottom(0) bearers bar		
+//instance.setInputData("12345678");
+//instance.setCheckDigit(1);
+//instance.setITFRectangle(1);
+//var inputData = instance.getInputData();
+//var checkDigit = instance.getCheckDigit();
+//var bearersBar = instance.getITFRectangle();
+barcodeobject.innerHTML=instance.encode();
+barcodetextobject.innerHTML=instance.humanReadableText;
+instance.delete();
+
+</pre>
+            </td>
+        </tr>
+    </table>
+
+<br /><br />
+CSS
+<br /><br />
+    <table style="border:1px solid gray">
+        <tr>
+            <td>
+<pre>
+
+&lt;style type="text/css" media="screen,print">
+  @font-face {
+    font-family: CCodeITF14_S3;
+    src: url("fonts/ConnectCodeITF14_S3.woff") format("woff");
+  }
+  #barcode {font-weight: normal; font-style: normal; line-height:normal; font-family: 'CCodeITF14_S3', sans-serif; font-size: 32px}
+&lt;/style>
+</pre>
+            </td>
+        </tr>
+    </table>
+
+<br /><br />
+<strong>Modified Plessy</strong>
+<br /><br />
+Files
+<br /><br />
+<ul class="list list1">
+<li>modifiedplessy.js</li>
+<li>modifiedplessy.wasm</li>
+</ul>
+Fonts
+<br /><br />
+<ul class="list list1">
+<li>ConnectCodeMSI_S1.woff</li>
+<li>ConnectCodeMSI_S2.woff</li>
+<li>ConnectCodeMSI_S3.woff</li>
+<li>ConnectCodeMSI_S4.woff</li>
+<li>ConnectCodeMSI_S5.woff</li>
+<li>ConnectCodeMSI_S6.woff</li>
+<li>ConnectCodeMSI_S7.woff</li>
+</ul>
+Usage
+<br /><br />
+JavaScript (invoking wasm module)
+<br /><br />
+    <table style="border:1px solid gray">
+        <tr>
+            <td>
+<pre>
+
+var instance = new Module.ModifiedPlessy("12345678",1);
+//First parameter is the input data and second parameter is whether to generate the check digit		
+//instance.setInputData("12345678");
+//instance.setCheckDigit(1);
+//var inputData = instance.getInputData();
+//var checkDigit = instance.getCheckDigit();
+barcodeobject.innerHTML=instance.encode();
+barcodetextobject.innerHTML=instance.humanReadableText;
+instance.delete();
+
+</pre>
+            </td>
+        </tr>
+    </table>
+
+
+<br /><br />
+CSS
+<br /><br />
+    <table style="border:1px solid gray">
+        <tr>
+            <td>
+<pre>
+
+&lt;style type="text/css" media="screen,print">
+  @font-face {
+    font-family: CCodeMSI_S3;
+    src: url("fonts/ConnectCodeMSI_S3.woff") format("woff");
+  }
+  #barcode {font-weight: normal; font-style: normal; line-height:normal; font-family: 'CCodeMSI_S3', sans-serif; font-size: 32px}
+&lt;/style>
+</pre>
+            </td>
+        </tr>
+    </table>
+
+<br /><br />
+<strong>POSTNET</strong>
+<br /><br />
+Files
+<br /><br />
+<ul class="list list1">
+<li>postnet.js</li>
+<li>postnet.wasm</li>
+</ul>
+Fonts 
+<br /><br />
+<ul class="list list1">
+<li>ConnectCodePostnet.woff</li>
+</ul>
+Usage
+<br /><br />
+JavaScript (invoking wasm module)
+<br /><br />
+    <table style="border:1px solid gray">
+        <tr>
+            <td>
+<pre>
+
+var instance = new Module.Postnet("12345678");
+//The parameter specified the input data 
+//instance.setInputData("12345678");
+//var inputData = instance.getInputData();
+barcodeobject.innerHTML=instance.encode();
+barcodetextobject.innerHTML=instance.humanReadableText;		
+instance.delete();
+
+</pre>
+            </td>
+        </tr>
+    </table>
+
+
+<br /><br />
+CSS
+<br /><br />
+    <table style="border:1px solid gray">
+        <tr>
+            <td>
+<pre>
+
+&lt;style type="text/css" media="screen,print">
+  @font-face {
+    font-family: CCodePostnet;
+    src: url("fonts/ConnectCodePostnet.woff") format("woff");
+  }
+  #barcode {font-weight: normal; font-style: normal; line-height:normal; font-family: 'CCodePostnet', sans-serif; font-size: 12px}
+&lt;/style>
+
+</pre>
+            </td>
+        </tr>
+    </table>
+<br /><br />
+<strong>UPCA</strong>
+<br /><br />
+Files
+<br /><br />
+<ul class="list list1">
+<li>upca.js</li>
+<li>upca.wasm</li>
+</ul>
+Fonts 
+<br /><br />
+Standard Fonts
+<br /><br />
+<ul class="list list1">
+<li>ConnectCodeUPCEAN_S1.woff</li>
+<li>ConnectCodeUPCEAN_S2.woff</li>
+<li>ConnectCodeUPCEAN_S3.woff</li>
+<li>ConnectCodeUPCEAN_S4.woff</li>
+<li>ConnectCodeUPCEAN_S5.woff</li>
+<li>ConnectCodeUPCEAN_S6.woff</li>
+<li>ConnectCodeUPCEAN_S7.woff </li>
+</ul>
+Embedded Human Readable Text at the bottom of the barcode
+<br /><br />
+<ul class="list list1">
+<li>ConnectCodeUPCEAN_HRBS1.woff</li>
+<li>ConnectCodeUPCEAN_HRBS2.woff</li>
+<li>ConnectCodeUPCEAN_HRBS3.woff</li>
+<li>ConnectCodeUPCEAN_HRBS4.woff</li>
+<li>ConnectCodeUPCEAN_HRBS5.woff</li>
+<li>ConnectCodeUPCEAN_HRBS6.woff</li>
+<li>ConnectCodeUPCEAN_HRBS7.woff </li>
+</ul>
+Embedded Human Readable Text on top of the barcode
+<br /><br />
+<ul class="list list1">
+<li>ConnectCodeUPCEAN_HRBT1.woff</li>
+<li>ConnectCodeUPCEAN_HRTS2.woff</li>
+<li>ConnectCodeUPCEAN_HRTS3.woff</li>
+</ul>
+Usage
+<br /><br />
+JavaScript (invoking wasm module)
+<br /><br />
+    <table style="border:1px solid gray">
+        <tr>
+            <td>
+<pre>
+
+var instance = new Module.UPCA("12345678",1); 
+//1-Extended Style UPCA. Use with fonts with Embedded Human Readable Text. 		
+//0-Non Extended Style UPCA. Use with standard fonts.
+//instance.setInputData("12345678");
+//var inputData = instance.getInputData();
+//instance.setExtendedStyle(1);
+//var extendedStyle=instance.getExtendedStyle();
+barcodeobject.innerHTML=instance.encode();
+barcodetextobject.innerHTML=instance.humanReadableText;
+instance.delete();
+
+</pre>
+            </td>
+        </tr>
+    </table>
+
+
+<br /><br />
+CSS
+<br /><br />
+    <table style="border:1px solid gray">
+        <tr>
+            <td>
+<pre>
+
+&lt;style type="text/css" media="screen,print">
+  @font-face {
+    font-family: CCodeCodeUPCEAN_S3;
+    src: url("fonts/ConnectCodeCodeUPCEAN_S3.woff") format("woff");
+  }
+  #barcode {font-weight: normal; font-style: normal; line-height:normal; font-family: 'CCodeCodeUPCEAN_S3', sans-serif; font-size: 32px}
+&lt;/style>
+
+</pre>
+            </td>
+        </tr>
+    </table>
+<br /><br />
+CSS – Extended Style (Fonts with Embedded Human Readable Text)
+<br /><br />
+    <table style="border:1px solid gray">
+        <tr>
+            <td>
+<pre>
+
+&lt;style type="text/css" media="screen,print">
+  @font-face {
+    font-family: CCodeCodeUPCEAN_HRBS3;
+    src: url("fonts/ConnectCodeCodeUPCEAN_HRBS3.woff") format("woff");
+  }
+  #barcode {font-weight: normal; font-style: normal; line-height:normal; font-family: 'CCodeCodeUPCEAN_HRBS3', sans-serif; font-size: 32px}
+&lt;/style>
+
+</pre>
+            </td>
+        </tr>
+    </table>
+<br /><br />
+
+<strong>UPCE</strong>
+<br /><br />
+Files
+<br /><br />
+<ul class="list list1">
+<li>upce.js</li>
+<li>upce.wasm</li>
+</ul>
+Fonts 
+<br /><br />
+Standard Fonts
+<br /><br />
+<ul class="list list1">
+<li>ConnectCodeUPCEAN_S1.woff</li>
+<li>ConnectCodeUPCEAN_S2.woff</li>
+<li>ConnectCodeUPCEAN_S3.woff</li>
+<li>ConnectCodeUPCEAN_S4.woff</li>
+<li>ConnectCodeUPCEAN_S5.woff</li>
+<li>ConnectCodeUPCEAN_S6.woff</li>
+<li>ConnectCodeUPCEAN_S7.woff </li>
+</ul>
+Embedded Human Readable Text at the bottom of the barcode
+<br /><br />
+<ul class="list list1">
+<li>ConnectCodeUPCEAN_HRBS1.woff</li>
+<li>ConnectCodeUPCEAN_HRBS2.woff</li>
+<li>ConnectCodeUPCEAN_HRBS3.woff</li>
+<li>ConnectCodeUPCEAN_HRBS4.woff</li>
+<li>ConnectCodeUPCEAN_HRBS5.woff</li>
+<li>ConnectCodeUPCEAN_HRBS6.woff</li>
+<li>ConnectCodeUPCEAN_HRBS7.woff </li>
+</ul>
+Embedded Human Readable Text on top of the barcode
+<br /><br />
+<ul class="list list1">
+<li>ConnectCodeUPCEAN_HRBT1.woff</li>
+<li>ConnectCodeUPCEAN_HRTS2.woff</li>
+<li>ConnectCodeUPCEAN_HRTS3.woff</li>
+</ul>
+Usage
+<br /><br />
+JavaScript (invoking wasm module)
+<br /><br />
+    <table style="border:1px solid gray">
+        <tr>
+            <td>
+<pre>
+
+var instance = new Module.UPCE("12345678"); 
+//Can be used with standard fonts and fonts with Embedded Human Readable Text		
+//instance.setInputData("12345678");
+//var inputData = instance.getInputData();
+barcodeobject.innerHTML=instance.encode();
+barcodetextobject.innerHTML=instance.humanReadableText;
+instance.delete();
+
+</pre>
+            </td>
+        </tr>
+    </table>
+<br /><br />
+CSS
+<br /><br />
+    <table style="border:1px solid gray">
+        <tr>
+            <td>
+<pre>
+
+&lt;style type="text/css" media="screen,print">
+  @font-face {
+    font-family: CCodeCodeUPCEAN_S3;
+    src: url("fonts/ConnectCodeCodeUPCEAN_S3.woff") format("woff");
+  }
+  #barcode {font-weight: normal; font-style: normal; line-height:normal; font-family: 'CCodeCodeUPCEAN_S3', sans-serif; font-size: 32px}
+&lt;/style>
+
+</pre>
+            </td>
+        </tr>
+    </table>
+<br /><br />
+CSS – Extended Style (Fonts with Embedded Human Readable Text)
+<br /><br />
+    <table style="border:1px solid gray">
+        <tr>
+            <td>
+<pre>
+
+&lt;style type="text/css" media="screen,print">
+  @font-face {
+    font-family: CCodeCodeUPCEAN_HRBS3;
+    src: url("fonts/ConnectCodeCodeUPCEAN_HRBS3.woff") format("woff");
+  }
+  #barcode {font-weight: normal; font-style: normal; line-height:normal; font-family: 'CCodeCodeUPCEAN_HRBS3', sans-serif; font-size: 32px}
+&lt;/style>
+
+</pre>
+            </td>
+        </tr>
+    </table>
+
+
+<br>
+<br /><br />
+
+<br /><br />
+
+</body>
+</html>

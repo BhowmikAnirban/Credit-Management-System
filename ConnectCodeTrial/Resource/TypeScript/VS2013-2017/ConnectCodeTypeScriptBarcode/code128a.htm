@@ -1,0 +1,42 @@
+﻿<!DOCTYPE html>
+
+<html lang="en">
+<head>
+
+    <meta charset="utf-8" />
+    <title>TypeScript HTML App</title>
+    <link rel="stylesheet" href="app.css" type="text/css" />
+    <script src="barcodescripts/barcode.js"></script>
+    <script src="barcodescripts/code128a.js"></script>
+
+    <style type="text/css" media="screen,print">
+        @font-face {
+            font-family: CCode128;
+            src: url("barcodefonts/ConnectCode128_S3_Trial.eot");
+            src: local("CCode128_S3_Trial"), url("barcodefonts/ConnectCode128_S3_Trial.otf") format("opentype"), url("barcodefonts/ConnectCode128_S3_Trial.woff") format("woff");
+        }
+
+        div.barcodeData {
+            white-space:pre; /*mandatory*/
+            font-weight: normal;
+            font-style: normal;
+            line-height: normal;
+            font-family: 'CCode128', sans-serif;
+            font-size: 32px;
+        }
+    </style>
+
+</head>
+<body>
+
+    <h2>Code128 A Barcode</h2>
+    <center>
+
+        <div class="barcodeData">12345678</div>
+        <div class="humanReadableText"></div>
+
+    </center>
+    <script src="app-code128a.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,42 @@
+﻿<!DOCTYPE html>
+
+<html lang="en">
+<head>
+
+    <meta charset="utf-8" />
+    <title>TypeScript HTML App</title>
+    <link rel="stylesheet" href="app.css" type="text/css" />
+    <script src="barcodescripts/barcode.js"></script>
+    <script src="barcodescripts/postnet.js"></script>
+
+    <style type="text/css" media="screen,print">
+        @font-face {
+            font-family: CCodePostnet;
+            src: url("barcodefonts/ConnectCodePostnet_Trial.eot");
+            src: local("CCodePostnet_Trial"), url("barcodefonts/ConnectCodePostnet_Trial.otf") format("opentype"), url("barcodefonts/ConnectCodePostnet_Trial.woff") format("woff");
+        }
+
+        div.barcodeData {
+            white-space:pre; /*mandatory*/
+            font-weight: normal;
+            font-style: normal;
+            line-height: normal;
+            font-family: 'CCodePostnet', sans-serif;
+            font-size: 12px;
+        }
+    </style>
+
+</head>
+<body>
+
+    <h2>EXT2 Barcode</h2>
+    <center>
+
+        <div class="barcodeData">12345678</div>
+        <div class="humanReadableText"></div>
+
+    </center>
+    <script src="app-postnet.js"></script>
+</body>
+
+</html>

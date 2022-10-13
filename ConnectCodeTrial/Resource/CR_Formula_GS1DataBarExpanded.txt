@@ -1,0 +1,5334 @@
+'Copyright 2006-2011 ConnectCode Pte Ltd. All Rights Reserved.
+'This source code is protected by Copyright Laws. You are only allowed to modify
+'and include the source in your application if you have purchased a Distribution License.
+'===================================================================================
+' ConnectCode Barcode Formulas for Crystal Report
+'
+'
+' The formula and custom report functions in this file can be used for 
+' creating the GS1 DataBar Expanded barcode in Crystal Report.
+'
+'
+' Usage :
+' 1) Go to the Field Explorer in Crystal Report and create a new formula. 
+' 2) Give the new formula a name (e.g Encode_GS1DataBarExpanded)
+' 3) Copy the formula for Encode_GS1DataBarExpanded below and paste it to the Formula Editor.
+' 4) Set the syntax of the formula to 'Basic Syntax'
+' 5) Modify the 'data = "12345678' statement so that it connects to your data source.
+'    For example, change the statement to data  = { Employee.Name }
+' 6) Create the following Report Custom Functions. This can be done by right clicking the 
+'    Report Custom Function node in the Formula Workshop and selecting the New command. 
+'    Give each Report Custom Function a name exactly as given below and copy the its  
+'    corresponding code to the Custom Function Editor. Set the syntax of the custom function to 'Basic Syntax'.
+'    Note that you will need to create a custom function for each of the following
+'
+'    
+'    Report Custom Functions : 
+'    =========================
+'    alphaEncodation
+'    alphanumericCompaction
+'    dataCompaction
+'    encodationMethod
+'    filterInput__GS1DatabarExpanded
+'    fixLength8Encodation
+'    getCheckSumWeights
+'    getFinderPatternIndex
+'    getFinderPatterns
+'    getFinderPatternsfd
+'    getNumFinder
+'    ISO646Compaction
+'    ISO646Encodation
+'    ISOSwitchToAlpha
+'    ISOSwitchToNumeric
+'    matchAI
+'    NextTwoNumeric
+'    numericCompaction
+'    numericEncodation
+'    onlyNumeric
+'    pad
+'    stripBrackets
+'
+'
+' 7) Save the Formula and Report Custom Functions and close the Formula Workshop
+' 8) Drag the formula to your report to create a formula field
+' 9) Set the font of the formula field to the appropriate barcode font 
+'    For example, CCodeGS1D_S3 
+
+'
+'====================================================================================
+   
+
+' ===========================================================================================
+' Encode_GS1DatabarExpanded    Formula
+
+    Dim data as string  
+    Dim linkage as number
+
+    'Replace "(01)90012345678908(3103)001750" with your data field here  
+    data = "(01)90012345678908(3103)001750"
+    
+    linkage = 0    
+
+    'State Variables
+    Dim compactionResult As String
+    Dim encodationResult As String
+    Dim errorMsg As String
+    Dim linkageFlag As number
+
+    
+    Dim widthsodd(88) As number
+    Dim widthseven(88) As number
+    Dim resultsodd(88) As number
+    Dim resultseven(88) As number
+    Dim checkwidthsodd(4) As number
+    Dim checkwidthseven(4) As number
+        
+    Dim numData, numSegments As number
+
+    Dim baryy As number
+    Dim elmWidth As number
+    Dim mxwElement As number
+    Dim subVal, lessVal As number
+    Dim narrowMask As number
+    Dim tempMask As number
+    Dim nz As number
+    Dim rz As number
+    Dim iz, jz As number
+    Dim maxDenomz, minDenomz As number
+    Dim valz As number
+
+    Dim valpp As number
+	Dim npp As number
+    Dim elements  As number
+   	Dim maxWidth As number
+    Dim noNarrow As number
+
+    Dim maskval1,maskval2 as number
+    Dim maskdiv1,maskdiv2 as number
+    Dim masksum as number
+    Dim mz as number    
+
+    Dim datachar(22) As number
+    Dim debugstr As String
+    
+    debugstr = ""
+    errorMsg = ""
+
+    Dim cd, result, filtereddata As String
+    Dim retval As number
+    
+    'or use currency ?
+    Dim value As number
+    Dim sumx, checksum As number
+    
+    
+    Dim CHECKSUMEXPANDED(184) As number
+    
+    CHECKSUMEXPANDED(0*8+ 0+1) = 1
+    CHECKSUMEXPANDED(0*8+ 1+1) = 3
+    CHECKSUMEXPANDED(0*8+ 2+1) = 9
+    CHECKSUMEXPANDED(0*8+ 3+1) = 27
+    CHECKSUMEXPANDED(0*8+ 4+1) = 81
+    CHECKSUMEXPANDED(0*8+ 5+1) = 32
+    CHECKSUMEXPANDED(0*8+ 6+1) = 96
+    CHECKSUMEXPANDED(0*8+ 7+1) = 77
+    
+    CHECKSUMEXPANDED(1*8+ 0+1) = 20
+    CHECKSUMEXPANDED(1*8+ 1+1) = 60
+    CHECKSUMEXPANDED(1*8+ 2+1) = 180
+    CHECKSUMEXPANDED(1*8+ 3+1) = 118
+    CHECKSUMEXPANDED(1*8+ 4+1) = 143
+    CHECKSUMEXPANDED(1*8+ 5+1) = 7
+    CHECKSUMEXPANDED(1*8+ 6+1) = 21
+    CHECKSUMEXPANDED(1*8+ 7+1) = 63
+    
+    CHECKSUMEXPANDED(2*8+ 0+1) = 189
+    CHECKSUMEXPANDED(2*8+ 1+1) = 145
+    CHECKSUMEXPANDED(2*8+ 2+1) = 13
+    CHECKSUMEXPANDED(2*8+ 3+1) = 39
+    CHECKSUMEXPANDED(2*8+ 4+1) = 117
+    CHECKSUMEXPANDED(2*8+ 5+1) = 140
+    CHECKSUMEXPANDED(2*8+ 6+1) = 209
+    CHECKSUMEXPANDED(2*8+ 7+1) = 205
+    
+    CHECKSUMEXPANDED(3*8+ 0+1) = 193
+    CHECKSUMEXPANDED(3*8+ 1+1) = 157
+    CHECKSUMEXPANDED(3*8+ 2+1) = 49
+    CHECKSUMEXPANDED(3*8+ 3+1) = 147
+    CHECKSUMEXPANDED(3*8+ 4+1) = 19
+    CHECKSUMEXPANDED(3*8+ 5+1) = 57
+    CHECKSUMEXPANDED(3*8+ 6+1) = 171
+    CHECKSUMEXPANDED(3*8+ 7+1) = 91
+    
+    CHECKSUMEXPANDED(4*8+ 0+1) = 62
+    CHECKSUMEXPANDED(4*8+ 1+1) = 186
+    CHECKSUMEXPANDED(4*8+ 2+1) = 136
+    CHECKSUMEXPANDED(4*8+ 3+1) = 197
+    CHECKSUMEXPANDED(4*8+ 4+1) = 169
+    CHECKSUMEXPANDED(4*8+ 5+1) = 85
+    CHECKSUMEXPANDED(4*8+ 6+1) = 44
+    CHECKSUMEXPANDED(4*8+ 7+1) = 132
+        
+    CHECKSUMEXPANDED(5*8+ 0+1) = 185
+    CHECKSUMEXPANDED(5*8+ 1+1) = 133
+    CHECKSUMEXPANDED(5*8+ 2+1) = 188
+    CHECKSUMEXPANDED(5*8+ 3+1) = 142
+    CHECKSUMEXPANDED(5*8+ 4+1) = 4
+    CHECKSUMEXPANDED(5*8+ 5+1) = 12
+    CHECKSUMEXPANDED(5*8+ 6+1) = 36
+    CHECKSUMEXPANDED(5*8+ 7+1) = 108
+        
+    CHECKSUMEXPANDED(6*8+ 0+1) = 113
+    CHECKSUMEXPANDED(6*8+ 1+1) = 128
+    CHECKSUMEXPANDED(6*8+ 2+1) = 173
+    CHECKSUMEXPANDED(6*8+ 3+1) = 97
+    CHECKSUMEXPANDED(6*8+ 4+1) = 80
+    CHECKSUMEXPANDED(6*8+ 5+1) = 29
+    CHECKSUMEXPANDED(6*8+ 6+1) = 87
+    CHECKSUMEXPANDED(6*8+ 7+1) = 50
+    
+    CHECKSUMEXPANDED(7*8+ 0+1) = 150
+    CHECKSUMEXPANDED(7*8+ 1+1) = 28
+    CHECKSUMEXPANDED(7*8+ 2+1) = 84
+    CHECKSUMEXPANDED(7*8+ 3+1) = 41
+    CHECKSUMEXPANDED(7*8+ 4+1) = 123
+    CHECKSUMEXPANDED(7*8+ 5+1) = 158
+    CHECKSUMEXPANDED(7*8+ 6+1) = 52
+    CHECKSUMEXPANDED(7*8+ 7+1) = 156
+        
+    CHECKSUMEXPANDED(8*8+ 0+1) = 46
+    CHECKSUMEXPANDED(8*8+ 1+1) = 138
+    CHECKSUMEXPANDED(8*8+ 2+1) = 203
+    CHECKSUMEXPANDED(8*8+ 3+1) = 187
+    CHECKSUMEXPANDED(8*8+ 4+1) = 139
+    CHECKSUMEXPANDED(8*8+ 5+1) = 206
+    CHECKSUMEXPANDED(8*8+ 6+1) = 196
+    CHECKSUMEXPANDED(8*8+ 7+1) = 166
+    
+    CHECKSUMEXPANDED(9*8+ 0+1) = 76
+    CHECKSUMEXPANDED(9*8+ 1+1) = 17
+    CHECKSUMEXPANDED(9*8+ 2+1) = 51
+    CHECKSUMEXPANDED(9*8+ 3+1) = 153
+    CHECKSUMEXPANDED(9*8+ 4+1) = 37
+    CHECKSUMEXPANDED(9*8+ 5+1) = 111
+    CHECKSUMEXPANDED(9*8+ 6+1) = 122
+    CHECKSUMEXPANDED(9*8+ 7+1) = 155
+    
+    CHECKSUMEXPANDED(10*8+ 0+1) = 43
+    CHECKSUMEXPANDED(10*8+ 1+1) = 129
+    CHECKSUMEXPANDED(10*8+ 2+1) = 176
+    CHECKSUMEXPANDED(10*8+ 3+1) = 106
+    CHECKSUMEXPANDED(10*8+ 4+1) = 107
+    CHECKSUMEXPANDED(10*8+ 5+1) = 110
+    CHECKSUMEXPANDED(10*8+ 6+1) = 119
+    CHECKSUMEXPANDED(10*8+ 7+1) = 146
+    
+    CHECKSUMEXPANDED(11*8+ 0+1) = 16
+    CHECKSUMEXPANDED(11*8+ 1+1) = 48
+    CHECKSUMEXPANDED(11*8+ 2+1) = 144
+    CHECKSUMEXPANDED(11*8+ 3+1) = 10
+    CHECKSUMEXPANDED(11*8+ 4+1) = 30
+    CHECKSUMEXPANDED(11*8+ 5+1) = 90
+    CHECKSUMEXPANDED(11*8+ 6+1) = 59
+    CHECKSUMEXPANDED(11*8+ 7+1) = 177
+    
+    CHECKSUMEXPANDED(12*8+ 0+1) = 109
+    CHECKSUMEXPANDED(12*8+ 1+1) = 116
+    CHECKSUMEXPANDED(12*8+ 2+1) = 137
+    CHECKSUMEXPANDED(12*8+ 3+1) = 200
+    CHECKSUMEXPANDED(12*8+ 4+1) = 178
+    CHECKSUMEXPANDED(12*8+ 5+1) = 112
+    CHECKSUMEXPANDED(12*8+ 6+1) = 125
+    CHECKSUMEXPANDED(12*8+ 7+1) = 164
+    
+    CHECKSUMEXPANDED(13*8+ 0+1) = 70
+    CHECKSUMEXPANDED(13*8+ 1+1) = 210
+    CHECKSUMEXPANDED(13*8+ 2+1) = 208
+    CHECKSUMEXPANDED(13*8+ 3+1) = 202
+    CHECKSUMEXPANDED(13*8+ 4+1) = 184
+    CHECKSUMEXPANDED(13*8+ 5+1) = 130
+    CHECKSUMEXPANDED(13*8+ 6+1) = 179
+    CHECKSUMEXPANDED(13*8+ 7+1) = 115
+    
+    CHECKSUMEXPANDED(14*8+ 0+1) = 134
+    CHECKSUMEXPANDED(14*8+ 1+1) = 191
+    CHECKSUMEXPANDED(14*8+ 2+1) = 151
+    CHECKSUMEXPANDED(14*8+ 3+1) = 31
+    CHECKSUMEXPANDED(14*8+ 4+1) = 93
+    CHECKSUMEXPANDED(14*8+ 5+1) = 68
+    CHECKSUMEXPANDED(14*8+ 6+1) = 204
+    CHECKSUMEXPANDED(14*8+ 7+1) = 190
+    
+    CHECKSUMEXPANDED(15*8+ 0+1) = 148
+    CHECKSUMEXPANDED(15*8+ 1+1) = 22
+    CHECKSUMEXPANDED(15*8+ 2+1) = 66
+    CHECKSUMEXPANDED(15*8+ 3+1) = 198
+    CHECKSUMEXPANDED(15*8+ 4+1) = 172
+    CHECKSUMEXPANDED(15*8+ 5+1) = 94
+    CHECKSUMEXPANDED(15*8+ 6+1) = 71
+    CHECKSUMEXPANDED(15*8+ 7+1) = 2
+    
+    CHECKSUMEXPANDED(16*8+ 0+1) = 6
+    CHECKSUMEXPANDED(16*8+ 1+1) = 18
+    CHECKSUMEXPANDED(16*8+ 2+1) = 54
+    CHECKSUMEXPANDED(16*8+ 3+1) = 162
+    CHECKSUMEXPANDED(16*8+ 4+1) = 64
+    CHECKSUMEXPANDED(16*8+ 5+1) = 192
+    CHECKSUMEXPANDED(16*8+ 6+1) = 154
+    CHECKSUMEXPANDED(16*8+ 7+1) = 40
+    
+    CHECKSUMEXPANDED(17*8+ 0+1) = 120
+    CHECKSUMEXPANDED(17*8+ 1+1) = 149
+    CHECKSUMEXPANDED(17*8+ 2+1) = 25
+    CHECKSUMEXPANDED(17*8+ 3+1) = 75
+    CHECKSUMEXPANDED(17*8+ 4+1) = 14
+    CHECKSUMEXPANDED(17*8+ 5+1) = 42
+    CHECKSUMEXPANDED(17*8+ 6+1) = 126
+    CHECKSUMEXPANDED(17*8+ 7+1) = 167
+    
+    CHECKSUMEXPANDED(18*8+ 0+1) = 79
+    CHECKSUMEXPANDED(18*8+ 1+1) = 26
+    CHECKSUMEXPANDED(18*8+ 2+1) = 78
+    CHECKSUMEXPANDED(18*8+ 3+1) = 23
+    CHECKSUMEXPANDED(18*8+ 4+1) = 69
+    CHECKSUMEXPANDED(18*8+ 5+1) = 207
+    CHECKSUMEXPANDED(18*8+ 6+1) = 199
+    CHECKSUMEXPANDED(18*8+ 7+1) = 175
+    
+    CHECKSUMEXPANDED(19*8+ 0+1) = 103
+    CHECKSUMEXPANDED(19*8+ 1+1) = 98
+    CHECKSUMEXPANDED(19*8+ 2+1) = 83
+    CHECKSUMEXPANDED(19*8+ 3+1) = 38
+    CHECKSUMEXPANDED(19*8+ 4+1) = 114
+    CHECKSUMEXPANDED(19*8+ 5+1) = 131
+    CHECKSUMEXPANDED(19*8+ 6+1) = 182
+    CHECKSUMEXPANDED(19*8+ 7+1) = 124
+    
+    CHECKSUMEXPANDED(20*8+ 0+1) = 161
+    CHECKSUMEXPANDED(20*8+ 1+1) = 61
+    CHECKSUMEXPANDED(20*8+ 2+1) = 183
+    CHECKSUMEXPANDED(20*8+ 3+1) = 127
+    CHECKSUMEXPANDED(20*8+ 4+1) = 170
+    CHECKSUMEXPANDED(20*8+ 5+1) = 88
+    CHECKSUMEXPANDED(20*8+ 6+1) = 53
+    CHECKSUMEXPANDED(20*8+ 7+1) = 159
+    
+    CHECKSUMEXPANDED(21*8+ 0+1) = 55
+    CHECKSUMEXPANDED(21*8+ 1+1) = 165
+    CHECKSUMEXPANDED(21*8+ 2+1) = 73
+    CHECKSUMEXPANDED(21*8+ 3+1) = 8
+    CHECKSUMEXPANDED(21*8+ 4+1) = 24
+    CHECKSUMEXPANDED(21*8+ 5+1) = 72
+    CHECKSUMEXPANDED(21*8+ 6+1) = 5
+    CHECKSUMEXPANDED(21*8+ 7+1) = 15
+    
+    CHECKSUMEXPANDED(22*8+ 0+1) = 45
+    CHECKSUMEXPANDED(22*8+ 1+1) = 135
+    CHECKSUMEXPANDED(22*8+ 2+1) = 194
+    CHECKSUMEXPANDED(22*8+ 3+1) = 160
+    CHECKSUMEXPANDED(22*8+ 4+1) = 58
+    CHECKSUMEXPANDED(22*8+ 5+1) = 174
+    CHECKSUMEXPANDED(22*8+ 6+1) = 100
+    CHECKSUMEXPANDED(22*8+ 7+1) = 89
+    
+    Dim FINDERPATTERN(110) As String
+
+    FINDERPATTERN(0*11+ 0+1) = "A1"
+    FINDERPATTERN(0*11+ 1+1) = "A2"
+    FINDERPATTERN(0*11+ 2+1) = ""
+    FINDERPATTERN(0*11+ 3+1) = ""
+    FINDERPATTERN(0*11+ 4+1) = ""
+    FINDERPATTERN(0*11+ 5+1) = ""
+    FINDERPATTERN(0*11+ 6+1) = ""
+    FINDERPATTERN(0*11+ 7+1) = ""
+    FINDERPATTERN(0*11+ 8+1) = ""
+    FINDERPATTERN(0*11+ 9+1) = ""
+    FINDERPATTERN(0*11+ 10+1) = ""
+    
+    FINDERPATTERN(1*11+ 0+1) = "A1"
+    FINDERPATTERN(1*11+ 1+1) = "B2"
+    FINDERPATTERN(1*11+ 2+1) = "B1"
+    FINDERPATTERN(1*11+ 3+1) = ""
+    FINDERPATTERN(1*11+ 4+1) = ""
+    FINDERPATTERN(1*11+ 5+1) = ""
+    FINDERPATTERN(1*11+ 6+1) = ""
+    FINDERPATTERN(1*11+ 7+1) = ""
+    FINDERPATTERN(1*11+ 8+1) = ""
+    FINDERPATTERN(1*11+ 9+1) = ""
+    FINDERPATTERN(1*11+ 10+1) = ""
+    
+    FINDERPATTERN(2*11+ 0+1) = "A1"
+    FINDERPATTERN(2*11+ 1+1) = "C2"
+    FINDERPATTERN(2*11+ 2+1) = "B1"
+    FINDERPATTERN(2*11+ 3+1) = "D2"
+    FINDERPATTERN(2*11+ 4+1) = ""
+    FINDERPATTERN(2*11+ 5+1) = ""
+    FINDERPATTERN(2*11+ 6+1) = ""
+    FINDERPATTERN(2*11+ 7+1) = ""
+    FINDERPATTERN(2*11+ 8+1) = ""
+    FINDERPATTERN(2*11+ 9+1) = ""
+    FINDERPATTERN(2*11+ 10+1) = ""
+    
+    
+    FINDERPATTERN(3*11+ 0+1) = "A1"
+    FINDERPATTERN(3*11+ 1+1) = "E2"
+    FINDERPATTERN(3*11+ 2+1) = "B1"
+    FINDERPATTERN(3*11+ 3+1) = "D2"
+    FINDERPATTERN(3*11+ 4+1) = "C1"
+    FINDERPATTERN(3*11+ 5+1) = ""
+    FINDERPATTERN(3*11+ 6+1) = ""
+    FINDERPATTERN(3*11+ 7+1) = ""
+    FINDERPATTERN(3*11+ 8+1) = ""
+    FINDERPATTERN(3*11+ 9+1) = ""
+    FINDERPATTERN(3*11+ 10+1) = ""
+    
+    FINDERPATTERN(4*11+ 0+1) = "A1"
+    FINDERPATTERN(4*11+ 1+1) = "E2"
+    FINDERPATTERN(4*11+ 2+1) = "B1"
+    FINDERPATTERN(4*11+ 3+1) = "D2"
+    FINDERPATTERN(4*11+ 4+1) = "D1"
+    FINDERPATTERN(4*11+ 5+1) = "F2"
+    FINDERPATTERN(4*11+ 6+1) = ""
+    FINDERPATTERN(4*11+ 7+1) = ""
+    FINDERPATTERN(4*11+ 8+1) = ""
+    FINDERPATTERN(4*11+ 9+1) = ""
+    FINDERPATTERN(4*11+ 10+1) = ""
+    
+    FINDERPATTERN(5*11+ 0+1) = "A1"
+    FINDERPATTERN(5*11+ 1+1) = "E2"
+    FINDERPATTERN(5*11+ 2+1) = "B1"
+    FINDERPATTERN(5*11+ 3+1) = "D2"
+    FINDERPATTERN(5*11+ 4+1) = "E1"
+    FINDERPATTERN(5*11+ 5+1) = "F2"
+    FINDERPATTERN(5*11+ 6+1) = "F1"
+    FINDERPATTERN(5*11+ 7+1) = ""
+    FINDERPATTERN(5*11+ 8+1) = ""
+    FINDERPATTERN(5*11+ 9+1) = ""
+    FINDERPATTERN(5*11+ 10+1) = ""
+    
+    FINDERPATTERN(6*11+ 0+1) = "A1"
+    FINDERPATTERN(6*11+ 1+1) = "A2"
+    FINDERPATTERN(6*11+ 2+1) = "B1"
+    FINDERPATTERN(6*11+ 3+1) = "B2"
+    FINDERPATTERN(6*11+ 4+1) = "C1"
+    FINDERPATTERN(6*11+ 5+1) = "C2"
+    FINDERPATTERN(6*11+ 6+1) = "D1"
+    FINDERPATTERN(6*11+ 7+1) = "D2"
+    FINDERPATTERN(6*11+ 8+1) = ""
+    FINDERPATTERN(6*11+ 9+1) = ""
+    FINDERPATTERN(6*11+ 10+1) = ""
+    
+    FINDERPATTERN(7*11+ 0+1) = "A1"
+    FINDERPATTERN(7*11+ 1+1) = "A2"
+    FINDERPATTERN(7*11+ 2+1) = "B1"
+    FINDERPATTERN(7*11+ 3+1) = "B2"
+    FINDERPATTERN(7*11+ 4+1) = "C1"
+    FINDERPATTERN(7*11+ 5+1) = "C2"
+    FINDERPATTERN(7*11+ 6+1) = "D1"
+    FINDERPATTERN(7*11+ 7+1) = "E2"
+    FINDERPATTERN(7*11+ 8+1) = "E1"
+    FINDERPATTERN(7*11+ 9+1) = ""
+    FINDERPATTERN(7*11+ 10+1) = ""
+    
+    FINDERPATTERN(8*11+ 0+1) = "A1"
+    FINDERPATTERN(8*11+ 1+1) = "A2"
+    FINDERPATTERN(8*11+ 2+1) = "B1"
+    FINDERPATTERN(8*11+ 3+1) = "B2"
+    FINDERPATTERN(8*11+ 4+1) = "C1"
+    FINDERPATTERN(8*11+ 5+1) = "C2"
+    FINDERPATTERN(8*11+ 6+1) = "D1"
+    FINDERPATTERN(8*11+ 7+1) = "E2"
+    FINDERPATTERN(8*11+ 8+1) = "F1"
+    FINDERPATTERN(8*11+ 9+1) = "F2"
+    FINDERPATTERN(8*11+ 10+1) = ""
+    
+    FINDERPATTERN(9*11+ 0+1) = "A1"
+    FINDERPATTERN(9*11+ 1+1) = "A2"
+    FINDERPATTERN(9*11+ 2+1) = "B1"
+    FINDERPATTERN(9*11+ 3+1) = "B2"
+    FINDERPATTERN(9*11+ 4+1) = "C1"
+    FINDERPATTERN(9*11+ 5+1) = "D2"
+    FINDERPATTERN(9*11+ 6+1) = "D1"
+    FINDERPATTERN(9*11+ 7+1) = "E2"
+    FINDERPATTERN(9*11+ 8+1) = "E1"
+    FINDERPATTERN(9*11+ 9+1) = "F2"
+    FINDERPATTERN(9*11+ 10+1) = "F1"
+            
+    Dim FINDERS1(30) As number
+    Dim FINDERS2(30) As number
+
+   	'FINDERS1
+    FINDERS1(0*5+ 0+1 ) = 1
+    FINDERS1(0*5+ 1+1 ) = 8
+    FINDERS1(0*5+ 2+1 ) = 4
+    FINDERS1(0*5+ 3+1 ) = 1
+    FINDERS1(0*5+ 4+1 ) = 1
+     
+    FINDERS1(1*5+ 0+1 ) = 3
+    FINDERS1(1*5+ 1+1 ) = 6
+    FINDERS1(1*5+ 2+1 ) = 4
+    FINDERS1(1*5+ 3+1 ) = 1
+    FINDERS1(1*5+ 4+1 ) = 1
+      
+    FINDERS1(2*5+ 0+1 ) = 3
+    FINDERS1(2*5+ 1+1 ) = 4
+    FINDERS1(2*5+ 2+1 ) = 6
+    FINDERS1(2*5+ 3+1 ) = 1
+    FINDERS1(2*5+ 4+1 ) = 1
+      
+    FINDERS1(3*5+ 0+1 ) = 3
+    FINDERS1(3*5+ 1+1 ) = 2
+    FINDERS1(3*5+ 2+1 ) = 8
+    FINDERS1(3*5+ 3+1 ) = 1
+    FINDERS1(3*5+ 4+1 ) = 1
+     
+    FINDERS1(4*5+ 0+1 ) = 2
+    FINDERS1(4*5+ 1+1 ) = 6
+    FINDERS1(4*5+ 2+1 ) = 5
+    FINDERS1(4*5+ 3+1 ) = 1
+    FINDERS1(4*5+ 4+1 ) = 1
+     
+    FINDERS1(5*5+ 0+1 ) = 2
+    FINDERS1(5*5+ 1+1 ) = 2
+    FINDERS1(5*5+ 2+1 ) = 9
+    FINDERS1(5*5+ 3+1 ) = 1
+    FINDERS1(5*5+ 4+1 ) = 1
+     
+    
+    'FINDERS2
+    FINDERS2(0*5+ 0+1 ) = 1
+    FINDERS2(0*5+ 1+1 ) = 1
+    FINDERS2(0*5+ 2+1 ) = 4
+    FINDERS2(0*5+ 3+1 ) = 8
+    FINDERS2(0*5+ 4+1 ) = 1
+     
+    FINDERS2(1*5+ 0+1 ) = 1
+    FINDERS2(1*5+ 1+1 ) = 1
+    FINDERS2(1*5+ 2+1 ) = 4
+    FINDERS2(1*5+ 3+1 ) = 6
+    FINDERS2(1*5+ 4+1 ) = 3
+     
+    FINDERS2(2*5+ 0+1 ) = 1
+    FINDERS2(2*5+ 1+1 ) = 1
+    FINDERS2(2*5+ 2+1 ) = 6
+    FINDERS2(2*5+ 3+1 ) = 4
+    FINDERS2(2*5+ 4+1 ) = 3
+     
+    FINDERS2(3*5+ 0+1 ) = 1
+    FINDERS2(3*5+ 1+1 ) = 1
+    FINDERS2(3*5+ 2+1 ) = 8
+    FINDERS2(3*5+ 3+1 ) = 2
+    FINDERS2(3*5+ 4+1 ) = 3
+     
+    FINDERS2(4*5+ 0+1 ) = 1
+    FINDERS2(4*5+ 1+1 ) = 1
+    FINDERS2(4*5+ 2+1 ) = 5
+    FINDERS2(4*5+ 3+1 ) = 6
+    FINDERS2(4*5+ 4+1 ) = 2
+     
+    FINDERS2(5*5+ 0+1 ) = 1
+    FINDERS2(5*5+ 1+1 ) = 1
+    FINDERS2(5*5+ 2+1 ) = 9
+    FINDERS2(5*5+ 3+1 ) = 2
+    FINDERS2(5*5+ 4+1 ) = 2
+
+
+    Dim WIDTH17_4_0(35) As number
+    Dim WIDTH17_4_1(35) As number
+        
+    '740
+    WIDTH17_4_0(0*7+ 0+1) = 0
+    WIDTH17_4_0(0*7+ 1+1) = 347
+    WIDTH17_4_0(0*7+ 2+1) = 4
+    WIDTH17_4_0(0*7+ 3+1) = 5
+    WIDTH17_4_0(0*7+ 4+1) = 4
+    WIDTH17_4_0(0*7+ 5+1) = 2
+    WIDTH17_4_0(0*7+ 6+1) = 1
+        
+    WIDTH17_4_0(1*7+ 0+1) = 348
+    WIDTH17_4_0(1*7+ 1+1) = 1387
+    WIDTH17_4_0(1*7+ 2+1) = 20
+    WIDTH17_4_0(1*7+ 3+1) = 7
+    WIDTH17_4_0(1*7+ 4+1) = 4
+    WIDTH17_4_0(1*7+ 5+1) = 4
+    WIDTH17_4_0(1*7+ 6+1) = 1
+        
+    WIDTH17_4_0(2*7+ 0+1) = 1388
+    WIDTH17_4_0(2*7+ 1+1) = 2947
+    WIDTH17_4_0(2*7+ 2+1) = 52
+    WIDTH17_4_0(2*7+ 3+1) = 9
+    WIDTH17_4_0(2*7+ 4+1) = 4
+    WIDTH17_4_0(2*7+ 5+1) = 5
+    WIDTH17_4_0(2*7+ 6+1) = 1
+    
+    WIDTH17_4_0(3*7+ 0+1) = 2948
+    WIDTH17_4_0(3*7+ 1+1) = 3987
+    WIDTH17_4_0(3*7+ 2+1) = 104
+    WIDTH17_4_0(3*7+ 3+1) = 11
+    WIDTH17_4_0(3*7+ 4+1) = 4
+    WIDTH17_4_0(3*7+ 5+1) = 6
+    WIDTH17_4_0(3*7+ 6+1) = 1
+            
+    WIDTH17_4_0(4*7+ 0+1) = 3988
+    WIDTH17_4_0(4*7+ 1+1) = 4191
+    WIDTH17_4_0(4*7+ 2+1) = 204
+    WIDTH17_4_0(4*7+ 3+1) = 13
+    WIDTH17_4_0(4*7+ 4+1) = 4
+    WIDTH17_4_0(4*7+ 5+1) = 8
+    WIDTH17_4_0(4*7+ 6+1) = 1
+    
+    
+    '741
+    WIDTH17_4_1(0*7+ 0+1) = 0
+    WIDTH17_4_1(0*7+ 1+1) = 347
+    WIDTH17_4_1(0*7+ 2+1) = 4
+    WIDTH17_4_1(0*7+ 3+1) = 12
+    WIDTH17_4_1(0*7+ 4+1) = 4
+    WIDTH17_4_1(0*7+ 5+1) = 7
+    WIDTH17_4_1(0*7+ 6+1) = 0
+     
+     
+    WIDTH17_4_1(1*7+ 0+1) = 348
+    WIDTH17_4_1(1*7+ 1+1) = 1387
+    WIDTH17_4_1(1*7+ 2+1) = 20
+    WIDTH17_4_1(1*7+ 3+1) = 10
+    WIDTH17_4_1(1*7+ 4+1) = 4
+    WIDTH17_4_1(1*7+ 5+1) = 5
+    WIDTH17_4_1(1*7+ 6+1) = 0
+     
+     
+    WIDTH17_4_1(2*7+ 0+1) = 1388
+    WIDTH17_4_1(2*7+ 1+1) = 2947
+    WIDTH17_4_1(2*7+ 2+1) = 52
+    WIDTH17_4_1(2*7+ 3+1) = 8
+    WIDTH17_4_1(2*7+ 4+1) = 4
+    WIDTH17_4_1(2*7+ 5+1) = 4
+    WIDTH17_4_1(2*7+ 6+1) = 0
+     
+    WIDTH17_4_1(3*7+ 0+1) = 2948
+    WIDTH17_4_1(3*7+ 1+1) = 3987
+    WIDTH17_4_1(3*7+ 2+1) = 104
+    WIDTH17_4_1(3*7+ 3+1) = 6
+    WIDTH17_4_1(3*7+ 4+1) = 4
+    WIDTH17_4_1(3*7+ 5+1) = 3
+    WIDTH17_4_1(3*7+ 6+1) = 0
+     
+    WIDTH17_4_1(4*7+ 0+1) = 3988
+    WIDTH17_4_1(4*7+ 1+1) = 4191
+    WIDTH17_4_1(4*7+ 2+1) = 204
+    WIDTH17_4_1(4*7+ 3+1) = 4
+    WIDTH17_4_1(4*7+ 4+1) = 4
+    WIDTH17_4_1(4*7+ 5+1) = 1
+    WIDTH17_4_1(4*7+ 6+1) = 0
+
+    
+    cd = ""
+    result = ""
+    filtereddata = filterInput__GS1DatabarExpanded(data)
+    
+    Dim checkCharacter, numFinder, dataCounter, filteredlength As number
+    
+    filteredlength = Len(filtereddata)
+    
+    If (filteredlength > 200) Then
+        filtereddata = left(filtereddata, 200) 'This is max length input supported. the variable encodation will reject data that exceed the encodation length.
+    End If
+
+    
+    
+    Dim nx As number
+    Dim humanText as String
+    Dim errorFlag as number
+
+        
+  
+    'returns numSegments, numData (number of datachars), datachar
+    errorFlag = 0
+    filtereddata = encodationMethod(filtereddata, linkageFlag)
+    'formula = filtereddata
+
+    If (filtereddata="") then
+        errorFlag = 1
+    Else
+
+
+	        Dim value1Str as String
+    		Dim value2Str as String
+    		Dim value3Str as String
+    		Dim value4Str as String
+	    	Dim zzStr as String
+    		Dim zz, zzLen as number
+            Dim iter As number
+	
+			zzStr = filtereddata
+            
+
+            zzLen = Len(zzStr)
+            For zz = 1 to  zzLen-4
+
+            	If ((Mid(zzStr, zz , 1)="|") and (Mid(zzStr, zz+1 , 1)="|") and (Mid(zzStr, zz+2 , 1)="|") and (Mid(zzStr, zz+3 , 1)="|"))  then
+	
+            		value1Str = left(zzStr,zz-1)
+            		zzStr = right(zzStr,zzLen-4-zz+1)
+            		Exit For
+	
+            	End if	
+            Next zz
+            filtereddata = value1Str
+            
+
+
+            zzLen = Len(zzStr)
+            For zz = 1 to  zzLen-4
+
+            	If ((Mid(zzStr, zz , 1)="|") and (Mid(zzStr, zz+1 , 1)="|") and (Mid(zzStr, zz+2 , 1)="|") and (Mid(zzStr, zz+3 , 1)="|"))  then
+	
+            		value2Str = left(zzStr,zz-1)
+            		zzStr = right(zzStr,zzLen-4-zz+1)
+            		Exit For
+	
+            	End if	
+            Next zz
+            numSegments = val(value2Str)
+            
+
+            zzLen = Len(zzStr)
+            For zz = 1 to  zzLen-4
+
+            	If ((Mid(zzStr, zz , 1)="|") and (Mid(zzStr, zz+1 , 1)="|") and (Mid(zzStr, zz+2 , 1)="|") and (Mid(zzStr, zz+3 , 1)="|"))  then
+	
+            		value3Str = left(zzStr,zz-1)
+            		zzStr = right(zzStr,zzLen-4-zz+1)
+            		Exit For
+	
+            	End if	
+            Next zz
+            numData = val(value3Str)
+            
+
+            For iter = 1 to numData-1
+
+                zzLen = Len(zzStr)
+                For zz = 1 to  zzLen-4
+
+                	If ((Mid(zzStr, zz , 1)="|") and (Mid(zzStr, zz+1 , 1)="|") and (Mid(zzStr, zz+2 , 1)="|") and (Mid(zzStr, zz+3 , 1)="|"))  then
+	
+                		value4Str = left(zzStr,zz-1)
+                		zzStr = right(zzStr,zzLen-4-zz+1)
+                		Exit For
+	
+                	End if	
+                Next zz                
+                datachar(iter) = val(value4Str)
+                
+                
+
+            Next iter
+            
+            datachar(numData) = val(zzStr)
+            
+            
+
+
+    End If
+    
+    
+    'numData = nx                
+    humanText = filtereddata
+    sumx = 0
+    
+    
+    Dim wwodd(4) As number
+    Dim wweven(4) As number
+    Dim z As number
+    Dim y As number
+    Dim x As number
+    Dim xp As number
+        
+    For xp = 0 To numData - 1
+        
+        '''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+        'retval = getGS1WExpanded(datachar(xp), 1, 17, wwodd)        
+         For x = 0 To 4
+                If (datachar(xp+1) >= WIDTH17_4_1(x*7+ 0+1) And datachar(xp+1) <= WIDTH17_4_1(x*7+ 1+1)) Then                
+                            'retval = getGS1widths(Int((datachar(xp) - WIDTH17_4_1(x*7+ 0+1)) / WIDTH17_4_1(x*7+ 2+1)), WIDTH17_4_1(x*7+ 3+1), WIDTH17_4_1(x*7+ 4+1), WIDTH17_4_1(x*7+ 5+1), WIDTH17_4_1(x*7+ 6+1), widths)
+                            valpp = Int((datachar(xp+1) - WIDTH17_4_1(x*7+ 0+1)) / WIDTH17_4_1(x*7+ 2+1)) 
+                        	npp = WIDTH17_4_1(x*7+ 3+1)
+                        	elements = WIDTH17_4_1(x*7+ 4+1) 
+                        	maxWidth = WIDTH17_4_1(x*7+ 5+1) 
+                        	noNarrow = WIDTH17_4_1(x*7+ 6+1)
+               
+                            narrowMask = 0
+                            For baryy = 0 To (elements - 1 - 1)
+    
+                                'for (elmWidth = 1, narrowMask |= (1<<baryy);; elmWidth++, narrowMask &= ~(1<<baryy))
+                                elmWidth = 1
+                                tempMask = 2 ^ baryy
+                                
+                                'Bitwise OR
+                                'narrowMask = narrowMask Or tempMask                                
+                                maskdiv1 = narrowMask
+                                maskdiv2 = tempMask
+                                masksum = 0
+                                For mz = 0 to 31
+        
+                                    maskval1 = maskdiv1 mod 2
+                                    maskval2 = maskdiv2 mod 2
+
+                                    if ((maskval1=1) or (maskval2=1)) then 'or                                           
+                                           masksum =  masksum  +  2^mz
+                                    end if
+
+                                    maskdiv1 = Int(maskdiv1 /2) 
+                                    maskdiv2 = Int(maskdiv2 /2)
+
+                                Next mz        
+                                narrowMask = masksum                                
+                        
+            
+                                Do While (1 > 0)
+        
+                                            ' get all combinations
+                                            'subVal = combins__GS1Databar14(npp - elmWidth - 1, elements - bar - 2)
+                                            nz = npp - elmWidth - 1
+                                            rz = elements - baryy - 2
+                                            If (nz - rz > rz) Then
+        
+                                                minDenomz = rz
+                                                maxDenomz = nz - rz
+        
+                                            Else
+                                                minDenomz = nz - rz
+                                                maxDenomz = rz
+                                            End If
+        
+        
+                                            valz = 1
+                                            jz = 1
+                                            For iz = nz To maxDenomz + 1 Step -1
+        
+                                                valz = valz * iz
+                                                If (jz <= minDenomz) Then
+                                                    valz = valz / jz
+                                                    jz = jz + 1
+                                                End If
+            
+                                            Next iz
+                                            Do While (jz <= minDenomz)
+            
+                                                valz = valz / jz
+                                                jz = jz + 1
+            
+                                            Loop
+                                            subVal = valz
+
+
+                                            ' less combinations with no single module element
+                                            'if ((!noNarrow) and (narrowMask==0) and
+                                            If ((noNarrow = 0) And (narrowMask = 0) And (npp - elmWidth - (elements - baryy - 1) >= elements - baryy - 1)) Then
+                                                'subVal = subVal - combins__GS1Databar14(npp - elmWidth - (elements - bar), elements - bar - 2)
+                                                nz = npp - elmWidth - (elements - baryy)
+                                                rz = elements - baryy - 2
+
+                                                If (nz - rz > rz) Then
+        
+                                                    minDenomz = rz
+                                                    maxDenomz = nz - rz
+        
+                                                Else
+                                                    minDenomz = nz - rz
+                                                    maxDenomz = rz
+                                                End If
+        
+        
+                                                valz = 1
+                                                jz = 1
+                                                For iz = nz To maxDenomz + 1 Step -1
+        
+                                                    valz = valz * iz
+                                                    If (jz <= minDenomz) Then
+                                                        valz = valz / jz
+                                                        jz = jz + 1
+                                                    End If
+            
+                                                Next iz
+                                                Do While (jz <= minDenomz)
+            
+                                                    valz = valz / jz
+                                                    jz = jz + 1
+            
+                                                Loop
+                                                subVal = subVal - valz 
+        
+
+                                            End If
+
+
+
+
+                                            ' less combinations with elements > maxval
+                                            If (elements - baryy - 1 > 1) Then
+                    
+                                                'for (mxwElement = npp-elmWidth-(elements-baryy-2);  mxwElement > maxWidth; mxwElement--)
+                                                lessVal = 0
+                                                mxwElement = npp - elmWidth - (elements - baryy - 2)
+                                                Do While (mxwElement > maxWidth)
+                                                
+                                                        'lessVal = lessVal + combins__GS1Databar14(npp - elmWidth - mxwElement - 1, elements - bar - 3)
+                                                        nz = npp - elmWidth - mxwElement - 1
+                                                        rz = elements - baryy - 3
+
+                                                        If (nz - rz > rz) Then
+        
+                                                            minDenomz = rz
+                                                            maxDenomz = nz - rz
+        
+                                                        Else
+                                                            minDenomz = nz - rz
+                                                            maxDenomz = rz
+                                                        End If        
+        
+                                                        valz = 1
+                                                        jz = 1
+                                                        For iz = nz To maxDenomz + 1 Step -1
+        
+                                                            valz = valz * iz
+                                                            If (jz <= minDenomz) Then
+                                                                valz = valz / jz
+                                                                jz = jz + 1
+                                                            End If
+            
+                                                        Next iz
+                                                        Do While (jz <= minDenomz)
+            
+                                                            valz = valz / jz
+                                                            jz = jz + 1
+            
+                                                        Loop                            
+                                                        lessVal = lessVal + valz 
+
+                                                        mxwElement = mxwElement - 1
+                        
+                                                    Loop
+                                                    'to return        
+                                                    subVal = subVal - (lessVal * (elements - 1 - baryy))
+                            
+                                            
+                                            ElseIf (npp - elmWidth > maxWidth) Then
+                    
+                                                subVal = subVal - 1
+                        
+                                            End If
+                                            valpp = valpp - subVal
+                                            If (valpp < 0) Then
+                                                Exit Do
+                                            End If
+                    
+                    
+                                            elmWidth = elmWidth + 1
+                                            tempMask = 2 ^ baryy
+                                            'narrowMask = narrowMask And (Not (tempMask))
+
+                                            'Bitwise Operations                                            
+                                            maskdiv1 = narrowMask
+                                            maskdiv2 = tempMask
+                                            masksum = 0
+                                            For mz = 0 to 31
+        
+                                                maskval1 = maskdiv1 mod 2
+                                                maskval2 = maskdiv2 mod 2
+
+                                                if ((maskval1=1) and (maskval2=0)) then    'And (Not 
+                                                       masksum =  masksum  +  2^mz
+                                                end if
+
+                                                maskdiv1 = Int(maskdiv1 /2) 
+                                                maskdiv2 = Int(maskdiv2 /2)
+
+                                            Next mz        
+                                            narrowMask = masksum                                
+
+                                Loop
+            
+                                valpp = valpp + subVal
+                                npp = npp - elmWidth
+                                wwodd(baryy+1) = elmWidth        
+    
+                            Next baryy    
+                            wwodd(baryy+1) = npp
+
+                
+                End If
+         Next x
+        
+        '''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+        'retval = getGS1WExpanded(datachar(xp), 0, 17, wweven)
+         For x = 0 To 4
+                If (datachar(xp+1) >= WIDTH17_4_0(x*7+ 0+1) And datachar(xp+1) <= WIDTH17_4_0(x*7+ 1+1)) Then                                        
+                    'retval = getGS1widths(Int((datachar(xp) - WIDTH17_4_0(x*7+ 0+1)) Mod WIDTH17_4_0(x*7+ 2+1)), WIDTH17_4_0(x*7+ 3+1), WIDTH17_4_0(x*7+ 4+1), WIDTH17_4_0(x*7+ 5+1), WIDTH17_4_0(x*7+ 6+1), widths)
+
+                            valpp = Int((datachar(xp+1) - WIDTH17_4_0(x*7+ 0+1)) Mod WIDTH17_4_0(x*7+ 2+1))
+                        	npp =  WIDTH17_4_0(x*7+ 3+1)
+                        	elements =  WIDTH17_4_0(x*7+ 4+1) 
+                        	maxWidth = WIDTH17_4_0(x*7+ 5+1) 
+                        	noNarrow = WIDTH17_4_0(x*7+ 6+1)
+               
+                            narrowMask = 0
+                            For baryy = 0 To (elements - 1 - 1)
+    
+                                'for (elmWidth = 1, narrowMask |= (1<<baryy);; elmWidth++, narrowMask &= ~(1<<baryy))
+                                elmWidth = 1
+                                tempMask = 2 ^ baryy
+                                
+                                'Bitwise OR
+                                'narrowMask = narrowMask Or tempMask                                
+                                maskdiv1 = narrowMask
+                                maskdiv2 = tempMask
+                                masksum = 0
+                                For mz = 0 to 31
+        
+                                    maskval1 = maskdiv1 mod 2
+                                    maskval2 = maskdiv2 mod 2
+
+                                    if ((maskval1=1) or (maskval2=1)) then 'or                                           
+                                           masksum =  masksum  +  2^mz
+                                    end if
+
+                                    maskdiv1 = Int(maskdiv1 /2) 
+                                    maskdiv2 = Int(maskdiv2 /2)
+
+                                Next mz        
+                                narrowMask = masksum                                
+                        
+            
+                                Do While (1 > 0)
+        
+                                            ' get all combinations
+                                            'subVal = combins__GS1Databar14(npp - elmWidth - 1, elements - bar - 2)
+                                            nz = npp - elmWidth - 1
+                                            rz = elements - baryy - 2
+                                            If (nz - rz > rz) Then
+        
+                                                minDenomz = rz
+                                                maxDenomz = nz - rz
+        
+                                            Else
+                                                minDenomz = nz - rz
+                                                maxDenomz = rz
+                                            End If
+        
+        
+                                            valz = 1
+                                            jz = 1
+                                            For iz = nz To maxDenomz + 1 Step -1
+        
+                                                valz = valz * iz
+                                                If (jz <= minDenomz) Then
+                                                    valz = valz / jz
+                                                    jz = jz + 1
+                                                End If
+            
+                                            Next iz
+                                            Do While (jz <= minDenomz)
+            
+                                                valz = valz / jz
+                                                jz = jz + 1
+            
+                                            Loop
+                                            subVal = valz
+
+
+                                            ' less combinations with no single module element
+                                            'if ((!noNarrow) and (narrowMask==0) and
+                                            If ((noNarrow = 0) And (narrowMask = 0) And (npp - elmWidth - (elements - baryy - 1) >= elements - baryy - 1)) Then
+                                                'subVal = subVal - combins__GS1Databar14(npp - elmWidth - (elements - bar), elements - bar - 2)
+                                                nz = npp - elmWidth - (elements - baryy)
+                                                rz = elements - baryy - 2
+
+                                                If (nz - rz > rz) Then
+        
+                                                    minDenomz = rz
+                                                    maxDenomz = nz - rz
+        
+                                                Else
+                                                    minDenomz = nz - rz
+                                                    maxDenomz = rz
+                                                End If
+        
+        
+                                                valz = 1
+                                                jz = 1
+                                                For iz = nz To maxDenomz + 1 Step -1
+        
+                                                    valz = valz * iz
+                                                    If (jz <= minDenomz) Then
+                                                        valz = valz / jz
+                                                        jz = jz + 1
+                                                    End If
+            
+                                                Next iz
+                                                Do While (jz <= minDenomz)
+            
+                                                    valz = valz / jz
+                                                    jz = jz + 1
+            
+                                                Loop
+                                                subVal = subVal - valz 
+        
+
+                                            End If
+
+
+
+
+                                            ' less combinations with elements > maxval
+                                            If (elements - baryy - 1 > 1) Then
+                    
+                                                'for (mxwElement = npp-elmWidth-(elements-baryy-2);  mxwElement > maxWidth; mxwElement--)
+                                                lessVal = 0
+                                                mxwElement = npp - elmWidth - (elements - baryy - 2)
+                                                Do While (mxwElement > maxWidth)
+                                                
+                                                        'lessVal = lessVal + combins__GS1Databar14(npp - elmWidth - mxwElement - 1, elements - bar - 3)
+                                                        nz = npp - elmWidth - mxwElement - 1
+                                                        rz = elements - baryy - 3
+
+                                                        If (nz - rz > rz) Then
+        
+                                                            minDenomz = rz
+                                                            maxDenomz = nz - rz
+        
+                                                        Else
+                                                            minDenomz = nz - rz
+                                                            maxDenomz = rz
+                                                        End If        
+        
+                                                        valz = 1
+                                                        jz = 1
+                                                        For iz = nz To maxDenomz + 1 Step -1
+        
+                                                            valz = valz * iz
+                                                            If (jz <= minDenomz) Then
+                                                                valz = valz / jz
+                                                                jz = jz + 1
+                                                            End If
+            
+                                                        Next iz
+                                                        Do While (jz <= minDenomz)
+            
+                                                            valz = valz / jz
+                                                            jz = jz + 1
+            
+                                                        Loop                            
+                                                        lessVal = lessVal + valz 
+
+                                                        mxwElement = mxwElement - 1
+                        
+                                                    Loop
+                                                    'to return        
+                                                    subVal = subVal - (lessVal * (elements - 1 - baryy))
+                            
+                                            
+                                            ElseIf (npp - elmWidth > maxWidth) Then
+                    
+                                                subVal = subVal - 1
+                        
+                                            End If
+                                            valpp = valpp - subVal
+                                            If (valpp < 0) Then
+                                                Exit Do
+                                            End If
+                    
+                    
+                                            elmWidth = elmWidth + 1
+                                            tempMask = 2 ^ baryy
+                                            'narrowMask = narrowMask And (Not (tempMask))
+
+                                            'Bitwise Operations                                            
+                                            maskdiv1 = narrowMask
+                                            maskdiv2 = tempMask
+                                            masksum = 0
+                                            For mz = 0 to 31
+        
+                                                maskval1 = maskdiv1 mod 2
+                                                maskval2 = maskdiv2 mod 2
+
+                                                if ((maskval1=1) and (maskval2=0)) then    'And (Not 
+                                                       masksum =  masksum  +  2^mz
+                                                end if
+
+                                                maskdiv1 = Int(maskdiv1 /2) 
+                                                maskdiv2 = Int(maskdiv2 /2)
+
+                                            Next mz        
+                                            narrowMask = masksum                                
+
+                                Loop
+            
+                                valpp = valpp + subVal
+                                npp = npp - elmWidth
+                                wweven(baryy+1) = elmWidth        
+    
+                            Next baryy    
+                            wweven(baryy+1) = npp
+                
+                End If
+         Next x
+        
+        For z = 0 To 3
+            widthsodd(xp*4+ z+1) = wwodd(z+1)
+            widthseven(xp*4+ z+1) = wweven(z+1)
+        Next z
+        
+    
+    Next xp
+    
+    
+    
+    Dim sequenceIndex As number
+    Dim toggle As String
+    Dim checksumptr As number
+    For x = 0 To numData - 1
+    
+        
+        toggle = " Left"
+        
+        If (x = 0) Then
+        
+            sequenceIndex = x
+            checksumptr = getCheckSumWeights(FINDERPATTERN(getFinderPatternIndex(numSegments)*11+ sequenceIndex+1) + " Right")
+        
+        
+        ElseIf (x > 0 And (x Mod 2 = 0)) Then
+        
+            checksumptr = getCheckSumWeights(FINDERPATTERN(getFinderPatternIndex(numSegments)*11+ sequenceIndex+1) + " Right")
+        
+        ElseIf (x > 0 And (x Mod 2 = 1)) Then
+        
+            sequenceIndex = sequenceIndex + 1
+            checksumptr = getCheckSumWeights(FINDERPATTERN(getFinderPatternIndex(numSegments)*11+ sequenceIndex+1) + " Left")
+        
+        End If
+
+        
+        'TRACE("Chechsum Weights\n");
+        'For y = 0 To 3
+            'TRACE("%d,%d,",checksumptr[(y*2)],checksumptr[(y*2)+1]);
+        'Next y
+        
+
+        For y = 0 To 3
+    
+            resultsodd(x*4+ y+1) = widthsodd(x*4+ y+1)
+            resultseven(x*4+ y+1) = widthseven(x*4+ y+1)
+            sumx = sumx + CHECKSUMEXPANDED(checksumptr*8+ (y * 2)+1) * widthsodd(x*4+ y+1) + CHECKSUMEXPANDED(checksumptr*8+ ((y * 2) + 1)+1) * widthseven(x*4+ y+1)
+        
+        Next y
+    
+    
+    Next x
+    
+    
+
+    checksum = sumx Mod 211
+    checkCharacter = 211 * (numSegments - 4) + checksum
+    
+   
+    ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    'retval = getGS1WExpanded(checkCharacter, 1, 17, wwodd)
+    For x = 0 To 4
+                If (checkCharacter >= WIDTH17_4_1(x*7+ 0+1) And checkCharacter <= WIDTH17_4_1(x*7+ 1+1)) Then
+                
+                           'retval = getGS1widths(Int((checkCharacter - WIDTH17_4_1(x*7+ 0+1)) / WIDTH17_4_1(x*7+ 2+1)), WIDTH17_4_1(x*7+ 3+1), WIDTH17_4_1(x*7+ 4+1), WIDTH17_4_1(x*7+ 5+1), WIDTH17_4_1(x*7+ 6+1), widths)
+                            valpp = Int((checkCharacter - WIDTH17_4_1(x*7+ 0+1)) / WIDTH17_4_1(x*7+ 2+1))
+                        	npp  = WIDTH17_4_1(x*7+ 3+1) 
+                        	elements  = WIDTH17_4_1(x*7+ 4+1) 
+                        	maxWidth = WIDTH17_4_1(x*7+ 5+1) 
+                        	noNarrow = WIDTH17_4_1(x*7+ 6+1)
+               
+                            narrowMask = 0
+                            For baryy = 0 To (elements - 1 - 1)
+    
+                                'for (elmWidth = 1, narrowMask |= (1<<baryy);; elmWidth++, narrowMask &= ~(1<<baryy))
+                                elmWidth = 1
+                                tempMask = 2 ^ baryy
+                                
+                                'Bitwise OR
+                                'narrowMask = narrowMask Or tempMask                                
+                                maskdiv1 = narrowMask
+                                maskdiv2 = tempMask
+                                masksum = 0
+                                For mz = 0 to 31
+        
+                                    maskval1 = maskdiv1 mod 2
+                                    maskval2 = maskdiv2 mod 2
+
+                                    if ((maskval1=1) or (maskval2=1)) then 'or                                           
+                                           masksum =  masksum  +  2^mz
+                                    end if
+
+                                    maskdiv1 = Int(maskdiv1 /2) 
+                                    maskdiv2 = Int(maskdiv2 /2)
+
+                                Next mz        
+                                narrowMask = masksum                                
+                        
+            
+                                Do While (1 > 0)
+        
+                                            ' get all combinations
+                                            'subVal = combins__GS1Databar14(npp - elmWidth - 1, elements - bar - 2)
+                                            nz = npp - elmWidth - 1
+                                            rz = elements - baryy - 2
+                                            If (nz - rz > rz) Then
+        
+                                                minDenomz = rz
+                                                maxDenomz = nz - rz
+        
+                                            Else
+                                                minDenomz = nz - rz
+                                                maxDenomz = rz
+                                            End If
+        
+        
+                                            valz = 1
+                                            jz = 1
+                                            For iz = nz To maxDenomz + 1 Step -1
+        
+                                                valz = valz * iz
+                                                If (jz <= minDenomz) Then
+                                                    valz = valz / jz
+                                                    jz = jz + 1
+                                                End If
+            
+                                            Next iz
+                                            Do While (jz <= minDenomz)
+            
+                                                valz = valz / jz
+                                                jz = jz + 1
+            
+                                            Loop
+                                            subVal = valz
+
+
+                                            ' less combinations with no single module element
+                                            'if ((!noNarrow) and (narrowMask==0) and
+                                            If ((noNarrow = 0) And (narrowMask = 0) And (npp - elmWidth - (elements - baryy - 1) >= elements - baryy - 1)) Then
+                                                'subVal = subVal - combins__GS1Databar14(npp - elmWidth - (elements - bar), elements - bar - 2)
+                                                nz = npp - elmWidth - (elements - baryy)
+                                                rz = elements - baryy - 2
+
+                                                If (nz - rz > rz) Then
+        
+                                                    minDenomz = rz
+                                                    maxDenomz = nz - rz
+        
+                                                Else
+                                                    minDenomz = nz - rz
+                                                    maxDenomz = rz
+                                                End If
+        
+        
+                                                valz = 1
+                                                jz = 1
+                                                For iz = nz To maxDenomz + 1 Step -1
+        
+                                                    valz = valz * iz
+                                                    If (jz <= minDenomz) Then
+                                                        valz = valz / jz
+                                                        jz = jz + 1
+                                                    End If
+            
+                                                Next iz
+                                                Do While (jz <= minDenomz)
+            
+                                                    valz = valz / jz
+                                                    jz = jz + 1
+            
+                                                Loop
+                                                subVal = subVal - valz 
+        
+
+                                            End If
+
+
+
+
+                                            ' less combinations with elements > maxval
+                                            If (elements - baryy - 1 > 1) Then
+                    
+                                                'for (mxwElement = npp-elmWidth-(elements-baryy-2);  mxwElement > maxWidth; mxwElement--)
+                                                lessVal = 0
+                                                mxwElement = npp - elmWidth - (elements - baryy - 2)
+                                                Do While (mxwElement > maxWidth)
+                                                
+                                                        'lessVal = lessVal + combins__GS1Databar14(npp - elmWidth - mxwElement - 1, elements - bar - 3)
+                                                        nz = npp - elmWidth - mxwElement - 1
+                                                        rz = elements - baryy - 3
+
+                                                        If (nz - rz > rz) Then
+        
+                                                            minDenomz = rz
+                                                            maxDenomz = nz - rz
+        
+                                                        Else
+                                                            minDenomz = nz - rz
+                                                            maxDenomz = rz
+                                                        End If        
+        
+                                                        valz = 1
+                                                        jz = 1
+                                                        For iz = nz To maxDenomz + 1 Step -1
+        
+                                                            valz = valz * iz
+                                                            If (jz <= minDenomz) Then
+                                                                valz = valz / jz
+                                                                jz = jz + 1
+                                                            End If
+            
+                                                        Next iz
+                                                        Do While (jz <= minDenomz)
+            
+                                                            valz = valz / jz
+                                                            jz = jz + 1
+            
+                                                        Loop                            
+                                                        lessVal = lessVal + valz 
+
+                                                        mxwElement = mxwElement - 1
+                        
+                                                    Loop
+                                                    'to return        
+                                                    subVal = subVal - (lessVal * (elements - 1 - baryy))
+                            
+                                            
+                                            ElseIf (npp - elmWidth > maxWidth) Then
+                    
+                                                subVal = subVal - 1
+                        
+                                            End If
+                                            valpp = valpp - subVal
+                                            If (valpp < 0) Then
+                                                Exit Do
+                                            End If
+                    
+                    
+                                            elmWidth = elmWidth + 1
+                                            tempMask = 2 ^ baryy
+                                            'narrowMask = narrowMask And (Not (tempMask))
+
+                                            'Bitwise Operations                                            
+                                            maskdiv1 = narrowMask
+                                            maskdiv2 = tempMask
+                                            masksum = 0
+                                            For mz = 0 to 31
+        
+                                                maskval1 = maskdiv1 mod 2
+                                                maskval2 = maskdiv2 mod 2
+
+                                                if ((maskval1=1) and (maskval2=0)) then    'And (Not 
+                                                       masksum =  masksum  +  2^mz
+                                                end if
+
+                                                maskdiv1 = Int(maskdiv1 /2) 
+                                                maskdiv2 = Int(maskdiv2 /2)
+
+                                            Next mz        
+                                            narrowMask = masksum                                
+
+                                Loop
+            
+                                valpp = valpp + subVal
+                                npp = npp - elmWidth
+                                wwodd(baryy+1) = elmWidth        
+    
+                            Next baryy    
+                            wwodd(baryy+1) = npp
+    
+
+                
+                End If
+    Next x
+
+
+    'retval = getGS1WExpanded(checkCharacter, 0, 17, wweven)
+    For x = 0 To 4
+
+                If (checkCharacter >= WIDTH17_4_0(x*7+ 0+1) And checkCharacter <= WIDTH17_4_0(x*7+ 1+1)) Then
+                                        
+                            'retval = getGS1widths(Int((checkCharacter - WIDTH17_4_0(x*7+ 0+1)) Mod WIDTH17_4_0(x*7+ 2+1)), WIDTH17_4_0(x*7+ 3+1), WIDTH17_4_0(x*7+ 4+1), WIDTH17_4_0(x*7+ 5+1), WIDTH17_4_0(x*7+ 6+1), widths)
+                            valpp = Int((checkCharacter - WIDTH17_4_0(x*7+ 0+1)) Mod WIDTH17_4_0(x*7+ 2+1))
+                        	npp  =   WIDTH17_4_0(x*7+ 3+1) 
+                        	elements  = WIDTH17_4_0(x*7+ 4+1) 
+                        	maxWidth = WIDTH17_4_0(x*7+ 5+1)
+                        	noNarrow =  WIDTH17_4_0(x*7+ 6+1)
+               
+                            narrowMask = 0
+                            For baryy = 0 To (elements - 1 - 1)
+    
+                                'for (elmWidth = 1, narrowMask |= (1<<baryy);; elmWidth++, narrowMask &= ~(1<<baryy))
+                                elmWidth = 1
+                                tempMask = 2 ^ baryy
+                                
+                                'Bitwise OR
+                                'narrowMask = narrowMask Or tempMask                                
+                                maskdiv1 = narrowMask
+                                maskdiv2 = tempMask
+                                masksum = 0
+                                For mz = 0 to 31
+        
+                                    maskval1 = maskdiv1 mod 2
+                                    maskval2 = maskdiv2 mod 2
+
+                                    if ((maskval1=1) or (maskval2=1)) then 'or                                           
+                                           masksum =  masksum  +  2^mz
+                                    end if
+
+                                    maskdiv1 = Int(maskdiv1 /2) 
+                                    maskdiv2 = Int(maskdiv2 /2)
+
+                                Next mz        
+                                narrowMask = masksum                                
+                        
+            
+                                Do While (1 > 0)
+        
+                                            ' get all combinations
+                                            'subVal = combins__GS1Databar14(npp - elmWidth - 1, elements - bar - 2)
+                                            nz = npp - elmWidth - 1
+                                            rz = elements - baryy - 2
+                                            If (nz - rz > rz) Then
+        
+                                                minDenomz = rz
+                                                maxDenomz = nz - rz
+        
+                                            Else
+                                                minDenomz = nz - rz
+                                                maxDenomz = rz
+                                            End If
+        
+        
+                                            valz = 1
+                                            jz = 1
+                                            For iz = nz To maxDenomz + 1 Step -1
+        
+                                                valz = valz * iz
+                                                If (jz <= minDenomz) Then
+                                                    valz = valz / jz
+                                                    jz = jz + 1
+                                                End If
+            
+                                            Next iz
+                                            Do While (jz <= minDenomz)
+            
+                                                valz = valz / jz
+                                                jz = jz + 1
+            
+                                            Loop
+                                            subVal = valz
+
+
+                                            ' less combinations with no single module element
+                                            'if ((!noNarrow) and (narrowMask==0) and
+                                            If ((noNarrow = 0) And (narrowMask = 0) And (npp - elmWidth - (elements - baryy - 1) >= elements - baryy - 1)) Then
+                                                'subVal = subVal - combins__GS1Databar14(npp - elmWidth - (elements - bar), elements - bar - 2)
+                                                nz = npp - elmWidth - (elements - baryy)
+                                                rz = elements - baryy - 2
+
+                                                If (nz - rz > rz) Then
+        
+                                                    minDenomz = rz
+                                                    maxDenomz = nz - rz
+        
+                                                Else
+                                                    minDenomz = nz - rz
+                                                    maxDenomz = rz
+                                                End If
+        
+        
+                                                valz = 1
+                                                jz = 1
+                                                For iz = nz To maxDenomz + 1 Step -1
+        
+                                                    valz = valz * iz
+                                                    If (jz <= minDenomz) Then
+                                                        valz = valz / jz
+                                                        jz = jz + 1
+                                                    End If
+            
+                                                Next iz
+                                                Do While (jz <= minDenomz)
+            
+                                                    valz = valz / jz
+                                                    jz = jz + 1
+            
+                                                Loop
+                                                subVal = subVal - valz 
+        
+
+                                            End If
+
+
+
+
+                                            ' less combinations with elements > maxval
+                                            If (elements - baryy - 1 > 1) Then
+                    
+                                                'for (mxwElement = npp-elmWidth-(elements-baryy-2);  mxwElement > maxWidth; mxwElement--)
+                                                lessVal = 0
+                                                mxwElement = npp - elmWidth - (elements - baryy - 2)
+                                                Do While (mxwElement > maxWidth)
+                                                
+                                                        'lessVal = lessVal + combins__GS1Databar14(npp - elmWidth - mxwElement - 1, elements - bar - 3)
+                                                        nz = npp - elmWidth - mxwElement - 1
+                                                        rz = elements - baryy - 3
+
+                                                        If (nz - rz > rz) Then
+        
+                                                            minDenomz = rz
+                                                            maxDenomz = nz - rz
+        
+                                                        Else
+                                                            minDenomz = nz - rz
+                                                            maxDenomz = rz
+                                                        End If        
+        
+                                                        valz = 1
+                                                        jz = 1
+                                                        For iz = nz To maxDenomz + 1 Step -1
+        
+                                                            valz = valz * iz
+                                                            If (jz <= minDenomz) Then
+                                                                valz = valz / jz
+                                                                jz = jz + 1
+                                                            End If
+            
+                                                        Next iz
+                                                        Do While (jz <= minDenomz)
+            
+                                                            valz = valz / jz
+                                                            jz = jz + 1
+            
+                                                        Loop                            
+                                                        lessVal = lessVal + valz 
+
+                                                        mxwElement = mxwElement - 1
+                        
+                                                    Loop
+                                                    'to return        
+                                                    subVal = subVal - (lessVal * (elements - 1 - baryy))
+                            
+                                            
+                                            ElseIf (npp - elmWidth > maxWidth) Then
+                    
+                                                subVal = subVal - 1
+                        
+                                            End If
+                                            valpp = valpp - subVal
+                                            If (valpp < 0) Then
+                                                Exit Do
+                                            End If
+                    
+                    
+                                            elmWidth = elmWidth + 1
+                                            tempMask = 2 ^ baryy
+                                            'narrowMask = narrowMask And (Not (tempMask))
+
+                                            'Bitwise Operations                                            
+                                            maskdiv1 = narrowMask
+                                            maskdiv2 = tempMask
+                                            masksum = 0
+                                            For mz = 0 to 31
+        
+                                                maskval1 = maskdiv1 mod 2
+                                                maskval2 = maskdiv2 mod 2
+
+                                                if ((maskval1=1) and (maskval2=0)) then    'And (Not 
+                                                       masksum =  masksum  +  2^mz
+                                                end if
+
+                                                maskdiv1 = Int(maskdiv1 /2) 
+                                                maskdiv2 = Int(maskdiv2 /2)
+
+                                            Next mz        
+                                            narrowMask = masksum                                
+
+                                Loop
+            
+                                valpp = valpp + subVal
+                                npp = npp - elmWidth
+                                wweven(baryy+1) = elmWidth        
+    
+                            Next baryy    
+                            wweven(baryy+1) = npp
+                
+                End If
+    Next x
+        
+
+    For z = 0 To 3
+            checkwidthsodd(z+1) = wwodd(z+1)
+            checkwidthseven(z+1) = wweven(z+1)
+    Next z
+    
+
+    result = "11"  'Left Guard
+    For x = 0 To 3
+    
+        result = result + ChrW(Int(checkwidthsodd(x+1) + 48)) + ChrW(Int(checkwidthseven(x+1) + 48))
+        
+    Next x
+        
+
+    Dim patternptr As String
+    Dim patternsequenceptr As number
+    Dim findersnum As number
+
+    numFinder = getNumFinder(numSegments)
+    dataCounter = 0
+    For x = 0 To numFinder - 1    
+    
+        patternsequenceptr = getFinderPatterns(FINDERPATTERN(getFinderPatternIndex(numSegments)*11+ x+1))
+        findersnum =  getFinderPatternsfd(FINDERPATTERN(getFinderPatternIndex(numSegments)*11+ x+1))
+        For y = 0 To 4
+        
+            If (findersnum = 1) Then
+                result = result + ChrW(Int(FINDERS1(patternsequenceptr*5+ y+1) + 48))
+            Else
+                result = result + ChrW(Int(FINDERS2(patternsequenceptr*5+ y+1) + 48))
+            End If    
+        
+        Next y
+        
+                
+        If (dataCounter < numData) Then
+        
+            For y = 3 To 0 Step -1 'mirror
+                result = result + ChrW(Int(widthseven((x * 2)*4+ y+1) + 48)) + ChrW(Int(widthsodd((x * 2)*4+ y+1) + 48))
+            Next y
+            dataCounter = dataCounter + 1
+        
+        End If
+        
+        If (dataCounter < numData) Then
+        
+            For y = 0 To 3
+                result = result + ChrW(Int(widthsodd((x * 2 + 1)*4+ y+1) + 48)) + ChrW(Int(widthseven((x * 2 + 1)*4+ y+1) + 48))
+            Next y
+            dataCounter = dataCounter + 1
+        End If
+    
+    Next x
+
+    
+    result = result + "11" 'Right Guard
+
+    'Convert to White Black White Black
+    Dim bwresult as String
+    Dim black as number
+    bwresult = ""
+    black = 0
+    For x = 0 To Len(result) - 1
+    
+        If (black = 0) Then
+        
+            bwresult = bwresult + ChrW(AscW(Mid(result, x + 1, 1)) + 48)
+            black = 1
+        
+        Else
+        
+            bwresult = bwresult + ChrW(AscW(Mid(result, x + 1, 1)) + 16)
+            black = 0
+        
+        End If
+
+    
+    Next x
+
+    'If (errorMsg <> "") Then    
+    '    Formula = ""
+    'End If
+
+    If (errorFlag <> 0) then
+       Formula = ""
+    Else        
+        Formula = bwresult
+    End if
+
+
+' ===========================================================================================
+' End of Formula
+' ===========================================================================================
+
+
+
+
+
+
+
+
+
+' ===========================================================================================
+' Report Custom Functions
+' ===========================================================================================
+
+'''''''''''''''''''''''''''''''''''''''''''''''''''''
+' Report Custom Function : alphaEncodation
+'''''''''''''''''''''''''''''''''''''''''''''''''''''
+Function alphaEncodation( x As number,  data As String, state As String) As String
+
+    
+    Dim result As String
+    Dim lendata As number
+    lendata = Len(data)
+    
+    result = ""
+    
+    Do While (x < Len(data))
+            
+        If (alphanumericCompaction(AscW(Mid(data, x + 1, 1))) <> "") Then
+            
+            result = result + alphanumericCompaction(AscW(Mid(data, x + 1, 1)))
+            x = x + 1
+        
+        ElseIf (ISO646Compaction(AscW(Mid(data, x + 1, 1))) <> "") Then
+
+            state = "ISO646"
+            result = result + "00100"
+            alphaEncodation = result + "||||" + cstr(x) + "||||" + state
+            Exit Function
+            
+        End If
+        
+
+        If (Len(data) >= x + 1 + 6) Then
+          If ((NextTwoNumeric(x, data)<>0) And (NextTwoNumeric(x + 2, data)<>0) And (NextTwoNumeric(x + 4, data)<>0)) Then
+            
+
+            state = "Numeric"
+            result = result + "000"
+            alphaEncodation = result + "||||" + cstr(x) + "||||" + state
+            Exit Function
+           
+          End If
+        End If
+        
+        
+        
+        If (Len(data) = x + 1 + 4) Then
+            If ((NextTwoNumeric(x, data)<>0) And (NextTwoNumeric(x + 2, data)<>0)) Then
+            
+
+                state = "Numeric"
+                result = result + "000"
+                alphaEncodation = result + "||||" + cstr(x) + "||||" + state
+                Exit Function
+            
+            End If
+        End If
+
+
+    Loop
+    
+    alphaEncodation = result + "||||" + cstr(x) + "||||" + state
+    
+End Function
+
+
+
+'''''''''''''''''''''''''''''''''''''''''''''''''''''
+' Report Custom Function : alphanumericCompaction
+'''''''''''''''''''''''''''''''''''''''''''''''''''''
+Function alphanumericCompaction(alpha As number) As String
+
+    Dim returnstr As String
+
+    returnstr = ""    
+    
+    If (alpha = 48) Then
+        returnstr = "00101"
+    ElseIf (alpha = 49) Then
+        returnstr = "00110"
+    ElseIf (alpha = 50) Then
+        returnstr = "00111"
+    ElseIf (alpha = 51) Then
+        returnstr = "01000"
+    ElseIf (alpha = 52) Then
+        returnstr = "01001"
+    ElseIf (alpha = 53) Then
+        returnstr = "01010"
+    ElseIf (alpha = 54) Then
+        returnstr = "01011"
+    ElseIf (alpha = 55) Then
+        returnstr = "01100"
+    ElseIf (alpha = 56) Then
+        returnstr = "01101"
+    ElseIf (alpha = 57) Then
+        returnstr = "01110"
+    ElseIf (alpha = AscW("#")) Then 'FNC1
+        returnstr = "01111"
+    ElseIf (alpha = AscW("A")) Then
+        returnstr = "100000"
+    ElseIf (alpha = AscW("B")) Then
+        returnstr = "100001"
+    ElseIf (alpha = AscW("C")) Then
+        returnstr = "100010"
+    ElseIf (alpha = AscW("D")) Then
+        returnstr = "100011"
+    ElseIf (alpha = AscW("E")) Then
+        returnstr = "100100"
+    ElseIf (alpha = AscW("F")) Then
+        returnstr = "100101"
+    ElseIf (alpha = AscW("G")) Then
+        returnstr = "100110"
+    ElseIf (alpha = AscW("H")) Then
+        returnstr = "100111"
+    ElseIf (alpha = AscW("I")) Then
+        returnstr = "101000"
+    ElseIf (alpha = AscW("J")) Then
+        returnstr = "101001"
+    ElseIf (alpha = AscW("K")) Then
+        returnstr = "101010"
+    ElseIf (alpha = AscW("L")) Then
+        returnstr = "101011"
+    ElseIf (alpha = AscW("M")) Then
+        returnstr = "101100"
+    ElseIf (alpha = AscW("N")) Then
+        returnstr = "101101"
+    ElseIf (alpha = AscW("O")) Then
+        returnstr = "101110"
+    ElseIf (alpha = AscW("P")) Then
+        returnstr = "101111"
+    ElseIf (alpha = AscW("Q")) Then
+        returnstr = "110000"
+    ElseIf (alpha = AscW("R")) Then
+        returnstr = "110001"
+    ElseIf (alpha = AscW("S")) Then
+        returnstr = "110010"
+    ElseIf (alpha = AscW("T")) Then
+        returnstr = "110011"
+    ElseIf (alpha = AscW("U")) Then
+        returnstr = "110100"
+    ElseIf (alpha = AscW("V")) Then
+        returnstr = "110101"
+    ElseIf (alpha = AscW("W")) Then
+        returnstr = "110110"
+    ElseIf (alpha = AscW("X")) Then
+        returnstr = "110111"
+    ElseIf (alpha = AscW("Y")) Then
+        returnstr = "111000"
+    ElseIf (alpha = AscW("Z")) Then
+        returnstr = "111001"
+
+    ElseIf (alpha = AscW("*")) Then
+        returnstr = "111010"
+    ElseIf (alpha = AscW(",")) Then
+        returnstr = "111011"
+    ElseIf (alpha = AscW("-")) Then
+        returnstr = "111100"
+    ElseIf (alpha = AscW(".")) Then
+        returnstr = "111101"
+    ElseIf (alpha = AscW("/")) Then
+        returnstr = "111110"
+    End If
+    
+        
+    alphanumericCompaction = returnstr
+
+End Function
+
+
+'''''''''''''''''''''''''''''''''''''''''''''''''''''
+' Report Custom Function : dataCompaction
+'''''''''''''''''''''''''''''''''''''''''''''''''''''
+Function dataCompaction( data As String, encodationResult As String, compactionResult As String,  state As String) As String
+
+
+    Dim debugStr as String    
+
+    Dim x As number
+    
+    Dim value1Str as String
+    Dim value2Str as String
+    Dim value3Str as String
+    Dim value4Str as String
+    Dim zzStr as String
+    Dim zz, zzLen as number
+
+    
+    x = 0
+    
+    debugStr = ""
+    state = "Numeric"
+    compactionResult = ""
+    Do While (x < Len(data))
+    
+        If (state = "Numeric") Then
+            
+            'compactionResult = compactionResult + numericEncodation(x, data, encodationResult, compactionResult, state)
+            zzStr = numericEncodation(x, data, encodationResult, compactionResult, state)
+            
+
+            zzLen = Len(zzStr)
+            For zz = 1 to  zzLen-4
+
+            	If ((Mid(zzStr, zz , 1)="|") and (Mid(zzStr, zz+1 , 1)="|") and (Mid(zzStr, zz+2 , 1)="|") and (Mid(zzStr, zz+3 , 1)="|"))  then
+	
+            		value1Str = left(zzStr,zz-1)
+            		zzStr = right(zzStr,zzLen-4-zz+1)
+            		Exit For
+	
+            	End if	
+
+            Next zz
+
+
+            zzLen = Len(zzStr)
+            For zz = 1 to  zzLen-4
+
+            	If ((Mid(zzStr, zz , 1)="|") and (Mid(zzStr, zz+1 , 1)="|") and (Mid(zzStr, zz+2 , 1)="|") and (Mid(zzStr, zz+3 , 1)="|"))  then
+	
+            		value2Str = left(zzStr,zz-1)
+            		zzStr = right(zzStr,zzLen-4-zz+1)
+            		Exit For
+	
+            	End if	
+
+            Next zz
+
+            value3Str = zzStr            
+            
+            compactionResult = compactionResult + value1Str
+            x = val(value2Str)
+            state = value3Str
+            
+        ElseIf (state = "Alpha") Then
+            
+            'compactionResult = compactionResult + alphaEncodation(x, data, state)
+            zzStr = alphaEncodation(x, data, state)
+            
+
+            zzLen = Len(zzStr)
+            For zz = 1 to  zzLen-4
+
+            	If ((Mid(zzStr, zz , 1)="|") and (Mid(zzStr, zz+1 , 1)="|") and (Mid(zzStr, zz+2 , 1)="|") and (Mid(zzStr, zz+3 , 1)="|"))  then
+	
+            		value1Str = left(zzStr,zz-1)
+            		zzStr = right(zzStr,zzLen-4-zz+1)
+            		Exit For
+	
+            	End if	
+
+            Next zz
+
+
+            zzLen = Len(zzStr)
+            For zz = 1 to  zzLen-4
+
+            	If ((Mid(zzStr, zz , 1)="|") and (Mid(zzStr, zz+1 , 1)="|") and (Mid(zzStr, zz+2 , 1)="|") and (Mid(zzStr, zz+3 , 1)="|"))  then
+	
+            		value2Str = left(zzStr,zz)
+            		zzStr = right(zzStr,zzLen-4-zz+1)
+            		Exit For
+	
+            	End if	
+
+            Next zz
+
+            value3Str = zzStr
+                        
+            compactionResult = compactionResult + value1Str
+            x = val(value2Str)
+            state = value3Str
+            
+        ElseIf (state = "ISO646") Then
+            
+            'compactionResult = compactionResult + ISO646Encodation(x, data, state)
+            zzStr = ISO646Encodation(x, data, state)
+        	
+
+            zzLen = Len(zzStr)
+            For zz = 1 to  zzLen-4
+
+            	If ((Mid(zzStr, zz , 1)="|") and (Mid(zzStr, zz+1 , 1)="|") and (Mid(zzStr, zz+2 , 1)="|") and (Mid(zzStr, zz+3 , 1)="|"))  then
+	
+            		value1Str = left(zzStr,zz-1)
+            		zzStr = right(zzStr,zzLen-4-zz+1)
+            		Exit For
+	
+            	End if	
+
+            Next zz
+
+
+            zzLen = Len(zzStr)
+            For zz = 1 to  zzLen-4
+
+            	If ((Mid(zzStr, zz , 1)="|") and (Mid(zzStr, zz+1 , 1)="|") and (Mid(zzStr, zz+2 , 1)="|") and (Mid(zzStr, zz+3 , 1)="|"))  then
+	
+            		value2Str = left(zzStr,zz-1)
+            		zzStr = right(zzStr,zzLen-4-zz+1)
+            		Exit For
+	
+            	End if	
+
+            Next zz
+
+            value3Str = zzStr            
+            
+            compactionResult = compactionResult + value1Str
+            x = val(value2Str)
+            state = value3Str
+
+
+        End If
+    
+    Loop
+    
+    
+    'compactionResult = pad(compactionResult, encodationResult, state)
+    zzStr = pad(compactionResult, encodationResult, state)
+
+    zzLen = Len(zzStr)
+    For zz = 1 to  zzLen-4
+
+            	If ((Mid(zzStr, zz , 1)="|") and (Mid(zzStr, zz+1 , 1)="|") and (Mid(zzStr, zz+2 , 1)="|") and (Mid(zzStr, zz+3 , 1)="|"))  then
+	
+            		value1Str = left(zzStr,zz-1)
+            		zzStr = right(zzStr,zzLen-4-zz+1)
+            		Exit For
+	
+            	End if
+    Next zz
+
+
+    zzLen = Len(zzStr)
+    For zz = 1 to  zzLen-4
+
+            	If ((Mid(zzStr, zz , 1)="|") and (Mid(zzStr, zz+1 , 1)="|") and (Mid(zzStr, zz+2 , 1)="|") and (Mid(zzStr, zz+3 , 1)="|"))  then
+	
+            		value2Str = left(zzStr,zz)
+            		zzStr = right(zzStr,zzLen-4-zz+1)
+            		Exit For
+	
+            	End if	
+
+    Next zz
+
+    value3Str = zzStr            
+            
+    compactionResult = value1Str    
+    state = value3Str
+    
+    dataCompaction = compactionResult
+    
+End Function
+
+
+'''''''''''''''''''''''''''''''''''''''''''''''''''''
+' Report Custom Function : encodationMethod
+'''''''''''''''''''''''''''''''''''''''''''''''''''''
+Function encodationMethod(data As String,  linkageFlag As number) As String
+
+    'Results to be returned
+    Dim numData As number
+    Dim numSegments As number
+    Dim datachar(100) As number
+    
+    'Work Strings
+    Dim encodationResult As String
+    Dim compactionResult As String
+    Dim errorMsg As String
+
+    Dim result As String
+    Dim retval As number
+    Dim addcharlength As number
+    Dim state As String 'Numeric Alpha, ISO646
+
+    Dim ii As number
+    Dim retstr As String
+
+    Dim maskval1,maskval2 as number
+    Dim maskdiv1,maskdiv2 as number
+    Dim masksum as number
+    Dim mz as number
+
+
+    retstr = ""
+    
+    result = ""
+
+    numData = 0
+    numSegments = 0
+    
+    'state variables
+    Dim patterns(30) As String
+    Dim patData(30) As String
+    Dim patternCounter As number
+
+    'retval = findPatternData(data, patternCounter, patterns, patData)
+    Dim xxx, yyy, zzz As number
+    xxx = 0
+    yyy = 0
+    zzz = 0
+    
+    patternCounter = 0
+    For xxx = 0 To 29
+    
+        patterns(xxx+1) = ""
+        patData(xxx+1) = ""
+    
+    Next xxx
+
+    xxx = 0
+    
+    Do While (xxx < Len(data))
+    
+        
+        If (Mid(data, xxx + 1, 1) = "(") Then
+        
+            patterns(patternCounter+1) = patterns(patternCounter+1) + Mid(data, xxx + 1, 1)
+            yyy = xxx + 1
+            xxx = xxx + 1
+            Do While (yyy < Len(data) And Mid(data, yyy + 1, 1) <> ")")
+            
+                patterns(patternCounter+1) = patterns(patternCounter+1) + Mid(data, yyy + 1, 1)
+                xxx = xxx + 1
+                yyy = yyy + 1
+                
+                'inserted to prevent Mid overflow
+                If (yyy >= Len(data)) Then
+                    Exit Do
+                End If
+            
+            Loop
+            
+            If (Mid(data, yyy + 1, 1) = ")") Then
+                patterns(patternCounter+1) = patterns(patternCounter+1) + Mid(data, yyy + 1, 1)
+            End If
+
+            zzz = yyy + 1
+            xxx = xxx + 1
+            Do While (zzz < Len(data) And Mid(data, zzz + 1, 1) <> "(")
+            
+                patData(patternCounter+1) = patData(patternCounter+1) + Mid(data, zzz + 1, 1)
+                xxx = xxx + 1
+                zzz = zzz + 1
+                
+                'inserted to prevent Mid overflow
+                If (zzz >= Len(data)) Then
+                    Exit Do
+                End If
+            
+            Loop
+
+            
+            patternCounter = patternCounter + 1
+        
+        Else
+            xxx = xxx + 1
+        End If
+    
+    Loop
+
+
+    If (patternCounter < 1) Then
+    
+        errorMsg = "No Application Identifier specified."
+        encodationMethod = ""
+        Exit Function
+    
+    End If
+
+    'TRACE("Here %d\n",patternCounter);
+    Dim x as number
+    Dim y as number
+    If (patternCounter = 2 And patterns(0+1) = "(01)" And patterns(1+1) = "(3103)") Then
+    
+       Dim patData0, patData1, tempString As String
+       
+        patData(0+1) = onlyNumeric(patData(0+1))
+        If (Len(patData(0+1)) < 14) Then
+        
+            addcharlength = 14 - Len(patData(0+1))
+            For x = 0 To addcharlength - 1
+                patData(0+1) = "0" + patData(0+1)
+            Next x
+        
+        ElseIf (Len(patData(0+1)) > 14) Then
+        
+            patData(0+1) = left(patData(0+1), 14)
+        
+        End If
+
+        If (Mid(patData(0+1), 0 + 1, 1) <> "9") Then
+        
+            errorMsg = "9 must be the first digit for the data in AI (01) in this specific Expanded encoding."
+            encodationMethod = ""
+            Exit Function
+        
+        End If
+
+        patData(1+1) = onlyNumeric(patData(1+1))
+        If (Len(patData(1+1)) > 6) Then
+        
+            patData(1+1) = left(patData(1+1), 6)
+        
+        End If
+
+        If (Len(patData(1+1)) < 6) Then
+        
+            addcharlength = 6 - Len(patData(1+1))
+            For x = 0 To addcharlength - 1
+                patData(1+1) = "0" + patData(1+1)
+             Next x
+        
+        End If
+        
+        Dim valueRange As number
+        valueRange = val(patData(1+1))
+        If (valueRange < 0 Or valueRange > 32767) Then
+        
+            errorMsg = "The weight field must be from 0 to 32767."
+            encodationMethod = ""
+            Exit Function
+        
+        End If
+
+        patData0 = left(patData(0+1), 13) 'Take out last Digit
+        patData0 = right(patData0, 12)  'Take out first Digit
+        patData1 = patData(1+1)
+
+        'Setup for barcode encodation
+        numData = 5
+        numSegments = 6
+        If (linkageFlag = 1) Then
+            tempString = "1"
+        Else
+            tempString = "0" 'Linkage
+        End If
+        tempString = tempString + "0100" 'Encodation Method Field
+        
+        Dim fStr as String
+        Dim triplets As String
+        Dim digits As number
+        triplets = ""
+        fStr = ""
+        Dim tripletsValue As number
+        For x = 0 To 11
+        
+            fStr = ""
+            triplets = triplets + Mid(patData0, x + 1, 1)
+            If ((x + 1) Mod 3 = 0) Then
+            
+                tripletsValue = val(triplets)
+                
+                '10 digits most significant 1
+                digits = 512
+                For y = 0 To 9
+                
+                    'If (tripletsValue And digits) Then
+                    maskdiv1 = tripletsValue
+                    maskdiv2 = digits
+                    masksum = 0
+                    For mz = 0 to 31
+
+                        maskval1 = maskdiv1 mod 2
+                        maskval2 = maskdiv2 mod 2
+
+                        if ((maskval1=1) and (maskval2=1)) then 
+                               masksum =  masksum  +  2^mz
+                        end if
+
+                        maskdiv1 = Int(maskdiv1 /2) 
+                        maskdiv2 = Int(maskdiv2 /2)
+
+                    Next mz        
+    
+                    If (masksum<>0) Then
+                        fStr = fStr + "1"
+                    Else
+                        fStr = fStr + "0"
+                    End If
+                    digits = Int(digits / 2)
+                
+                Next y
+                tempString = tempString + fStr
+                triplets = ""
+            
+            End If
+        
+        Next x
+
+        Dim patData1Value As number
+        patData1Value = val(patData1)
+        
+        digits = 16384 '15 digits most significant 1
+        For y = 0 To 14
+        
+            'If (patData1Value And digits) Then
+		    maskdiv1 = patData1Value
+            maskdiv2 = digits
+            masksum = 0
+            For mz = 0 to 31
+
+                maskval1 = maskdiv1 mod 2
+                maskval2 = maskdiv2 mod 2
+
+                if ((maskval1=1) and (maskval2=1)) then                                            
+                       masksum =  masksum  +  2^mz
+                end if
+
+                maskdiv1 = Int(maskdiv1 /2) 
+                maskdiv2 = Int(maskdiv2 /2)
+
+            Next mz        
+                   
+            If (masksum<>0) Then
+                tempString = tempString + "1"
+            Else
+                tempString = tempString + "0"
+            End If
+            digits = Int(digits / 2)
+        
+        Next y
+        
+        Dim value12 As number
+        value12 = 0
+        digits = 2048
+        For x = 0 To 59
+        
+
+            If (Mid(tempString, x + 1, 1) = "1") Then
+            
+                value12 = value12 + digits
+                '//TRACE("Interim : %d\n",value12);
+            End If
+            
+            If ((x + 1) Mod 12 = 0) Then
+            
+                datachar(Int(((x + 1) / 12) - 1)+1) = value12
+                
+                value12 = 0
+                digits = 2048
+            
+            Else
+                digits = Int(digits / 2)
+            End If
+        
+        Next x
+
+	    retstr = "||||" + cstr(numSegments) + "||||" + cstr(numData) 
+        For ii = 1 to numData
+            retstr = retstr + "||||" + cstr(datachar(ii),"##########.##")
+        Next ii
+        
+        encodationMethod = patterns(0+1) + patData(0+1) + patterns(1+1) + patData(1+1) + retstr
+        Exit Function
+            
+    ElseIf (patternCounter = 2 And patterns(0+1) = "(01)" And patterns(1+1) = "(3202)") Then
+    
+        'Dim patData0, patData1, tempString As String
+        
+        patData(0+1) = onlyNumeric(patData(0+1))
+        If (Len(patData(0+1)) < 14) Then
+        
+            addcharlength = 14 - Len(patData(0+1))
+            For x = 0 To addcharlength - 1
+                patData(0+1) = "0" + patData(0+1)
+            Next x
+        
+        ElseIf (Len(patData(0+1)) > 14) Then
+        
+            patData(0+1) = left(patData(0+1), 14)
+            
+        End If
+
+        If (Mid(patData(0+1), 0 + 1, 1) <> "9") Then
+        
+            errorMsg = "9 must be the first digit for the data in AI (01) in this specific Expanded encoding."
+            encodationMethod = ""
+            Exit Function
+        
+        End If
+
+        patData(1+1) = onlyNumeric(patData(1+1))
+        If (Len(patData(1+1)) > 6) Then
+        
+            patData(1+1) = left(patData(1+1), 6)
+        
+        End If
+
+        If (Len(patData(1+1)) < 6) Then
+        
+            addcharlength = 6 - Len(patData(1+1))
+            For x = 0 To addcharlength - 1
+                
+                patData(1+1) = "0" + patData(1+1)
+                
+            Next x
+        End If
+        
+        'Dim valueRange As Long
+        valueRange = val(patData(1+1))
+        If (valueRange < 0 Or valueRange > 9999) Then
+        
+            errorMsg = "The weight field must be from 0 to 9999."
+            encodationMethod = ""
+            Exit Function
+        
+        End If
+        patData0 = left(patData(0+1), 13) 'Take out last Digit
+        patData0 = right(patData0, 12) 'Take out first Digit
+        patData1 = right(patData(1+1), 4)
+
+        'Setup for barcode encodation
+        numData = 5
+        numSegments = 6
+        If (linkageFlag = 1) Then
+            tempString = "1"
+        Else
+            tempString = "0" 'Linkage
+        End If
+        tempString = tempString + "0101" 'Encodation Method Field
+        
+        
+        fStr = ""
+        triplets = ""
+        For x = 0 To 11
+        
+            fStr = ""
+            triplets = triplets + Mid(patData0, x + 1, 1)
+            If ((x + 1) Mod 3 = 0) Then
+            
+                tripletsValue = val(triplets)
+                
+                
+                digits = 512 '10 digits most significant 1
+                For y = 0 To 9
+                
+                    'If (tripletsValue And digits) Then
+		            maskdiv1 = tripletsValue
+                    maskdiv2 = digits
+                    masksum = 0
+                    For mz = 0 to 31
+
+                        maskval1 = maskdiv1 mod 2
+                        maskval2 = maskdiv2 mod 2
+
+                        if ((maskval1=1) and (maskval2=1)) then 
+                               masksum =  masksum  +  2^mz
+                        end if
+
+                        maskdiv1 = Int(maskdiv1 /2) 
+                        maskdiv2 = Int(maskdiv2 /2)
+
+                    Next mz        
+                   
+                    If (masksum<>0) Then
+                        fStr = fStr + "1"
+                    Else
+                        fStr = fStr + "0"
+                    End If
+                    digits = Int(digits / 2)
+                
+                Next y
+                tempString = tempString + fStr
+                triplets = ""
+            
+            End If
+        
+        Next x
+
+        
+        patData1Value = val(patData1)
+        digits = 16384 '15 digits most significant 1
+        For y = 0 To 14
+        
+                'If (patData1Value And digits) Then
+		        maskdiv1 = patData1Value
+                maskdiv2 = digits
+                masksum = 0
+                For mz = 0 to 31
+
+                    maskval1 = maskdiv1 mod 2
+                    maskval2 = maskdiv2 mod 2
+
+                    if ((maskval1=1) and (maskval2=1)) then 
+                           masksum =  masksum  +  2^mz
+                    end if
+
+                    maskdiv1 = Int(maskdiv1 /2) 
+                    maskdiv2 = Int(maskdiv2 /2)
+
+                Next mz        
+                   
+            If (masksum<>0) Then
+                tempString = tempString + "1"
+            Else
+                tempString = tempString + "0"
+            End If
+            digits = Int(digits / 2)
+        
+        Next y
+        
+        
+        value12 = 0
+        digits = 2048
+        For x = 0 To 59
+
+            If (Mid(tempString, x + 1, 1) = "1") Then
+            
+                value12 = value12 + digits
+                'TRACE("Interim : %d\n",value12);
+            
+            End If
+            
+            If ((x + 1) Mod 12 = 0) Then
+            
+                datachar(Int(((x + 1) / 12) - 1)+1) = value12
+                
+                value12 = 0
+                digits = 2048
+            
+            Else
+                digits = Int(digits / 2)
+            End If
+        
+        Next x
+
+	    retstr = "||||" + cstr(numSegments) + "||||" + cstr(numData) 
+        For ii = 1 to numData
+            retstr = retstr + "||||" + cstr(datachar(ii),"##########.##")
+        Next ii
+
+        encodationMethod = patterns(0+1) + patData(0+1) + patterns(1+1) + patData(1+1) + retstr
+        Exit Function
+    
+    ElseIf (patternCounter = 2 And patterns(0+1) = "(01)" And patterns(1+1) = "(3203)") Then
+    
+        
+        patData(0+1) = onlyNumeric(patData(0+1))
+        If (Len(patData(0+1)) < 14) Then
+        
+            addcharlength = 14 - Len(patData(0+1))
+            For x = 0 To addcharlength - 1
+                patData(0+1) = "0" + patData(0+1)
+            Next x
+        
+        ElseIf (Len(patData(0+1)) > 14) Then
+        
+            patData(0+1) = left(patData(0+1), 14)
+        
+        End If
+
+        If (Mid(patData(0+1), 0 + 1, 1) <> "9") Then
+        
+            errorMsg = "9 must be the first digit for the data in AI (01) in this specific Expanded encoding."
+            encodationMethod = ""
+            Exit Function
+        
+        End If
+
+        patData(1+1) = onlyNumeric(patData(1+1))
+        If (Len(patData(1+1)) > 6) Then
+            
+            patData(1+1) = left(patData(1+1), 6)
+            
+        End If
+
+        If (Len(patData(1+1)) < 6) Then
+        
+            addcharlength = 6 - Len(patData(1+1))
+            For x = 0 To addcharlength - 1
+                patData(1+1) = "0" + patData(1+1)
+            Next x
+        
+        End If
+        
+        
+        valueRange = val(patData(1+1))
+        If (valueRange < 0 Or valueRange > 22767) Then
+        
+            errorMsg = "The weight field must be from 0 to 22767."
+            encodationMethod = ""
+            Exit Function
+        
+        End If
+        
+        
+        patData0 = left(patData(0+1), 13) 'Take out last Digit
+        patData0 = right(patData0, 12) 'Take out first Digit
+        patData1 = right(patData(1+1), 4)
+
+        'Setup for barcode encodation
+        numData = 5
+        numSegments = 6
+        If (linkageFlag = 1) Then
+            tempString = "1"
+        Else
+            tempString = "0" 'Linkage
+        End If
+        tempString = tempString + "0101" 'Encodation Method Field
+        
+        
+        
+        
+        fStr = ""
+        triplets = ""
+        For x = 0 To 11
+        
+            fStr = ""
+            triplets = triplets + Mid(patData0, x + 1, 1)
+            If ((x + 1) Mod 3 = 0) Then
+            
+                tripletsValue = val(triplets)
+                
+                digits = 512 '10 digits most significant 1
+                For y = 0 To 9
+                
+                    'If (tripletsValue And digits) Then
+		            maskdiv1 = tripletsValue
+                    maskdiv2 = digits
+                    masksum = 0
+                    For mz = 0 to 31
+
+                        maskval1 = maskdiv1 mod 2
+                        maskval2 = maskdiv2 mod 2
+
+                        if ((maskval1=1) and (maskval2=1)) then 
+                               masksum =  masksum  +  2^mz
+                        end if
+
+                        maskdiv1 = Int(maskdiv1 /2) 
+                        maskdiv2 = Int(maskdiv2 /2)
+
+                    Next mz        
+                   
+                    If (masksum <> 0) Then
+                        fStr = fStr + "1"
+                    Else
+                        fStr = fStr + "0"
+                    End If
+                    digits = Int(digits / 2)
+                
+                Next y
+                tempString = tempString + fStr
+                triplets = ""
+            
+            End If
+        
+        Next x
+
+        
+        patData1Value = val(patData1) + 10000 'Add 10000 as compared to the previous
+        digits = 16384 '15 digits most significant 1
+        For y = 0 To 14
+        
+            'If (patData1Value And digits) Then
+		        maskdiv1 = patData1Value
+                maskdiv2 = digits
+                masksum = 0
+                For mz = 0 to 31
+
+                    maskval1 = maskdiv1 mod 2
+                    maskval2 = maskdiv2 mod 2
+
+                    if ((maskval1=1) and (maskval2=1)) then 
+                           masksum =  masksum  +  2^mz
+                    end if
+
+                    maskdiv1 = Int(maskdiv1 /2) 
+                    maskdiv2 = Int(maskdiv2 /2)
+
+                Next mz        
+                   
+            If (masksum<>0) Then
+                tempString = tempString + "1"
+            Else
+                tempString = tempString + "0"
+            End If
+            digits = Int(digits / 2)
+        
+        Next y
+        
+        
+        value12 = 0
+        digits = 2048
+        For x = 0 To 59
+        
+
+            If (Mid(tempString, x + 1, 1) = "1") Then
+            
+                value12 = value12 + digits
+                'TRACE("Interim : %d\n",value12);
+            
+            End If
+            
+                        
+            If ((x + 1) Mod 12 = 0) Then
+            
+                datachar(Int(((x + 1) / 12) - 1)+1) = value12
+                
+                value12 = 0
+                digits = 2048
+            
+            Else
+                digits = Int(digits / 2)
+            End If
+        
+        Next x
+
+
+	    retstr = "||||" + cstr(numSegments) + "||||" + cstr(numData) 
+        For ii = 1 to numData
+            retstr = retstr + "||||" + cstr(datachar(ii),"##########.##")
+        Next ii
+
+        encodationMethod = patterns(0+1) + patData(0+1) + patterns(1+1) + patData(1+1) + retstr
+        Exit Function
+                           
+    
+    ElseIf (patternCounter = 3 And patterns(0+1) = "(01)" And (matchAI(patterns(1+1), "(310x)")<>0) And patterns(2+1) = "(11)") Then
+    
+        encodationMethod = fixLength8Encodation(data, "0111000", numData, numSegments, errorMsg, linkageFlag, datachar, patterns, patData, patternCounter)
+        Exit Function
+    
+    ElseIf (patternCounter = 3 And patterns(0+1) = "(01)" And (matchAI(patterns(1+1), "(320x)")<>0) And patterns(2+1) = "(11)") Then
+    
+        encodationMethod = fixLength8Encodation(data, "0111001", numData, numSegments, errorMsg, linkageFlag, datachar, patterns, patData, patternCounter)
+        Exit Function
+    
+    ElseIf (patternCounter = 3 And patterns(0+1) = "(01)" And (matchAI(patterns(1+1), "(310x)")<>0) And patterns(2+1) = "(13)") Then
+    
+        encodationMethod = fixLength8Encodation(data, "0111010", numData, numSegments, errorMsg, linkageFlag, datachar, patterns, patData, patternCounter)
+        Exit Function
+    
+    ElseIf (patternCounter = 3 And patterns(0+1) = "(01)" And (matchAI(patterns(1+1), "(320x)")<>0) And patterns(2+1) = "(13)") Then
+    
+        encodationMethod = fixLength8Encodation(data, "0111011", numData, numSegments, errorMsg, linkageFlag, datachar, patterns, patData, patternCounter)
+        Exit Function
+    
+    ElseIf (patternCounter = 3 And patterns(0+1) = "(01)" And (matchAI(patterns(1+1), "(310x)")<>0) And patterns(2+1) = "(15)") Then
+    
+        'TRACE("Inside\n");
+        encodationMethod = fixLength8Encodation(data, "0111100", numData, numSegments, errorMsg, linkageFlag, datachar, patterns, patData, patternCounter) 
+
+        Exit Function
+    
+    ElseIf (patternCounter = 3 And patterns(0+1) = "(01)" And (matchAI(patterns(1+1), "(320x)")<>0) And patterns(2+1) = "(15)") Then
+    
+        encodationMethod = fixLength8Encodation(data, "0111101", numData, numSegments, errorMsg, linkageFlag, datachar, patterns, patData, patternCounter)
+        Exit Function
+    
+    ElseIf (patternCounter = 3 And patterns(0+1) = "(01)" And (matchAI(patterns(1+1), "(310x)")<>0) And patterns(2+1) = "(17)") Then
+    
+        encodationMethod = fixLength8Encodation(data, "0111110", numData, numSegments, errorMsg, linkageFlag, datachar, patterns, patData, patternCounter)
+        Exit Function
+    
+    ElseIf (patternCounter = 3 And patterns(0+1) = "(01)" And (matchAI(patterns(1+1), "(320x)")<>0) And patterns(2+1) = "(17)") Then
+    
+        encodationMethod = fixLength8Encodation(data, "0111111", numData, numSegments, errorMsg, linkageFlag, datachar, patterns, patData, patternCounter)
+        Exit Function
+    
+    ElseIf (patternCounter = 2 And patterns(0+1) = "(01)" And (matchAI(patterns(1+1), "(392x)")<>0)) Then
+    
+        'TRACE("Start of (392x)\n");
+        encodationResult = ""
+        Dim patData2 As String
+        
+        
+        patData(0+1) = onlyNumeric(patData(0+1))
+        If (Len(patData(0+1)) < 14) Then
+        
+            addcharlength = 14 - Len(patData(0+1))
+            For x = 0 To addcharlength - 1
+                patData(0+1) = "0" + patData(0+1)
+            Next x
+        
+        ElseIf (Len(patData(0+1)) > 14) Then
+        
+            patData(0+1) = left(patData(0+1), 14)
+        
+        End If
+
+        If (Mid(patData(0+1), 0 + 1, 1) <> "9") Then
+        
+            errorMsg = "9 must be the first digit for the data in AI (01) in this specific Expanded encoding."
+            encodationMethod = ""
+            Exit Function
+        
+        End If
+
+        
+        If (AscW(Mid(patterns(1+1), 4 + 1, 1)) < AscW("0") Or AscW(Mid(patterns(1+1), 4 + 1, 1)) > AscW("3")) Then
+        
+            
+            errorMsg = "The decimal point digit must be from 0 to 3."
+            encodationMethod = ""
+            Exit Function
+            
+        End If
+
+        patData(1+1) = onlyNumeric(patData(1+1))
+        If (Len(patData(1+1)) > 15) Then
+        
+            patData(1+1) = left(patData(1+1), 15)
+        
+        End If
+
+        If (patData(1+1) = "") Then
+        
+            errorMsg = "The price digits cannot be empty."
+            encodationMethod = ""
+            Exit Function
+        
+        End If
+
+        patData0 = left(patData(0+1), 13) 'Take out last Digit
+        patData0 = right(patData0, 12) 'Take out first Digit
+        patData1 = Mid(patterns(1+1), 4 + 1, 1)
+        
+        'Setup for barcode encodation
+        If (linkageFlag = 1) Then
+            tempString = "1"
+        Else
+            tempString = "0" 'Linkage
+        End If
+        
+        
+        tempString = tempString + "01100" 'Encodation Method Field
+        tempString = tempString + "00" 'Initialize with variable length field
+        
+        
+        
+        triplets = ""
+        fStr = ""
+        For x = 0 To 11
+        
+            fStr = ""
+            triplets = triplets + Mid(patData0, x + 1, 1)
+            If ((x + 1) Mod 3 = 0) Then
+            
+                tripletsValue = val(triplets)
+                
+                digits = 512 '10 digits most significant 1
+                For y = 0 To 9
+                
+                    'If (tripletsValue And digits) Then
+		            maskdiv1 = tripletsValue
+                    maskdiv2 = digits
+                    masksum = 0
+                    For mz = 0 to 31
+
+                        maskval1 = maskdiv1 mod 2
+                        maskval2 = maskdiv2 mod 2
+
+                        if ((maskval1=1) and (maskval2=1)) then 
+                               masksum =  masksum  +  2^mz
+                        end if
+
+                        maskdiv1 = Int(maskdiv1 /2) 
+                        maskdiv2 = Int(maskdiv2 /2)
+
+                    Next mz        
+                   
+
+                    If (masksum<>0) Then
+                        fStr = fStr + "1"
+                    Else
+                        fStr = fStr + "0"
+                    End If
+                        
+                    digits = Int(digits / 2)
+                Next y
+                tempString = tempString + fStr
+                triplets = ""
+            
+            End If
+        
+        Next x
+        
+        
+        patData1Value = val(patData1)
+        If (patData1Value = 0) Then
+            
+            tempString = tempString + "00"
+            
+        ElseIf (patData1Value = 1) Then
+            tempString = tempString + "01"
+        ElseIf (patData1Value = 2) Then
+            tempString = tempString + "10"
+        ElseIf (patData1Value = 3) Then
+            tempString = tempString + "11"
+        End If
+
+        encodationResult = tempString 'setup encodation result for calculation of length in dataCompaction
+        
+        tempString = tempString + dataCompaction(patData(1+1), encodationResult, compactionResult, state)
+
+        numData = Int(Len(tempString) / 12)
+        numSegments = numData + 1
+
+        'Setup the variable bits length field
+        Dim tempChar As String
+        Dim tempLeft, tempRight As String
+        If (numSegments Mod 2 = 0) Then
+            'tempChar = Mid(tempString, 6 + 1, 1)
+            tempLeft = left(tempString, 6)
+            tempRight = right(tempString, Len(tempString) - 7)
+            tempString = tempLeft + "0" + tempRight
+            'tempString.SetAt(6,'0');
+        Else
+            tempLeft = left(tempString, 6)
+            tempRight = right(tempString, Len(tempString) - 7)
+            tempString = tempLeft + "1" + tempRight
+            'tempString.SetAt(6,'1');
+        End If
+
+        If (numSegments <= 14) Then
+            tempLeft = left(tempString, 7)
+            tempRight = right(tempString, Len(tempString) - 8)
+            tempString = tempLeft + "0" + tempRight
+            'tempString.SetAt(7,'0');
+        Else
+            tempLeft = left(tempString, 7)
+            tempRight = right(tempString, Len(tempString) - 8)
+            tempString = tempLeft + "1" + tempRight
+            'tempString.SetAt(7,'1');
+        End If
+
+
+        'Possible place to do a length check does not exceed max length
+                
+        value12 = 0
+        digits = 2048
+        For x = 0 To Len(tempString) - 1
+        
+
+            If (Mid(tempString, x + 1, 1) = "1") Then
+            
+                value12 = value12 + digits
+                'TRACE("Interim : %d\n",value12);
+            
+            End If
+            
+            If ((x + 1) Mod 12 = 0) Then
+            
+                If (Int(((x + 1) / 12) - 1) > 21) Then
+                
+                    'TRACE("Max Length Exceed");
+                    errorMsg = "There are too many characters in the data to be encoded."
+                    encodationMethod = ""
+                    Exit Function
+                                    
+                End If
+                datachar(Int(((x + 1) / 12) - 1)+1) = value12
+                                
+                value12 = 0
+                digits = 2048
+            
+            Else
+                digits = Int(digits / 2)
+            End If
+        
+        Next x
+        
+
+	    retstr = "||||" + cstr(numSegments) + "||||" + cstr(numData) 
+        For ii = 1 to numData
+            retstr = retstr + "||||" + cstr(datachar(ii),"##########.##")
+        Next ii
+
+        encodationMethod = patterns(0+1) + patData(0+1) + patterns(1+1) + patData(1+1) + retstr
+        Exit Function
+
+    
+    ElseIf (patternCounter = 2 And patterns(0+1) = "(01)" And (matchAI(patterns(1+1), "(393x)")<>0)) Then
+    
+        encodationResult = ""
+                
+        patData(0+1) = onlyNumeric(patData(0+1))
+        If (Len(patData(0+1)) < 14) Then
+        
+            addcharlength = 14 - Len(patData(0+1))
+            For x = 0 To addcharlength - 1
+                patData(0+1) = "0" + patData(0+1)
+            Next x
+        
+        ElseIf (Len(patData(0+1)) > 14) Then
+        
+            patData(0+1) = left(patData(0+1), 14)
+            
+        End If
+
+        If (Mid(patData(0+1), 0 + 1, 1) <> "9") Then
+        
+            errorMsg = "9 must be the first digit for the data in AI (01) in this specific Expanded encoding."
+            encodationMethod = ""
+            Exit Function
+        
+        End If
+
+        If (AscW(Mid(patterns(1+1), 4 + 1, 1)) < AscW("0") Or AscW(Mid(patterns(1+1), 4 + 1, 1)) > AscW("3")) Then
+        
+            errorMsg = "The decimal point digit must be from 0 to 3."
+            encodationMethod = ""
+            Exit Function
+        
+        End If
+
+        patData(1+1) = onlyNumeric(patData(1+1))
+        If (Len(patData(1+1)) > 18) Then '3 ISO Currency + 15
+        
+            patData(1+1) = left(patData(1+1), 18)
+        
+        End If
+
+        If (patData(1+1) = "") Then
+        
+            errorMsg = "The price digits cannot be empty."
+            encodationMethod = ""
+            Exit Function
+        
+        End If
+
+
+        patData0 = left(patData(0+1), 13) 'Take out last Digit
+        patData0 = right(patData0, 12) 'Take out first Digit
+        patData1 = Mid(patterns(1+1), 4 + 1, 1)
+        
+        'Setup for barcode encodation
+        If (linkageFlag = 1) Then
+            tempString = "1"
+        Else
+            tempString = "0" 'Linkage
+        End If
+
+        
+        tempString = tempString + "01101" 'Encodation Method Field
+        tempString = tempString + "00" 'Initialize with variable length field
+                
+        
+        
+        triplets = ""
+        fStr = ""
+        For x = 0 To 11
+        
+            fStr = ""
+            triplets = triplets + Mid(patData0, x + 1, 1)
+            If ((x + 1) Mod 3 = 0) Then
+            
+                tripletsValue = val(triplets)
+                                
+                digits = 512 '10 digits most significant 1
+                For y = 0 To 9
+                
+                    'If (tripletsValue And digits) Then
+                    maskdiv1 = tripletsValue
+                    maskdiv2 = digits
+                    masksum = 0
+                    For mz = 0 to 31
+
+                        maskval1 = maskdiv1 mod 2
+                        maskval2 = maskdiv2 mod 2
+
+                        if ((maskval1=1) and (maskval2=1)) then 'or                                           
+                               masksum =  masksum  +  2^mz
+                        end if
+
+                        maskdiv1 = Int(maskdiv1 /2) 
+                        maskdiv2 = Int(maskdiv2 /2)
+
+                    Next mz                           
+
+                    If (masksum<>0) Then
+                        fStr = fStr + "1"
+                    Else
+                        fStr = fStr + "0"
+                    End If
+                    digits = Int(digits / 2)
+                
+                Next y
+                tempString = tempString + fStr
+                triplets = ""
+            
+            End If
+        
+        Next x
+        
+        
+        patData1Value = Int(val(patData1))
+        If (patData1Value = 0) Then
+            tempString = tempString + "00"
+        ElseIf (patData1Value = 1) Then
+            tempString = tempString + "01"
+        ElseIf (patData1Value = 2) Then
+            tempString = tempString + "10"
+        ElseIf (patData1Value = 3) Then
+            tempString = tempString + "11"
+        End If
+
+        
+        triplets = left(patData(1+1), 3)
+        tripletsValue = val(triplets)
+        digits = 512 '10 digits most significant 1
+        For y = 0 To 9
+        
+                    'If (tripletsValue And digits) Then
+                    maskdiv1 = tripletsValue
+                    maskdiv2 = digits
+                    masksum = 0
+                    For mz = 0 to 31
+
+                        maskval1 = maskdiv1 mod 2
+                        maskval2 = maskdiv2 mod 2
+
+                        if ((maskval1=1) and (maskval2=1)) then                                          
+                               masksum =  masksum  +  2^mz
+                        end if
+
+                        maskdiv1 = Int(maskdiv1 /2) 
+                        maskdiv2 = Int(maskdiv2 /2)
+
+                    Next mz        
+                   
+
+            If (masksum<>0) Then
+                tempString = tempString + "1"
+            Else
+                tempString = tempString + "0"
+            End If
+            digits = Int(digits / 2)
+        Next y
+
+        encodationResult = tempString 'setup encodation result for calculation of length in dataCompaction
+        
+        tempString = tempString + dataCompaction(Mid(patData(1+1), 3 + 1), encodationResult, compactionResult, state)
+
+
+        numData = Int(Len(tempString) / 12)
+        numSegments = numData + 1
+        
+
+        'Possible place to do a length check does not exceed max length
+        'Setup the variable bits length field
+        If (numSegments Mod 2 = 0) Then
+            tempLeft = left(tempString, 6)
+            tempRight = right(tempString, Len(tempString) - 7)
+            tempString = tempLeft + "0" + tempRight
+            'tempString.SetAt(6,'0');
+        Else
+            tempLeft = left(tempString, 6)
+            tempRight = right(tempString, Len(tempString) - 7)
+            tempString = tempLeft + "1" + tempRight
+            'tempString.SetAt(6,'1');
+        End If
+
+        If (numSegments <= 14) Then
+            tempLeft = left(tempString, 7)
+            tempRight = right(tempString, Len(tempString) - 8)
+            tempString = tempLeft + "0" + tempRight
+            'tempString.SetAt(7,'0')
+        Else
+            tempLeft = left(tempString, 7)
+            tempRight = right(tempString, Len(tempString) - 8)
+            tempString = tempLeft + "1" + tempRight
+            'tempString.SetAt(7,'1');
+        End If
+        
+        value12 = 0
+        digits = 2048
+        For x = 0 To Len(tempString) - 1
+        
+
+            If (Mid(tempString, x + 1, 1) = "1") Then
+            
+                value12 = value12 + digits
+                'TRACE("Interim : %d\n",value12);
+            
+            End If
+            
+            If ((x + 1) Mod 12 = 0) Then
+            
+                If (Int(((x + 1) / 12) - 1) > 21) Then
+                
+                    'TRACE("Max Length Exceed");
+                    errorMsg = "There are too many characters in the data to be encoded."
+                    encodationMethod = ""
+                    Exit Function
+                End If
+
+                datachar(Int(((x + 1) / 12) - 1)+1) = value12
+                
+                value12 = 0
+                digits = 2048
+            
+            Else
+                digits = Int(digits / 2)
+            End If
+        Next x
+        
+	    retstr = "||||" + cstr(numSegments) + "||||" + cstr(numData) 
+        For ii = 1 to numData
+            retstr = retstr + "||||" + cstr(datachar(ii),"##########.##")
+        Next ii
+
+
+        encodationMethod = patterns(0+1) + patData(0+1) + patterns(1+1) + patData(1+1) + retstr
+        Exit Function
+    
+    ElseIf (patterns(0+1) = "(01)" And patternCounter >= 1) Then
+    
+        encodationResult = ""
+        Dim temppatData As String
+                        
+        patData(0+1) = onlyNumeric(patData(0+1))
+        If (Len(patData(0+1)) < 14) Then
+        
+            addcharlength = 14 - Len(patData(0+1))
+            For x = 0 To addcharlength - 1
+                patData(0+1) = "0" + patData(0+1)
+            Next x
+        
+        ElseIf (Len(patData(0+1)) > 14) Then
+        
+            patData(0+1) = left(patData(0+1), 14)
+        
+        End If
+        
+        patData0 = left(patData(0+1), 13) 'Take out last Digit
+        
+        'Setup for barcode encodation
+        If (linkageFlag = 1) Then
+            tempString = "1"
+        Else
+            tempString = "0" 'Linkage
+        End If
+        
+
+        tempString = tempString + "1" 'Encodation Method Field
+        tempString = tempString + "00" 'Initialize with variable length field
+
+        
+        Dim singletValue As number
+        Dim smalldigit As number
+               
+        
+        triplets = ""
+        fStr = ""
+              
+        singletValue = val(Mid(patData0, 0 + 1, 1))
+        smalldigit = 8 '4 digits most significant 1
+        For y = 0 To 3
+        
+                    'If (singletValue And smalldigit) Then
+                    maskdiv1 = singletValue
+                    maskdiv2 = smalldigit
+                    masksum = 0
+                    For mz = 0 to 31
+
+                        maskval1 = maskdiv1 mod 2
+                        maskval2 = maskdiv2 mod 2
+
+                        if ((maskval1=1) and (maskval2=1)) then                                            
+                               masksum =  masksum  +  2^mz
+                        end if
+
+                        maskdiv1 = Int(maskdiv1 /2) 
+                        maskdiv2 = Int(maskdiv2 /2)
+
+                    Next mz        
+                   
+
+            If (masksum<>0) Then
+                fStr = fStr + "1"
+            Else
+                fStr = fStr + "0"
+            End If
+                
+            smalldigit = Int(smalldigit / 2)
+        
+        Next y
+
+        'TRACE("Singlet %s\n",fStr);
+        tempString = tempString + fStr
+
+        For x = 1 To 12
+        
+            fStr = ""
+            triplets = triplets + Mid(patData0, x + 1, 1)
+            If ((x + 1 - 1) Mod 3 = 0) Then 'Minus 1 as it starts from 1
+            
+                tripletsValue = val(triplets)
+                
+                digits = 512 '10 digits most significant 1
+                For y = 0 To 9
+                
+                    'If (tripletsValue And digits) Then
+		            maskdiv1 = tripletsValue
+                    maskdiv2 = digits
+                    masksum = 0
+                    For mz = 0 to 31
+
+                        maskval1 = maskdiv1 mod 2
+                        maskval2 = maskdiv2 mod 2
+
+                        if ((maskval1=1) and (maskval2=1)) then 
+                               masksum =  masksum  +  2^mz
+                        end if
+
+                        maskdiv1 = Int(maskdiv1 /2) 
+                        maskdiv2 = Int(maskdiv2 /2)
+
+                    Next mz        
+                   
+                    if (masksum<>0) then
+                        fStr = fStr + "1"
+                    Else
+                        fStr = fStr + "0"
+                    End If
+                    digits = Int(digits / 2)
+                
+                Next y
+                tempString = tempString + fStr
+                triplets = ""
+            
+            End If
+        
+        Next x
+        
+        encodationResult = tempString 'setup encodation result for calculation of length in dataCompaction
+            
+        For x = 0 To patternCounter - 1
+        
+            If (x <> 0) Then
+            
+                'TRACE("patterns %s patData %s\n",patterns[x],patData[x]);
+                temppatData = temppatData + stripBrackets(patterns(x+1)) + patData(x+1)
+            
+            End If
+        
+        Next x
+
+    
+        
+        tempString = tempString + dataCompaction(temppatData, encodationResult, compactionResult, state)
+        
+
+        numData = Int(Len(tempString) / 12)
+        numSegments = numData + 1
+
+        'Setup the variable bits length field
+        If (numSegments Mod 2 = 0) Then
+            tempLeft = left(tempString, 2)
+            tempRight = right(tempString, Len(tempString) - 3)
+            tempString = tempLeft + "0" + tempRight
+            'tempString.SetAt(2,'0');
+        Else
+            tempLeft = left(tempString, 2)
+            tempRight = right(tempString, Len(tempString) - 3)
+            tempString = tempLeft + "1" + tempRight
+            'tempString.SetAt(2,'1');
+        End If
+
+        If (numSegments <= 14) Then
+            tempLeft = left(tempString, 3)
+            tempRight = right(tempString, Len(tempString) - 4)
+            tempString = tempLeft + "0" + tempRight
+            'tempString.SetAt(3,'0');
+        Else
+            tempLeft = left(tempString, 3)
+            tempRight = right(tempString, Len(tempString) - 4)
+            tempString = tempLeft + "1" + tempRight
+            'tempString.SetAt(3,'1');
+        End If
+
+
+        'Possible place to do a length check does not exceed max length
+        
+        value12 = 0
+        digits = 2048
+        For x = 0 To Len(tempString) - 1
+        
+
+            If (Mid(tempString, x + 1, 1) = "1") Then
+            
+                value12 = value12 + digits
+                'TRACE("Interim : %d\n",value12);
+            
+            End If
+
+            If ((x + 1) Mod 12 = 0) Then
+            
+                If (Int(((x + 1) / 12) - 1) > 21) Then
+                
+                    'TRACE("Max Length Exceed");
+                    errorMsg = "There are too many characters in the data to be encoded."
+                    encodationMethod = ""
+                    Exit Function
+                
+                End If
+
+                datachar(Int(((x + 1) / 12) - 1)+1) = value12
+
+                
+                value12 = 0
+                digits = 2048
+            
+            Else
+                digits = Int(digits / 2)
+            End If
+        
+        Next x
+        
+        Dim combinationStr As String
+        combinationStr = ""
+        For x = 0 To patternCounter - 1
+        
+            combinationStr = combinationStr + patterns(x+1) + patData(x+1)
+        
+        Next x
+
+
+        retstr = "||||" + cstr(numSegments) + "||||" + cstr(numData) 
+        For ii = 1 to numData
+            retstr = retstr + "||||" + cstr(datachar(ii),"##########.##")
+        Next ii
+
+        encodationMethod = combinationStr + retstr
+	    
+        Exit Function
+    
+    Else
+    
+        'Could be any AI or AI(01) + other AI
+        encodationResult = ""
+        
+        'Setup for barcode encodation
+        If (linkageFlag = 1) Then
+            tempString = "1"
+        Else
+            tempString = "0" 'Linkage
+        End If
+            
+        
+        tempString = tempString + "00" 'Encodation Method Field
+        tempString = tempString + "00" 'Variable Length Field
+
+        encodationResult = tempString 'setup encodation result for calculation of length in dataCompaction
+        
+        For x = 0 To patternCounter - 1
+                    
+            temppatData = temppatData + stripBrackets(patterns(x+1)) + patData(x+1)
+        
+        Next x
+        
+        tempString = tempString + dataCompaction(temppatData, encodationResult, compactionResult, state)
+        numData = Int(Len(tempString) / 12)
+        numSegments = numData + 1
+
+	  '1031
+	  If (numSegments<4) Then
+		
+			errorMsg = "The GS1 Expanded Specifications require the number of data segments to be at least 4."
+		      encodationMethod = ""
+		      Exit Function
+
+	  End if
+        
+        'Possible place to do a length check does not exceed max length
+        'Setup the variable bits length field
+        If (numSegments Mod 2 = 0) Then
+            tempLeft = left(tempString, 3)
+            tempRight = right(tempString, Len(tempString) - 4)
+            tempString = tempLeft + "0" + tempRight
+            'tempString.SetAt(3,'0');
+        Else
+            tempLeft = left(tempString, 3)
+            tempRight = right(tempString, Len(tempString) - 4)
+            tempString = tempLeft + "1" + tempRight
+            'tempString.SetAt(3,'1');
+        End If
+
+        If (numSegments <= 14) Then
+            tempLeft = left(tempString, 4)
+            tempRight = right(tempString, Len(tempString) - 5)
+            tempString = tempLeft + "0" + tempRight
+            'tempString.SetAt(4,'0');
+        Else
+            tempLeft = left(tempString, 4)
+            tempRight = right(tempString, Len(tempString) - 5)
+            tempString = tempLeft + "1" + tempRight
+            'tempString.SetAt(4,'1');
+        End If
+
+                
+        value12 = 0
+        digits = 2048
+        For x = 0 To Len(tempString) - 1
+
+            If (Mid(tempString, x + 1, 1) = "1") Then
+            
+                value12 = value12 + digits
+                'TRACE("Interim : %d\n",value12);
+            
+            End If
+            
+            
+            If ((x + 1) Mod 12 = 0) Then
+            
+                If (Int(((x + 1) / 12) - 1) > 21) Then
+                
+                    'TRACE("Max Length Exceed");
+                    errorMsg = "There are too many characters in the data to be encoded."
+                    encodationMethod = ""
+                    Exit Function
+                
+                End If
+
+                datachar(Int(((x + 1) / 12) - 1)+1) = value12
+                                
+                value12 = 0
+                digits = 2048
+            
+            Else
+                digits = Int(digits / 2)
+            End If
+        Next x
+
+        
+        combinationStr = ""
+        For x = 0 To patternCounter - 1
+        
+            combinationStr = combinationStr + patterns(x+1) + patData(x+1)
+        
+        Next x
+
+	    retstr = "||||" + cstr(numSegments) + "||||" + cstr(numData) 
+        For ii = 1 to numData
+            retstr = retstr + "||||" + cstr(datachar(ii),"##########.##")
+        Next ii
+
+        encodationMethod = combinationStr + retstr
+        Exit Function
+
+    End If
+
+	retstr = "||||" + cstr(numSegments) + "||||" + cstr(numData) 
+    For ii = 1 to numData
+            retstr = retstr + "||||" + cstr(datachar(ii),"##########.##")
+    Next ii
+
+    encodationMethod = result + retstr
+    Exit Function
+    
+End Function
+
+
+
+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+' Report Custom Function : filterInput__GS1DatabarExpanded
+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+Function filterInput__GS1DatabarExpanded(data As String) As String
+    
+  Dim result As String
+  Dim x, datalength, barcodeval As number
+  Dim barcodechar As String
+    
+  result = ""
+  datalength = Len(data)
+
+  For x = 0 To datalength - 1
+  
+    barcodechar = Mid(data, x + 1, 1)
+    barcodeval = AscW(barcodechar)
+    If ( _
+        (barcodeval <= AscW("9") And barcodeval >= AscW("0")) Or _
+        (barcodeval <= AscW("z") And barcodeval >= AscW("a")) Or _
+        (barcodeval <= AscW("Z") And barcodeval >= AscW("A")) Or _
+        (barcodechar = "!" Or barcodeval = 34 Or barcodechar = "%" _
+         Or barcodechar = "&" Or barcodechar = "'" Or barcodechar = "(") _
+         Or barcodechar = ")" Or barcodechar = "*" Or barcodechar = "+" _
+         Or barcodechar = "," Or barcodechar = "-" Or barcodechar = "." _
+         Or barcodechar = "/" Or barcodechar = ":" Or barcodechar = ";" Or barcodechar = "<" _
+         Or barcodechar = "=" Or barcodechar = ">" Or barcodechar = "?" _
+         Or barcodechar = "_" Or barcodechar = " " _
+         Or barcodechar = "{" Or barcodechar = "}") Then
+         
+        result = result + barcodechar
+        
+     End If
+  
+  Next x
+
+  filterInput__GS1DatabarExpanded = result
+  
+End Function
+
+
+
+
+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+' Report Custom Function : fixLength8Encodation
+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+Function fixLength8Encodation(data As String, encodationField As String,  numData As number,  numSegments As number, errorMsg As String, linkageFlag As number, datachar() As number,  patterns() As String,  patData() As String,  patternCounter As number) As String
+
+        
+        Dim patData0, patData1, patData2, tempString As String
+        Dim addcharlength As number
+        Dim x As number
+        Dim y As number
+        Dim retstr As string
+        Dim ii as number
+        
+        Dim maskval1,maskval2 as number
+        Dim maskdiv1,maskdiv2 as number
+        Dim masksum as number
+        Dim mz as number
+
+
+        patData(0+1) = onlyNumeric(patData(0+1))
+        If (Len(patData(0+1)) < 14) Then
+        
+            addcharlength = 14 - Len(patData(0+1))
+            For x = 0 To addcharlength - 1
+                patData(0+1) = "0" + patData(0+1)
+            Next x
+         
+        
+        ElseIf (Len(patData(0+1)) > 14) Then
+        
+            'patData(0).Delete(14,len(patData(0))-14);
+            patData(0+1) = left(patData(0+1), 14)
+        
+        End If
+
+        If (Mid(patData(0+1), 0 + 1, 1) <> "9") Then
+        
+            errorMsg = "9 must be the first digit for the data in AI (01) in this specific Expanded encoding."
+            fixLength8Encodation = ""
+            Exit Function
+        
+        End If
+
+        patData(1+1) = onlyNumeric(patData(1+1))
+        If (Len(patData(1+1)) > 6) Then
+        
+            patData(1+1) = left(patData(1+1), 6)
+        
+        End If
+
+        If (Len(patData(1+1)) < 6) Then
+        
+            addcharlength = 6 - Len(patData(1+1))
+            For x = 0 To addcharlength - 1
+                patData(1+1) = "0" + patData(1+1)
+            Next x
+        End If
+
+        patData(2+1) = onlyNumeric(patData(2+1))
+        If (Len(patData(2+1)) > 6) Then
+        
+            patData(2+1) = left(patData(2+1), 6)
+        
+        End If
+
+        If (Len(patData(2+1)) < 6) Then
+        
+            addcharlength = 6 - Len(patData(2+1))
+            For x = 0 To addcharlength - 1
+                patData(2+1) = "0" + patData(2+1)
+            Next x
+        End If
+
+        Dim valueRange As number
+        valueRange = val(patData(1+1))
+        If (valueRange < 0 Or valueRange > 99999) Then
+        
+            errorMsg = "The weight field must be from 0 to 99999."
+            fixLength8Encodation = ""
+            Exit Function
+            
+        End If
+        patData0 = left(patData(0+1), 13) 'Take out last Digit
+        patData0 = right(patData0, 12) 'Take out first Digit
+        patData1 = Mid(patterns(1+1), 4 + 1, 1) + right(patData(1+1), 5)
+        patData2 = patData(2+1)
+
+        'TRACE("patData1 %s\n",patData1);
+
+        'Setup for barcode encodation
+        numData = 7
+        numSegments = 8
+        If (linkageFlag = 1) Then
+            tempString = "1"
+        Else
+            tempString = "0" 'Linkage
+        End If
+
+        'tempString=tempString+"0111000"; //Encodation Method Field
+        tempString = tempString + encodationField 'Encodation Method Field
+        
+        Dim triplets, fStr As String
+        triplets = ""
+        fStr = ""
+        Dim tripletsValue As number
+        Dim digits As number
+        
+        
+        For x = 0 To 11
+        
+           
+            fStr = ""
+            triplets = triplets + Mid(patData0, x + 1, 1)
+            If ((x + 1) Mod 3 = 0) Then
+            
+                tripletsValue = val(triplets)
+                
+                digits = 512 '10 digits most significant 1
+                For y = 0 To 9
+
+                    'If (tripletsValue And digits) Then
+                    maskdiv1 = tripletsValue
+                    maskdiv2 = digits
+                    masksum = 0
+                    For mz = 0 to 31
+
+                        maskval1 = maskdiv1 mod 2
+                        maskval2 = maskdiv2 mod 2
+
+                        if ((maskval1=1) and (maskval2=1)) then 
+                               masksum =  masksum  +  2^mz
+                        end if
+
+                        maskdiv1 = Int(maskdiv1 /2) 
+                        maskdiv2 = Int(maskdiv2 /2)
+
+                    Next mz        
+                    
+                    
+                    If (masksum<>0) Then
+                        fStr = fStr + "1"
+                    Else
+                        fStr = fStr + "0"
+                    End If
+                    digits = Int(digits / 2)
+                
+                Next y
+                tempString = tempString + fStr
+                triplets = ""
+            
+            End If
+        
+        Next x
+
+        Dim patData1Value As number
+        patData1Value = val(patData1)
+        digits = 524288 '0x80000; //20 digits most significant 1
+        For y = 0 To 19
+        
+                    'If (patData1Value And digits) Then                
+                    maskdiv1 = patData1Value
+                    maskdiv2 = digits
+                    masksum = 0
+                    For mz = 0 to 31
+
+                        maskval1 = maskdiv1 mod 2
+                        maskval2 = maskdiv2 mod 2
+
+                        if ((maskval1=1) and (maskval2=1)) then
+                               masksum =  masksum  +  2^mz
+                        end if
+
+                        maskdiv1 = Int(maskdiv1 /2) 
+                        maskdiv2 = Int(maskdiv2 /2)
+
+                    Next mz        
+                   
+            If (masksum<>0) Then  
+                tempString = tempString + "1"
+            Else
+                tempString = tempString + "0"
+            End If
+            digits = Int(digits / 2)
+        
+        Next y
+
+        Dim YY, MM, DD As number
+        
+        YY = val(left(patData2, 2))
+        MM = val(Mid(patData2, 2 + 1, 1) + Mid(patData2, 3 + 1, 1))
+        DD = val(right(patData2, 2))
+        'TRACE("YY %d, MM %d, DD %d\n",YY,MM,DD);
+
+        Dim patData2Value As number
+        patData2Value = YY * 384 + (MM - 1) * 32 + DD
+        If (patData2Value = 0) Then
+            patData2Value = 38400
+        End If
+
+        'TRACE("patData2 %ld\n",patData2Value);
+
+        Dim negation as boolean
+        negation = false
+        If (patData2Value<0) then
+            patData2Value = -patData2Value-1
+            negation = true
+        end If
+
+        digits = 32768 '20 digits most significant 1
+        For y = 0 To 15
+        
+            'If (patData2Value And digits) Then        
+                    maskdiv1 = patData2Value
+                    maskdiv2 = digits
+                    masksum = 0
+                    For mz = 0 to 31
+
+                        maskval1 = maskdiv1 mod 2
+                        maskval2 = maskdiv2 mod 2
+
+                        if (negation) then
+    
+                            if ((maskval1=0) and (maskval2=1)) then 
+                               masksum =  masksum  +  2^mz
+                            end if
+
+                        else
+
+                            if ((maskval1=1) and (maskval2=1)) then 
+                               masksum =  masksum  +  2^mz
+                            end if
+                        end if
+
+                        maskdiv1 = Int(maskdiv1 /2) 
+                        maskdiv2 = Int(maskdiv2 /2)
+
+                    Next mz        
+
+            If (masksum<>0) Then  
+                tempString = tempString + "1"
+            Else
+                tempString = tempString + "0"
+            End If
+            digits = Int(digits / 2)
+        
+        Next y
+        
+        Dim value12 As number
+        value12 = 0
+        digits = 2048
+        For x = 0 To 83
+        
+
+            If (Mid(tempString, x + 1, 1) = "1") Then
+            
+                value12 = value12 + digits 'value12=value12+(long)digits;
+                'TRACE("Interim : %d\n",value12);
+            End If
+            
+            If ((x + 1) Mod 12 = 0) Then
+            
+                datachar(Int(((x + 1) / 12) - 1)+1) = value12
+                
+                
+                value12 = 0
+                digits = 2048
+            
+            Else
+                digits = Int(digits / 2)
+            End If
+        Next x
+
+        'numSegments, numData (number of datachars), datachar
+        
+        retstr = "||||" + cstr(numSegments) + "||||" + cstr(numData) 
+        For ii = 1 to numData
+            retstr = retstr + "||||" + cstr(datachar(ii),"##########.##") 
+        Next ii
+
+        'retstr = retstr + "|||*" + tempString
+
+        fixLength8Encodation = patterns(0+1) + patData(0+1) + patterns(1+1) + patData(1+1) + patterns(2+1) + patData(2+1) + retstr
+        
+        
+End Function
+
+
+
+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+' Report Custom Function : getCheckSumWeights
+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+Function getCheckSumWeights( scr As String) As number
+
+    Dim retval As number
+    retval = 0
+    
+        
+    If (scr = "A1 Right") Then
+        retval = 0
+    ElseIf (scr = "A2 Left") Then
+        retval = 1
+    ElseIf (scr = "A2 Right") Then
+        retval = 2
+    ElseIf (scr = "B1 Left") Then
+        retval = 3
+    ElseIf (scr = "B1 Right") Then
+        retval = 4
+    ElseIf (scr = "B2 Left") Then
+        retval = 5
+    ElseIf (scr = "B2 Right") Then
+        retval = 6
+    ElseIf (scr = "C1 Left") Then
+        retval = 7
+    ElseIf (scr = "C1 Right") Then
+        retval = 8
+    ElseIf (scr = "C2 Left") Then
+        retval = 9
+    ElseIf (scr = "C2 Right") Then
+        retval = 10
+    ElseIf (scr = "D1 Left") Then
+        retval = 11
+    ElseIf (scr = "D1 Right") Then
+        retval = 12
+    ElseIf (scr = "D2 Left") Then
+        retval = 13
+    ElseIf (scr = "D2 Right") Then
+        retval = 14
+    ElseIf (scr = "E1 Left") Then
+        retval = 15
+    ElseIf (scr = "E1 Right") Then
+        retval = 16
+    ElseIf (scr = "E2 Left") Then
+        retval = 17
+    ElseIf (scr = "E2 Right") Then
+        retval = 18
+    ElseIf (scr = "F1 Left") Then
+        retval = 19
+    ElseIf (scr = "F1 Right") Then
+        retval = 20
+    ElseIf (scr = "F2 Left") Then
+        retval = 21
+    ElseIf (scr = "F2 Right") Then
+        retval = 22
+    End If
+
+    getCheckSumWeights = retval
+
+End Function
+
+
+
+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+' Report Custom Function : getFinderPatternIndex
+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+Function getFinderPatternIndex(numSegments As number) As number
+
+    Dim retval As number
+    retval = 0
+    
+    If (numSegments = 4) Then
+        retval = 0
+    ElseIf (numSegments = 5 Or numSegments = 6) Then
+        retval = 1
+    ElseIf (numSegments = 7 Or numSegments = 8) Then
+        retval = 2
+    ElseIf (numSegments = 9 Or numSegments = 10) Then
+        retval = 3
+    ElseIf (numSegments = 11 Or numSegments = 12) Then
+        retval = 4
+    ElseIf (numSegments = 13 Or numSegments = 14) Then
+        retval = 5
+    ElseIf (numSegments = 15 Or numSegments = 16) Then
+        retval = 6
+    ElseIf (numSegments = 17 Or numSegments = 18) Then
+        retval = 7
+    ElseIf (numSegments = 19 Or numSegments = 20) Then
+        retval = 8
+    ElseIf (numSegments = 21 Or numSegments = 22) Then
+        retval = 9
+    End If
+
+    getFinderPatternIndex = retval
+
+End Function
+
+
+
+
+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+' Report Custom Function : getFinderPatterns
+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+Function getFinderPatterns(patternName As String) As number
+
+    Dim retvalFPD As number
+    retvalFPD = 0
+    
+
+    
+    If (patternName = "A1") Then
+    
+        retvalFPD = 0
+    ElseIf (patternName = "B1") Then
+    
+        retvalFPD = 1
+    ElseIf (patternName = "C1") Then
+    
+        retvalFPD = 2
+    ElseIf (patternName = "D1") Then
+    
+        retvalFPD = 3
+    ElseIf (patternName = "E1") Then
+    
+        retvalFPD = 4
+    ElseIf (patternName = "F1") Then
+    
+        retvalFPD = 5
+    ElseIf (patternName = "A2") Then
+    
+        retvalFPD = 0
+    ElseIf (patternName = "B2") Then
+    
+        retvalFPD = 1
+    ElseIf (patternName = "C2") Then
+    
+        retvalFPD = 2
+    ElseIf (patternName = "D2") Then
+    
+        retvalFPD = 3
+    ElseIf (patternName = "E2") Then
+    
+        retvalFPD = 4
+    ElseIf (patternName = "F2") Then
+    
+        retvalFPD = 5
+    End If
+        
+    getFinderPatterns = retvalFPD
+
+End Function
+
+
+
+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+' Report Custom Function : getFinderPatternsfd
+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+Function getFinderPatternsfd( patternName As String) As number
+
+    Dim fdFPD As number    
+    fdFPD = 0
+    
+    If (patternName = "A1") Then
+        fdFPD = 1
+        
+    ElseIf (patternName = "B1") Then
+        fdFPD = 1
+        
+    ElseIf (patternName = "C1") Then
+        fdFPD = 1
+        
+    ElseIf (patternName = "D1") Then
+        fdFPD = 1
+        
+    ElseIf (patternName = "E1") Then
+        fdFPD = 1
+        
+    ElseIf (patternName = "F1") Then
+        fdFPD = 1
+        
+    ElseIf (patternName = "A2") Then
+        fdFPD = 2
+        
+    ElseIf (patternName = "B2") Then
+        fdFPD = 2
+        
+    ElseIf (patternName = "C2") Then
+        fdFPD = 2
+        
+    ElseIf (patternName = "D2") Then
+        fdFPD = 2
+        
+    ElseIf (patternName = "E2") Then
+        fdFPD = 2
+        
+    ElseIf (patternName = "F2") Then
+        fdFPD = 2
+        
+    End If
+        
+    getFinderPatternsfd = fdFPD
+
+End Function
+
+
+
+
+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+' Report Custom Function : getNumFinder
+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+Function getNumFinder( numSegments As number) As number
+
+    Dim retval As number
+    retval = 0
+
+    If (numSegments = 4) Then
+        retval = 2
+    ElseIf (numSegments = 5 Or numSegments = 6) Then
+        retval = 3
+    ElseIf (numSegments = 7 Or numSegments = 8) Then
+        retval = 4
+    ElseIf (numSegments = 9 Or numSegments = 10) Then
+        retval = 5
+    ElseIf (numSegments = 11 Or numSegments = 12) Then
+        retval = 6
+    ElseIf (numSegments = 13 Or numSegments = 14) Then
+        retval = 7
+    ElseIf (numSegments = 15 Or numSegments = 16) Then
+        retval = 8
+    ElseIf (numSegments = 17 Or numSegments = 18) Then
+        retval = 9
+    ElseIf (numSegments = 19 Or numSegments = 20) Then
+        retval = 10
+    ElseIf (numSegments = 21 Or numSegments = 22) Then
+        retval = 11
+    End If
+    
+    getNumFinder = retval
+
+End Function
+
+
+
+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+' Report Custom Function : ISO646Compaction
+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+Function ISO646Compaction(alpha As number) As String
+
+    Dim returnstr As String
+
+    returnstr = ""
+    
+    If (alpha = 48) Then
+        returnstr = "00101"
+    ElseIf (alpha = 49) Then
+        returnstr = "00110"
+    ElseIf (alpha = 50) Then
+        returnstr = "00111"
+    ElseIf (alpha = 51) Then
+        returnstr = "01000"
+    ElseIf (alpha = 52) Then
+        returnstr = "01001"
+    ElseIf (alpha = 53) Then
+        returnstr = "01010"
+    ElseIf (alpha = 54) Then
+        returnstr = "01011"
+    ElseIf (alpha = 55) Then
+        returnstr = "01100"
+    ElseIf (alpha = 56) Then
+        returnstr = "01101"
+    ElseIf (alpha = 57) Then
+        returnstr = "01110"
+    ElseIf (alpha = AscW("#")) Then 'FNC1
+        returnstr = "01111"
+    ElseIf (alpha = AscW("A")) Then
+        returnstr = "1000000"
+    ElseIf (alpha = AscW("B")) Then
+        returnstr = "1000001"
+    ElseIf (alpha = AscW("C")) Then
+        returnstr = "1000010"
+    ElseIf (alpha = AscW("D")) Then
+        returnstr = "1000011"
+    ElseIf (alpha = AscW("E")) Then
+        returnstr = "1000100"
+    ElseIf (alpha = AscW("F")) Then
+        returnstr = "1000101"
+    ElseIf (alpha = AscW("G")) Then
+        returnstr = "1000110"
+    ElseIf (alpha = AscW("H")) Then
+        returnstr = "1000111"
+    ElseIf (alpha = AscW("I")) Then
+        returnstr = "1001000"
+    ElseIf (alpha = AscW("J")) Then
+        returnstr = "1001001"
+    ElseIf (alpha = AscW("K")) Then
+        returnstr = "1001010"
+    ElseIf (alpha = AscW("L")) Then
+        returnstr = "1001011"
+    ElseIf (alpha = AscW("M")) Then
+        returnstr = "1001100"
+    ElseIf (alpha = AscW("N")) Then
+        returnstr = "1001101"
+    ElseIf (alpha = AscW("O")) Then
+        returnstr = "1001110"
+    ElseIf (alpha = AscW("P")) Then
+        returnstr = "1001111"
+    ElseIf (alpha = AscW("Q")) Then
+        returnstr = "1010000;"
+    ElseIf (alpha = AscW("R")) Then
+        returnstr = "1010001"
+    ElseIf (alpha = AscW("S")) Then
+        returnstr = "1010010"
+    ElseIf (alpha = AscW("T")) Then
+        returnstr = "1010011"
+    ElseIf (alpha = AscW("U")) Then
+        returnstr = "1010100"
+    ElseIf (alpha = AscW("V")) Then
+        returnstr = "1010101"
+    ElseIf (alpha = AscW("W")) Then
+        returnstr = "1010110"
+    ElseIf (alpha = AscW("X")) Then
+        returnstr = "1010111"
+    ElseIf (alpha = AscW("Y")) Then
+        returnstr = "1011000"
+    ElseIf (alpha = AscW("Z")) Then
+        returnstr = "1011001"
+    ElseIf (alpha = AscW("a")) Then
+        returnstr = "1011010"
+    ElseIf (alpha = AscW("b")) Then
+        returnstr = "1011011"
+    ElseIf (alpha = AscW("c")) Then
+        returnstr = "1011100"
+    ElseIf (alpha = AscW("d")) Then
+        returnstr = "1011101"
+    ElseIf (alpha = AscW("e")) Then
+        returnstr = "1011110"
+    ElseIf (alpha = AscW("f")) Then
+        returnstr = "1011111"
+    ElseIf (alpha = AscW("g")) Then
+        returnstr = "1100000"
+    ElseIf (alpha = AscW("h")) Then
+        returnstr = "1100001"
+    ElseIf (alpha = AscW("i")) Then
+        returnstr = "1100010"
+    ElseIf (alpha = AscW("j")) Then
+        returnstr = "1100011"
+    ElseIf (alpha = AscW("k")) Then
+        returnstr = "1100100"
+    ElseIf (alpha = AscW("l")) Then
+        returnstr = "1100101"
+    ElseIf (alpha = AscW("m")) Then
+        returnstr = "1100110"
+    ElseIf (alpha = AscW("n")) Then
+        returnstr = "1100111"
+    ElseIf (alpha = AscW("o")) Then
+        returnstr = "1101000"
+    ElseIf (alpha = AscW("p")) Then
+        returnstr = "1101001"
+    ElseIf (alpha = AscW("q")) Then
+        returnstr = "1101010"
+    ElseIf (alpha = AscW("r")) Then
+        returnstr = "1101011"
+    ElseIf (alpha = AscW("s")) Then
+        returnstr = "1101100"
+    ElseIf (alpha = AscW("t")) Then
+        returnstr = "1101101"
+    ElseIf (alpha = AscW("u")) Then
+        returnstr = "1101110"
+    ElseIf (alpha = AscW("v")) Then
+        returnstr = "1101111"
+    ElseIf (alpha = AscW("w")) Then
+        returnstr = "1110000"
+    ElseIf (alpha = AscW("x")) Then
+        returnstr = "1110001"
+    ElseIf (alpha = AscW("y")) Then
+        returnstr = "1110010"
+    ElseIf (alpha = AscW("z")) Then
+        returnstr = "1110011"
+    ElseIf (alpha = AscW("!")) Then
+        returnstr = "11101000"
+    ElseIf (alpha = 34) Then 'ascw(""")
+        returnstr = "11101001"
+    ElseIf (alpha = AscW("%")) Then
+        returnstr = "11101010"
+    ElseIf (alpha = AscW("&")) Then
+        returnstr = "11101011"
+    ElseIf (alpha = AscW("'")) Then
+        returnstr = "11101100"
+    ElseIf (alpha = AscW("{")) Then  'based on 80/20 rule. people will prefer the ( for the AI
+        returnstr = "11101101"
+    ElseIf (alpha = AscW("}")) Then  'and seldom need to encode actual brackets. To encode actual brackets they will use {} instead.
+        returnstr = "11101110"
+    ElseIf (alpha = AscW("*")) Then
+        returnstr = "11101111"
+    ElseIf (alpha = AscW("+")) Then
+        returnstr = "11110000"
+    ElseIf (alpha = AscW(",")) Then
+        returnstr = "11110001"
+    ElseIf (alpha = AscW("-")) Then
+        returnstr = "11110010"
+    ElseIf (alpha = AscW(".")) Then
+        returnstr = "11110011"
+    ElseIf (alpha = AscW("/")) Then
+        returnstr = "11110100"
+    ElseIf (alpha = AscW(":")) Then
+        returnstr = "11110101"
+    ElseIf (alpha = AscW(";")) Then
+        returnstr = "11110110"
+    ElseIf (alpha = AscW("<")) Then
+        returnstr = "11110111"
+    ElseIf (alpha = AscW("=")) Then
+        returnstr = "11111000"
+    ElseIf (alpha = AscW(">")) Then
+        returnstr = "11111001"
+    ElseIf (alpha = AscW("?")) Then
+        returnstr = "11111010"
+    ElseIf (alpha = AscW("_")) Then
+        returnstr = "11111011"
+    ElseIf (alpha = AscW(" ")) Then
+        returnstr = "11111100"
+    End If
+
+  
+
+    ISO646Compaction = returnstr
+    
+End Function
+
+
+
+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+' Report Custom Function : ISO646Encodation
+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+Function ISO646Encodation(x As number, data As String, state As String) As String
+
+    
+    Dim result As String
+    result = ""
+    Do While (x < Len(data))
+    
+        If (ISO646Compaction(AscW(Mid(data, x + 1, 1))) <> "") Then
+        
+            result = result + ISO646Compaction(AscW(Mid(data, x + 1, 1)))
+            
+            x = x + 1
+        
+        End If
+        
+
+        If (ISOSwitchToNumeric(x, data) <> 0) Then
+        
+            state = "Numeric"
+            result = result + "000"
+            ISO646Encodation = result + "||||" + cstr(x) + "||||" + state
+            Exit Function
+        
+        End If
+        
+        
+
+        If (ISOSwitchToAlpha(x, data) <> 0) Then
+        
+
+            state = "Alpha"
+            result = result + "00100"
+            ISO646Encodation = result + "||||" + cstr(x) + "||||" + state
+            Exit Function
+            
+        End If
+    
+    Loop
+
+    ISO646Encodation = result + "||||" + cstr(x) + "||||" + state
+            
+End Function
+
+
+
+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+' Report Custom Function : ISOSwitchToAlpha
+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+Function ISOSwitchToAlpha(x As number,  data As String) As number
+
+
+        If (Len(data) - x >= 1 + 15) Then
+                 If (alphanumericCompaction(AscW(Mid(data, x + 1, 1))) <> "" And _
+                    alphanumericCompaction(AscW(Mid(data, x + 1 + 1, 1))) <> "" And _
+                    alphanumericCompaction(AscW(Mid(data, x + 1 + 2, 1))) <> "" And _
+                    alphanumericCompaction(AscW(Mid(data, x + 1 + 3, 1))) <> "" And _
+                    alphanumericCompaction(AscW(Mid(data, x + 1 + 4, 1))) <> "" And _
+                    alphanumericCompaction(AscW(Mid(data, x + 1 + 5, 1))) <> "" And _
+                    alphanumericCompaction(AscW(Mid(data, x + 1 + 6, 1))) <> "" And _
+                    alphanumericCompaction(AscW(Mid(data, x + 1 + 7, 1))) <> "" And _
+                    alphanumericCompaction(AscW(Mid(data, x + 1 + 8, 1))) <> "" And _
+                    alphanumericCompaction(AscW(Mid(data, x + 1 + 9, 1))) <> "" And _
+                    alphanumericCompaction(AscW(Mid(data, x + 1 + 10, 1))) <> "" And _
+                    alphanumericCompaction(AscW(Mid(data, x + 1 + 11, 1))) <> "" And _
+                    alphanumericCompaction(AscW(Mid(data, x + 1 + 12, 1))) <> "" And _
+                    alphanumericCompaction(AscW(Mid(data, x + 1 + 13, 1))) <> "" And _
+                    alphanumericCompaction(AscW(Mid(data, x + 1 + 14, 1))) <> "") Then
+                    
+                    
+                    ISOSwitchToAlpha = 1
+                    Exit Function
+                    
+                End If
+        End If
+        
+        
+        If (Len(data) - x >= 1 + 14) Then
+              If (alphanumericCompaction(AscW(Mid(data, x + 1, 1))) <> "" And _
+                 alphanumericCompaction(AscW(Mid(data, x + 1 + 1, 1))) <> "" And _
+                 alphanumericCompaction(AscW(Mid(data, x + 1 + 2, 1))) <> "" And _
+                 alphanumericCompaction(AscW(Mid(data, x + 1 + 3, 1))) <> "" And _
+                 alphanumericCompaction(AscW(Mid(data, x + 1 + 4, 1))) <> "" And _
+                 alphanumericCompaction(AscW(Mid(data, x + 1 + 5, 1))) <> "" And _
+                 alphanumericCompaction(AscW(Mid(data, x + 1 + 6, 1))) <> "" And _
+                 alphanumericCompaction(AscW(Mid(data, x + 1 + 7, 1))) <> "" And _
+                 alphanumericCompaction(AscW(Mid(data, x + 1 + 8, 1))) <> "" And _
+                 alphanumericCompaction(AscW(Mid(data, x + 1 + 9, 1))) <> "" And _
+                 alphanumericCompaction(AscW(Mid(data, x + 1 + 10, 1))) <> "" And _
+                 alphanumericCompaction(AscW(Mid(data, x + 1 + 11, 1))) <> "" And _
+                 alphanumericCompaction(AscW(Mid(data, x + 1 + 12, 1))) <> "" And _
+                 alphanumericCompaction(AscW(Mid(data, x + 1 + 13, 1))) <> "") Then
+                
+                ISOSwitchToAlpha = 1
+                Exit Function
+                
+              End If
+        End If
+        
+        
+        
+        If (Len(data) - x >= 1 + 13) Then
+                 
+                 If (alphanumericCompaction(AscW(Mid(data, x + 1, 1))) <> "" And _
+                     alphanumericCompaction(AscW(Mid(data, x + 1 + 1, 1))) <> "" And _
+                     alphanumericCompaction(AscW(Mid(data, x + 1 + 2, 1))) <> "" And _
+                     alphanumericCompaction(AscW(Mid(data, x + 1 + 3, 1))) <> "" And _
+                     alphanumericCompaction(AscW(Mid(data, x + 1 + 4, 1))) <> "" And _
+                     alphanumericCompaction(AscW(Mid(data, x + 1 + 5, 1))) <> "" And _
+                     alphanumericCompaction(AscW(Mid(data, x + 1 + 6, 1))) <> "" And _
+                     alphanumericCompaction(AscW(Mid(data, x + 1 + 7, 1))) <> "" And _
+                     alphanumericCompaction(AscW(Mid(data, x + 1 + 8, 1))) <> "" And _
+                     alphanumericCompaction(AscW(Mid(data, x + 1 + 9, 1))) <> "" And _
+                     alphanumericCompaction(AscW(Mid(data, x + 1 + 10, 1))) <> "" And _
+                     alphanumericCompaction(AscW(Mid(data, x + 1 + 11, 1))) <> "" And _
+                     alphanumericCompaction(AscW(Mid(data, x + 1 + 12, 1))) <> "") Then
+                    
+                    ISOSwitchToAlpha = 1
+                    Exit Function
+                    
+                 End If
+        End If
+        
+        
+        
+        If (Len(data) - x >= 1 + 12) Then
+                 
+                 If (alphanumericCompaction(AscW(Mid(data, x + 1, 1))) <> "" And _
+                     alphanumericCompaction(AscW(Mid(data, x + 1 + 1, 1))) <> "" And _
+                     alphanumericCompaction(AscW(Mid(data, x + 1 + 2, 1))) <> "" And _
+                     alphanumericCompaction(AscW(Mid(data, x + 1 + 3, 1))) <> "" And _
+                     alphanumericCompaction(AscW(Mid(data, x + 1 + 4, 1))) <> "" And _
+                     alphanumericCompaction(AscW(Mid(data, x + 1 + 5, 1))) <> "" And _
+                     alphanumericCompaction(AscW(Mid(data, x + 1 + 6, 1))) <> "" And _
+                     alphanumericCompaction(AscW(Mid(data, x + 1 + 7, 1))) <> "" And _
+                     alphanumericCompaction(AscW(Mid(data, x + 1 + 8, 1))) <> "" And _
+                     alphanumericCompaction(AscW(Mid(data, x + 1 + 9, 1))) <> "" And _
+                     alphanumericCompaction(AscW(Mid(data, x + 1 + 10, 1))) <> "" And _
+                     alphanumericCompaction(AscW(Mid(data, x + 1 + 11, 1))) <> "") Then
+                    ISOSwitchToAlpha = 1
+                    Exit Function
+                    
+                 End If
+        End If
+        
+        
+        
+        If (Len(data) - x >= 1 + 11) Then
+                 
+                 If (alphanumericCompaction(AscW(Mid(data, x + 1, 1))) <> "" And _
+                     alphanumericCompaction(AscW(Mid(data, x + 1 + 1, 1))) <> "" And _
+                     alphanumericCompaction(AscW(Mid(data, x + 1 + 2, 1))) <> "" And _
+                     alphanumericCompaction(AscW(Mid(data, x + 1 + 3, 1))) <> "" And _
+                     alphanumericCompaction(AscW(Mid(data, x + 1 + 4, 1))) <> "" And _
+                     alphanumericCompaction(AscW(Mid(data, x + 1 + 5, 1))) <> "" And _
+                     alphanumericCompaction(AscW(Mid(data, x + 1 + 6, 1))) <> "" And _
+                     alphanumericCompaction(AscW(Mid(data, x + 1 + 7, 1))) <> "" And _
+                     alphanumericCompaction(AscW(Mid(data, x + 1 + 8, 1))) <> "" And _
+                     alphanumericCompaction(AscW(Mid(data, x + 1 + 9, 1))) <> "" And _
+                     alphanumericCompaction(AscW(Mid(data, x + 1 + 10, 1))) <> "") Then
+                    ISOSwitchToAlpha = 1
+                    Exit Function
+                 End If
+        End If
+        
+        
+        
+        If (Len(data) - x >= 1 + 10) Then
+                 
+                 If (alphanumericCompaction(AscW(Mid(data, x + 1, 1))) <> "" And _
+                     alphanumericCompaction(AscW(Mid(data, x + 1 + 1, 1))) <> "" And _
+                     alphanumericCompaction(AscW(Mid(data, x + 1 + 2, 1))) <> "" And _
+                     alphanumericCompaction(AscW(Mid(data, x + 1 + 3, 1))) <> "" And _
+                     alphanumericCompaction(AscW(Mid(data, x + 1 + 4, 1))) <> "" And _
+                     alphanumericCompaction(AscW(Mid(data, x + 1 + 5, 1))) <> "" And _
+                     alphanumericCompaction(AscW(Mid(data, x + 1 + 6, 1))) <> "" And _
+                     alphanumericCompaction(AscW(Mid(data, x + 1 + 7, 1))) <> "" And _
+                     alphanumericCompaction(AscW(Mid(data, x + 1 + 8, 1))) <> "" And _
+                     alphanumericCompaction(AscW(Mid(data, x + 1 + 9, 1))) <> "") Then
+                    ISOSwitchToAlpha = 1
+                    Exit Function
+                    
+                 End If
+        End If
+        
+        
+        
+        If (Len(data) - x >= 1 + 9) Then
+                 
+                 If (alphanumericCompaction(AscW(Mid(data, x + 1, 1))) <> "" And _
+                     alphanumericCompaction(AscW(Mid(data, x + 1 + 1, 1))) <> "" And _
+                     alphanumericCompaction(AscW(Mid(data, x + 1 + 2, 1))) <> "" And _
+                     alphanumericCompaction(AscW(Mid(data, x + 1 + 3, 1))) <> "" And _
+                     alphanumericCompaction(AscW(Mid(data, x + 1 + 4, 1))) <> "" And _
+                     alphanumericCompaction(AscW(Mid(data, x + 1 + 5, 1))) <> "" And _
+                     alphanumericCompaction(AscW(Mid(data, x + 1 + 6, 1))) <> "" And _
+                     alphanumericCompaction(AscW(Mid(data, x + 1 + 7, 1))) <> "" And _
+                     alphanumericCompaction(AscW(Mid(data, x + 1 + 8, 1))) <> "") Then
+                     
+                    ISOSwitchToAlpha = 1
+                    Exit Function
+                    
+                 End If
+        End If
+        
+        
+        
+        If (Len(data) - x >= 1 + 8) Then
+                 If (alphanumericCompaction(AscW(Mid(data, x + 1, 1))) <> "" And _
+                     alphanumericCompaction(AscW(Mid(data, x + 1 + 1, 1))) <> "" And _
+                     alphanumericCompaction(AscW(Mid(data, x + 1 + 2, 1))) <> "" And _
+                     alphanumericCompaction(AscW(Mid(data, x + 1 + 3, 1))) <> "" And _
+                     alphanumericCompaction(AscW(Mid(data, x + 1 + 4, 1))) <> "" And _
+                     alphanumericCompaction(AscW(Mid(data, x + 1 + 5, 1))) <> "" And _
+                     alphanumericCompaction(AscW(Mid(data, x + 1 + 6, 1))) <> "" And _
+                     alphanumericCompaction(AscW(Mid(data, x + 1 + 7, 1))) <> "") Then
+                    ISOSwitchToAlpha = 1
+                    Exit Function
+                    
+                 End If
+        End If
+        
+        
+        
+        If (Len(data) - x >= 1 + 7) Then
+                 If (alphanumericCompaction(AscW(Mid(data, x + 1, 1))) <> "" And _
+                     alphanumericCompaction(AscW(Mid(data, x + 1 + 1, 1))) <> "" And _
+                     alphanumericCompaction(AscW(Mid(data, x + 1 + 2, 1))) <> "" And _
+                     alphanumericCompaction(AscW(Mid(data, x + 1 + 3, 1))) <> "" And _
+                     alphanumericCompaction(AscW(Mid(data, x + 1 + 4, 1))) <> "" And _
+                     alphanumericCompaction(AscW(Mid(data, x + 1 + 5, 1))) <> "" And _
+                     alphanumericCompaction(AscW(Mid(data, x + 1 + 6, 1))) <> "") Then
+                    ISOSwitchToAlpha = 1
+                    Exit Function
+                    
+                 End If
+        End If
+        
+        
+        
+        If (Len(data) - x >= 1 + 6) Then
+                 
+                 If (alphanumericCompaction(AscW(Mid(data, x + 1, 1))) <> "" And _
+                     alphanumericCompaction(AscW(Mid(data, x + 1 + 1, 1))) <> "" And _
+                     alphanumericCompaction(AscW(Mid(data, x + 1 + 2, 1))) <> "" And _
+                     alphanumericCompaction(AscW(Mid(data, x + 1 + 3, 1))) <> "" And _
+                     alphanumericCompaction(AscW(Mid(data, x + 1 + 4, 1))) <> "" And _
+                     alphanumericCompaction(AscW(Mid(data, x + 1 + 5, 1))) <> "") Then
+                    ISOSwitchToAlpha = 1
+                    Exit Function
+                    
+                 End If
+        End If
+        
+        
+        
+        ISOSwitchToAlpha = 0
+
+End Function
+
+
+
+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+' Report Custom Function : ISOSwitchToNumeric
+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+Function ISOSwitchToNumeric(x As number, data As String) As number
+
+
+        'Careful the code depends on here to break and not to carry on the following.
+        'find any char that can be in alpha
+        If (Len(data) - x >= 1 + 14) Then
+                
+                 If ((NextTwoNumeric(x, data)<>0) And (NextTwoNumeric(x + 2, data)<>0) And _
+                    (alphanumericCompaction(AscW(Mid(data, x + 1, 1))) <> "" And _
+                     alphanumericCompaction(AscW(Mid(data, x + 1 + 1, 1))) <> "" And _
+                     alphanumericCompaction(AscW(Mid(data, x + 1 + 2, 1))) <> "" And _
+                     alphanumericCompaction(AscW(Mid(data, x + 1 + 3, 1))) <> "" And _
+                     alphanumericCompaction(AscW(Mid(data, x + 1 + 4, 1))) <> "" And _
+                     alphanumericCompaction(AscW(Mid(data, x + 1 + 5, 1))) <> "" And _
+                     alphanumericCompaction(AscW(Mid(data, x + 1 + 6, 1))) <> "" And _
+                     alphanumericCompaction(AscW(Mid(data, x + 1 + 7, 1))) <> "" And _
+                     alphanumericCompaction(AscW(Mid(data, x + 1 + 8, 1))) <> "" And _
+                     alphanumericCompaction(AscW(Mid(data, x + 1 + 9, 1))) <> "")) Then
+                     
+                    
+                    ISOSwitchToNumeric = 1
+                    Exit Function
+                    
+                End If
+        End If
+        
+        If (Len(data) - x >= 1 + 13) Then
+                 If ((NextTwoNumeric(x, data)<>0) And (NextTwoNumeric(x + 2, data)<>0) And _
+                    (alphanumericCompaction(AscW(Mid(data, x + 1, 1))) <> "" And _
+                     alphanumericCompaction(AscW(Mid(data, x + 1 + 1, 1))) <> "" And _
+                     alphanumericCompaction(AscW(Mid(data, x + 1 + 2, 1))) <> "" And _
+                     alphanumericCompaction(AscW(Mid(data, x + 1 + 3, 1))) <> "" And _
+                     alphanumericCompaction(AscW(Mid(data, x + 1 + 4, 1))) <> "" And _
+                     alphanumericCompaction(AscW(Mid(data, x + 1 + 5, 1))) <> "" And _
+                     alphanumericCompaction(AscW(Mid(data, x + 1 + 6, 1))) <> "" And _
+                     alphanumericCompaction(AscW(Mid(data, x + 1 + 7, 1))) <> "" And _
+                     alphanumericCompaction(AscW(Mid(data, x + 1 + 8, 1))) <> "")) Then
+                     
+                     
+                    
+                    ISOSwitchToNumeric = 1
+                    Exit Function
+                    
+                End If
+        End If
+        
+        
+        If (Len(data) - x >= 1 + 12) Then
+                 If ((NextTwoNumeric(x, data)<>0) And (NextTwoNumeric(x + 2, data)<>0) And _
+                    (alphanumericCompaction(AscW(Mid(data, x + 1, 1))) <> "" And _
+                     alphanumericCompaction(AscW(Mid(data, x + 1 + 1, 1))) <> "" And _
+                     alphanumericCompaction(AscW(Mid(data, x + 1 + 2, 1))) <> "" And _
+                     alphanumericCompaction(AscW(Mid(data, x + 1 + 3, 1))) <> "" And _
+                     alphanumericCompaction(AscW(Mid(data, x + 1 + 4, 1))) <> "" And _
+                     alphanumericCompaction(AscW(Mid(data, x + 1 + 5, 1))) <> "" And _
+                     alphanumericCompaction(AscW(Mid(data, x + 1 + 6, 1))) <> "" And _
+                     alphanumericCompaction(AscW(Mid(data, x + 1 + 7, 1))) <> "")) Then
+                     
+                     
+        
+                    ISOSwitchToNumeric = 1
+                    Exit Function
+                 End If
+         End If
+        
+        
+        If (Len(data) - x >= 1 + 11) Then
+                 If ((NextTwoNumeric(x, data)<>0) And (NextTwoNumeric(x + 2, data)<>0) And _
+                    (alphanumericCompaction(AscW(Mid(data, x + 1, 1))) <> "" And _
+                     alphanumericCompaction(AscW(Mid(data, x + 1 + 1, 1))) <> "" And _
+                     alphanumericCompaction(AscW(Mid(data, x + 1 + 2, 1))) <> "" And _
+                     alphanumericCompaction(AscW(Mid(data, x + 1 + 3, 1))) <> "" And _
+                     alphanumericCompaction(AscW(Mid(data, x + 1 + 4, 1))) <> "" And _
+                     alphanumericCompaction(AscW(Mid(data, x + 1 + 5, 1))) <> "" And _
+                     alphanumericCompaction(AscW(Mid(data, x + 1 + 6, 1))) <> "")) Then
+                     
+                     
+                     
+                    ISOSwitchToNumeric = 1
+                    Exit Function
+                    
+                 End If
+        End If
+        
+        
+        If (Len(data) - x >= 1 + 10) Then
+                 If ((NextTwoNumeric(x, data)<>0) And (NextTwoNumeric(x + 2, data)<>0) And _
+                    (alphanumericCompaction(AscW(Mid(data, x + 1, 1))) <> "" And _
+                     alphanumericCompaction(AscW(Mid(data, x + 1 + 1, 1))) <> "" And _
+                     alphanumericCompaction(AscW(Mid(data, x + 1 + 2, 1))) <> "" And _
+                     alphanumericCompaction(AscW(Mid(data, x + 1 + 3, 1))) <> "" And _
+                     alphanumericCompaction(AscW(Mid(data, x + 1 + 4, 1))) <> "" And _
+                     alphanumericCompaction(AscW(Mid(data, x + 1 + 5, 1))) <> "")) Then
+                     
+                     
+                     
+                    ISOSwitchToNumeric = 1
+                    Exit Function
+                    
+                 End If
+        End If
+        
+        
+        If (Len(data) - x >= 1 + 9) Then
+                 If ((NextTwoNumeric(x, data)<>0) And (NextTwoNumeric(x + 2, data)<>0) And _
+                    (alphanumericCompaction(AscW(Mid(data, x + 1, 1))) <> "" And _
+                     alphanumericCompaction(AscW(Mid(data, x + 1 + 1, 1))) <> "" And _
+                     alphanumericCompaction(AscW(Mid(data, x + 1 + 2, 1))) <> "" And _
+                     alphanumericCompaction(AscW(Mid(data, x + 1 + 3, 1))) <> "" And _
+                     alphanumericCompaction(AscW(Mid(data, x + 1 + 4, 1))) <> "")) Then
+                     
+                     
+                
+                    ISOSwitchToNumeric = 1
+                    Exit Function
+                    
+                 End If
+        End If
+        
+        If (Len(data) - x >= 1 + 8) Then
+                 If ((NextTwoNumeric(x, data)<>0) And (NextTwoNumeric(x + 2, data)<>0) And _
+                    (alphanumericCompaction(AscW(Mid(data, x + 1, 1))) <> "" And _
+                     alphanumericCompaction(AscW(Mid(data, x + 1 + 1, 1))) <> "" And _
+                     alphanumericCompaction(AscW(Mid(data, x + 1 + 2, 1))) <> "" And _
+                     alphanumericCompaction(AscW(Mid(data, x + 1 + 3, 1))) <> "")) Then
+                     
+                     
+                     
+                    ISOSwitchToNumeric = 1
+                    Exit Function
+                 End If
+        End If
+        
+        If (Len(data) - x >= 1 + 7) Then
+                 If ((NextTwoNumeric(x, data)<>0) And (NextTwoNumeric(x + 2, data)<>0) And _
+                    (alphanumericCompaction(AscW(Mid(data, x + 1, 1))) <> "" And _
+                     alphanumericCompaction(AscW(Mid(data, x + 1 + 1, 1))) <> "" And _
+                     alphanumericCompaction(AscW(Mid(data, x + 1 + 2, 1))) <> "")) Then
+                     
+                     
+                
+                    ISOSwitchToNumeric = 1
+                    Exit Function
+                    
+                 End If
+        End If
+        
+        
+        If (Len(data) - x >= 1 + 6) Then
+                 If ((NextTwoNumeric(x, data)<>0) And (NextTwoNumeric(x + 2, data)<>0) And _
+                    (alphanumericCompaction(AscW(Mid(data, x + 1, 1))) <> "" And _
+                     alphanumericCompaction(AscW(Mid(data, x + 1 + 1, 1))) <> "")) Then
+                     
+                     
+                     
+                    ISOSwitchToNumeric = 1
+                    Exit Function
+                    
+                 End If
+        End If
+        
+        
+        If (Len(data) - x >= 1 + 5) Then
+                 If ((NextTwoNumeric(x, data)<>0) And (NextTwoNumeric(x + 2, data)<>0) And _
+                    (alphanumericCompaction(AscW(Mid(data, x + 1, 1))) <> "")) Then
+                    
+                
+                    ISOSwitchToNumeric = 1
+                    Exit Function
+                    
+                 End If
+        End If
+
+        ISOSwitchToNumeric = 0
+        
+End Function
+
+
+
+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+' Report Custom Function : matchAI
+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+Function matchAI( data As String,  matchAIstr As String) As number
+    
+    Dim x, match As number
+    x = 0
+    match = 1
+
+    Do While (x < Len(data))
+    
+        If (Mid(data, x + 1, 1) <> Mid(matchAIstr, x + 1, 1)) Then
+        
+            If (Mid(matchAIstr, x + 1, 1) = "x") Then
+                 'do nothing
+            Else
+                match = 0
+            End If
+        
+        End If
+        x = x + 1
+    
+    Loop
+    matchAI = match
+
+End Function
+
+
+
+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+' Report Custom Function : NextTwoNumeric
+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+Function NextTwoNumeric(x As number,  data As String) As number
+
+    Dim retval As number
+    retval = 0
+
+    If (x + 1 = Len(data)) Then
+        retval = 0
+        NextTwoNumeric = retval
+        Exit Function
+    End If
+    
+    If (AscW(Mid(data, x + 1, 1)) >= AscW("0") And AscW(Mid(data, x + 1, 1)) <= AscW("9") And AscW(Mid(data, x + 1 + 1, 1)) >= AscW("0") And AscW(Mid(data, x + 1 + 1, 1)) <= AscW("9")) Then
+        retval = 1
+        NextTwoNumeric = retval
+        Exit Function
+    End If
+        
+    If (AscW(Mid(data, x + 1, 1)) >= AscW("0") And AscW(Mid(data, x + 1, 1)) <= AscW("9") And AscW(Mid(data, x + 1 + 1, 1)) = AscW("#")) Then
+        retval = 1
+        NextTwoNumeric = retval
+        Exit Function
+    End If
+    
+    If (AscW(Mid(data, x + 1, 1)) = AscW("#") And AscW(Mid(data, x + 1 + 1, 1)) >= AscW("0") And AscW(Mid(data, x + 1 + 1, 1)) <= AscW("9")) Then
+        retval = 1
+        NextTwoNumeric = retval
+        Exit Function
+    End If
+    
+    NextTwoNumeric = 0
+
+End Function
+
+
+
+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+' Report Custom Function : numericCompaction
+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+Function numericCompaction(data As String) As String
+
+
+    Dim numericEncodationV(120 + 8) As String 'First 8, 0..7 are not used
+    
+    numericEncodationV(0+1) = ""
+    numericEncodationV(1+1) = ""
+    numericEncodationV(2+1) = ""
+    numericEncodationV(3+1) = ""
+    numericEncodationV(4+1) = ""
+    numericEncodationV(5+1) = ""
+    numericEncodationV(6+1) = ""
+    numericEncodationV(7+1) = ""
+    numericEncodationV(8+1) = "0001000"
+    numericEncodationV(9+1) = "0001001"
+    numericEncodationV(10+1) = "0001010"
+    numericEncodationV(11+1) = "0001011"
+    numericEncodationV(12+1) = "0001100"
+    numericEncodationV(13+1) = "0001101"
+    numericEncodationV(14+1) = "0001110"
+    numericEncodationV(15+1) = "0001111"
+    numericEncodationV(16+1) = "0010000"
+    numericEncodationV(17+1) = "0010001"
+    numericEncodationV(18+1) = "0010010"
+    numericEncodationV(19+1) = "0010011"
+    numericEncodationV(20+1) = "0010100"
+    numericEncodationV(21+1) = "0010101"
+    numericEncodationV(22+1) = "0010110"
+    numericEncodationV(23+1) = "0010111"
+    numericEncodationV(24+1) = "0011000"
+    numericEncodationV(25+1) = "0011001"
+    numericEncodationV(26+1) = "0011010"
+    numericEncodationV(27+1) = "0011011"
+    numericEncodationV(28+1) = "0011100"
+    numericEncodationV(29+1) = "0011101"
+    numericEncodationV(30+1) = "0011110"
+    numericEncodationV(31+1) = "0011111"
+    numericEncodationV(32+1) = "0100000"
+    numericEncodationV(33+1) = "0100001"
+    numericEncodationV(34+1) = "0100010"
+    numericEncodationV(35+1) = "0100011"
+    numericEncodationV(36+1) = "0100100"
+    numericEncodationV(37+1) = "0100101"
+    numericEncodationV(38+1) = "0100110"
+    numericEncodationV(39+1) = "0100111"
+    numericEncodationV(40+1) = "0101000"
+    numericEncodationV(41+1) = "0101001"
+    numericEncodationV(42+1) = "0101010"
+    numericEncodationV(43+1) = "0101011"
+    numericEncodationV(44+1) = "0101100"
+    numericEncodationV(45+1) = "0101101"
+    numericEncodationV(46+1) = "0101110"
+    numericEncodationV(47+1) = "0101111"
+    numericEncodationV(48+1) = "0110000"
+    numericEncodationV(49+1) = "0110001"
+    numericEncodationV(50+1) = "0110010"
+    numericEncodationV(51+1) = "0110011"
+    numericEncodationV(52+1) = "0110100"
+    numericEncodationV(53+1) = "0110101"
+    numericEncodationV(54+1) = "0110110"
+    numericEncodationV(55+1) = "0110111"
+    numericEncodationV(56+1) = "0111000"
+    numericEncodationV(57+1) = "0111001"
+    numericEncodationV(58+1) = "0111010"
+    numericEncodationV(59+1) = "0111011"
+    numericEncodationV(60+1) = "0111100"
+    numericEncodationV(61+1) = "0111101"
+    numericEncodationV(62+1) = "0111110"
+    numericEncodationV(63+1) = "0111111"
+    numericEncodationV(64+1) = "1000000"
+    numericEncodationV(65+1) = "1000001"
+    numericEncodationV(66+1) = "1000010"
+    numericEncodationV(67+1) = "1000011"
+    numericEncodationV(68+1) = "1000100"
+    numericEncodationV(69+1) = "1000101"
+    numericEncodationV(70+1) = "1000110"
+    numericEncodationV(71+1) = "1000111"
+    numericEncodationV(72+1) = "1001000"
+    numericEncodationV(73+1) = "1001001"
+    numericEncodationV(74+1) = "1001010"
+    numericEncodationV(75+1) = "1001011"
+    numericEncodationV(76+1) = "1001100"
+    numericEncodationV(77+1) = "1001101"
+    numericEncodationV(78+1) = "1001110"
+    numericEncodationV(79+1) = "1001111"
+    numericEncodationV(80+1) = "1010000"
+    numericEncodationV(81+1) = "1010001"
+    numericEncodationV(82+1) = "1010010"
+    numericEncodationV(83+1) = "1010011"
+    numericEncodationV(84+1) = "1010100"
+    numericEncodationV(85+1) = "1010101"
+    numericEncodationV(86+1) = "1010110"
+    numericEncodationV(87+1) = "1010111"
+    numericEncodationV(88+1) = "1011000"
+    numericEncodationV(89+1) = "1011001"
+    numericEncodationV(90+1) = "1011010"
+    numericEncodationV(91+1) = "1011011"
+    numericEncodationV(92+1) = "1011100"
+    numericEncodationV(93+1) = "1011101"
+    numericEncodationV(94+1) = "1011110"
+    numericEncodationV(95+1) = "1011111"
+    numericEncodationV(96+1) = "1100000"
+    numericEncodationV(97+1) = "1100001"
+    numericEncodationV(98+1) = "1100010"
+    numericEncodationV(99+1) = "1100011"
+    numericEncodationV(100+1) = "1100100"
+    numericEncodationV(101+1) = "1100101"
+    numericEncodationV(102+1) = "1100110"
+    numericEncodationV(103+1) = "1100111"
+    numericEncodationV(104+1) = "1101000"
+    numericEncodationV(105+1) = "1101001"
+    numericEncodationV(106+1) = "1101010"
+    numericEncodationV(107+1) = "1101011"
+    numericEncodationV(108+1) = "1101100"
+    numericEncodationV(109+1) = "1101101"
+    numericEncodationV(110+1) = "1101110"
+    numericEncodationV(111+1) = "1101111"
+    numericEncodationV(112+1) = "1110000"
+    numericEncodationV(113+1) = "1110001"
+    numericEncodationV(114+1) = "1110010"
+    numericEncodationV(115+1) = "1110011"
+    numericEncodationV(116+1) = "1110100"
+    numericEncodationV(117+1) = "1110101"
+    numericEncodationV(118+1) = "1110110"
+    numericEncodationV(119+1) = "1110111"
+    numericEncodationV(120+1) = "1111000"
+    numericEncodationV(121+1) = "1111001"
+    numericEncodationV(122+1) = "1111010"
+    numericEncodationV(123+1) = "1111011"
+    numericEncodationV(124+1) = "1111100"
+    numericEncodationV(125+1) = "1111101"
+    numericEncodationV(126+1) = "1111110"
+    numericEncodationV(127+1) = "1111111"
+    
+
+    If (Len(data) <> 2) Then
+        numericCompaction = ""
+    Else
+        
+    Dim value1 As number
+    Dim value2 As number
+    Dim value As number
+    Dim barcodechar As String
+    Dim barcodechar1 As String
+    
+    barcodechar = ""
+    barcodechar1 = ""
+    
+  
+    barcodechar = Mid(data, 0 + 1, 1)
+    If AscW(barcodechar) <= AscW("9") And AscW(barcodechar) >= AscW("0") Then
+            value1 = AscW(barcodechar) - 48
+    ElseIf (barcodechar = "#") Then
+            value1 = 10
+    End If
+    
+    
+    barcodechar1 = Mid(data, 1 + 1, 1)
+    If AscW(barcodechar1) <= AscW("9") And AscW(barcodechar1) >= AscW("0") Then
+            value2 = AscW(barcodechar1) - 48
+    Else
+            value2 = 10
+    End If
+
+    value = value1 * 11 + value2 + 8
+    numericCompaction = numericEncodationV(value+1)
+    
+    End If
+
+End Function
+
+
+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+' Report Custom Function : numericEncodation
+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+Function numericEncodation(x As number, dataNE As String, encodationResult As String, compactionResult As String, state As String) As String
+
+    'TRACE("Numeric Encodation\n");
+    'MsgBox "Numeric Encodation"
+            
+    Dim maskval1,maskval2 as number
+    Dim maskdiv1,maskdiv2 as number
+    Dim masksum as number
+    Dim mz as number
+
+    Dim resultNE As String
+    resultNE = ""
+    Do While (x < Len(dataNE))
+    
+        
+        If (NextTwoNumeric(x, dataNE)<>0) Then
+            
+            resultNE = resultNE + numericCompaction(Mid(dataNE, x + 1, 2))
+            x = x + 2
+        
+        ElseIf (Len(dataNE) - x >= 2) Then '2 or more characters left
+        
+           
+            resultNE = resultNE + "0000"
+            state = "Alpha"
+            numericEncodation = resultNE + "||||" + cstr(x) + "||||" + state
+            Exit Function
+        
+        ElseIf (Len(dataNE) - x = 1 And (AscW(Mid(dataNE, x + 1, 1)) < AscW("0") Or AscW(Mid(dataNE, x + 1, 1)) > AscW("9"))) Then '1 character left
+                       
+                        
+            resultNE = resultNE + "0000"
+            state = "Alpha"
+            numericEncodation = resultNE + "||||" + cstr(x) + "||||" + state
+            Exit Function
+        
+        ElseIf (Len(dataNE) - x = 1 And AscW(Mid(dataNE, x + 1, 1)) >= AscW("0") And AscW(Mid(dataNE, x + 1, 1)) <= AscW("9")) Then
+        
+        
+            
+            Dim symbolbitslength, nextFactor, numBitsLeft As number
+            symbolbitslength = Len(encodationResult) + Len(compactionResult) + Len(resultNE)
+            nextFactor = Int(symbolbitslength / 12) + 1
+            numBitsLeft = nextFactor * 12 - symbolbitslength
+            If (numBitsLeft >= 7) Then
+            
+                
+                resultNE = resultNE + numericCompaction(Mid(dataNE, x + 1, 1) + "#")
+                x = x + 1
+                numericEncodation = resultNE + "||||" + cstr(x) + "||||" + state
+
+                Exit Function
+            
+            ElseIf (numBitsLeft >= 4 And numBitsLeft <= 6) Then
+            
+                Dim value As number
+                Dim digits As number
+                Dim y As number
+                
+                value = (AscW(Mid(dataNE, x + 1, 1)) - AscW("0")) + 1
+                'int digits=0x08; recheck
+                digits = 8
+                
+    
+                For y = 0 To 3
+                
+            
+                    'if (value&digits)<>0 
+                    
+                    'Bitwise Operations                                            
+                    maskdiv1 = value
+                    maskdiv2 = digits
+                    masksum = 0
+                    For mz = 0 to 31
+
+                        maskval1 = maskdiv1 mod 2
+                        maskval2 = maskdiv2 mod 2
+
+                        if ((maskval1=1) and (maskval2=1)) then    'And 
+                               masksum =  masksum  +  2^mz
+                        end if
+
+                        maskdiv1 = Int(maskdiv1 /2) 
+                        maskdiv2 = Int(maskdiv2 /2)
+
+                    Next mz                                                            
+                    If (masksum <> 0) Then
+                        resultNE = resultNE + "1"
+                    Else
+                        resultNE = resultNE + "0"
+                    End If
+                    'digits>>=1;
+                    digits = Int(digits / 2)
+                Next y
+                x = x + 1
+                numericEncodation = resultNE + "||||" + cstr(x) + "||||" + state
+                
+
+                Exit Function
+            
+            Else
+            
+                resultNE = resultNE + numericCompaction(Mid(dataNE, x + 1, 1) + "#")
+                x = x + 1
+                numericEncodation = resultNE + "||||" + cstr(x) + "||||" + state
+                
+
+                Exit Function
+            
+            End If
+        End If
+    Loop
+    numericEncodation = resultNE + "||||" + cstr(x) + "||||" + state
+
+End Function
+
+
+
+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+' Report Custom Function : onlyNumeric
+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+Function onlyNumeric( data As String) As String
+
+    Dim result As String
+    Dim x as number
+    result = ""
+    
+    For x = 0 To Len(data) - 1
+        If (AscW(Mid(data, x + 1, 1)) <= AscW("9") And AscW(Mid(data, x + 1, 1)) >= AscW("0")) Then
+            result = result + Mid(data, x + 1, 1)
+        End If
+    Next x
+            
+    onlyNumeric = result
+
+End Function
+
+
+
+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+' Report Custom Function : pad
+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+Function pad( data As String, encodationResult As String, state As String) As String
+    
+    Dim result As String
+    result = data
+    
+    Dim symbolbitslength, nextFactor, numBitsLeft As number
+    symbolbitslength = Len(encodationResult) + Len(data)
+
+
+    If (symbolbitslength Mod 12 = 0) Then
+        'TRACE("Fit Exactly\n");//Pad not Required
+
+    Else
+    
+        nextFactor = Int(symbolbitslength / 12) + 1
+        numBitsLeft = nextFactor * 12 - symbolbitslength
+        result = data
+
+        Do While (numBitsLeft > 0)
+        
+            If (state = "Numeric") Then
+            
+                If (numBitsLeft > 3) Then
+                
+                    result = result + "0000"
+                    numBitsLeft = numBitsLeft - 4
+                    state = "Alpha"
+                
+                ElseIf (numBitsLeft = 3) Then
+                
+                    result = result + "000"
+                    numBitsLeft = numBitsLeft - 3
+                    state = "Alpha"
+                
+                ElseIf (numBitsLeft = 2) Then
+                
+                    result = result + "00"
+                    numBitsLeft = numBitsLeft - 2
+                
+                ElseIf (numBitsLeft = 1) Then
+                
+                    result = result + "0"
+                    numBitsLeft = numBitsLeft - 1
+                
+                End If
+            
+            Else
+            
+                If (numBitsLeft >= 5) Then
+                
+                    result = result + "00100"
+                    numBitsLeft = numBitsLeft - 5
+                
+                ElseIf (numBitsLeft = 4) Then
+                
+                    result = result + "0010"
+                    numBitsLeft = numBitsLeft - 4
+                
+                ElseIf (numBitsLeft = 3) Then
+                
+                    result = result + "001"
+                    numBitsLeft = numBitsLeft - 3
+                
+                ElseIf (numBitsLeft = 2) Then
+                
+                    result = result + "00"
+                    numBitsLeft = numBitsLeft - 2
+                
+                ElseIf (numBitsLeft = 1) Then
+                
+                    result = result + "0"
+                    numBitsLeft = numBitsLeft - 1
+                    
+                End If
+                
+                
+            End If
+        Loop 'while
+    End If
+
+    pad = result + "||||" + "0" + "||||" +  state
+    
+End Function
+
+
+
+
+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+' Report Custom Function : stripBrackets
+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+Function stripBrackets(data As String) As String
+
+    Dim stripResult As String
+    Dim x As number
+    stripResult = ""
+    
+    x = 0
+    Do While (x < Len(data))
+    
+        If (AscW(Mid(data, x + 1, 1)) <= AscW("9") And AscW(Mid(data, x + 1, 1)) >= AscW("0")) Then
+            stripResult = stripResult + Mid(data, x + 1, 1)
+        End If
+        x = x + 1
+    
+    Loop
+    stripBrackets = stripResult
+
+End Function
+
+
+
+

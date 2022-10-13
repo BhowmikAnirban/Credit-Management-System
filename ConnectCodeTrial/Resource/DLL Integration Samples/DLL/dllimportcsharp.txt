@@ -1,0 +1,57 @@
+[DllImport("connectcodefont.dll", EntryPoint = "Encode_Code128Auto")]
+public static extern int Encode_Code128Auto(String instr, StringBuilder outstr, int outstrmax);
+[DllImport("connectcodefont.dll", EntryPoint = "Encode_Code39")]
+public static extern int Encode_Code39(String instr, int checkdigit, StringBuilder outstr, int outstrmax);
+[DllImport("connectcodefont.dll", EntryPoint = "Encode_POSTNET")]
+public static extern int Encode_POSTNET(String instr, int checkdigit, StringBuilder outstr, int outstrmax);
+[DllImport("connectcodefont.dll", EntryPoint = "Encode_Code93")]
+public static extern int Encode_Code93(String instr, int checkdigit, StringBuilder outstr, int outstrmax);
+[DllImport("connectcodefont.dll", EntryPoint = "Encode_Codabar")]
+public static extern int Encode_Codabar(String instr, int checkdigit, StringBuilder outstr, int outstrmax);
+[DllImport("connectcodefont.dll", EntryPoint = "Encode_Code39Ascii")]
+public static extern int Encode_Code39Ascii(String instr, int checkdigit, StringBuilder outstr, int outstrmax);
+[DllImport("connectcodefont.dll", EntryPoint = "Encode_I2of5")]
+public static extern int Encode_I2of5(String instr, int checkdigit, StringBuilder outstr, int outstrmax);
+[DllImport("connectcodefont.dll", EntryPoint = "Encode_ITF14")]
+public static extern int Encode_ITF14(String instr, int checkdigit, int bearer, StringBuilder outstr, int outstrmax);
+[DllImport("connectcodefont.dll", EntryPoint = "Encode_Industrial2of5")]
+public static extern int Encode_Industrial2of5(String instr, int checkdigit, StringBuilder outstr, int outstrmax);
+[DllImport("connectcodefont.dll", EntryPoint = "Encode_ModifiedPlessy")]
+public static extern int Encode_ModifiedPlessy(String instr, int checkdigit, StringBuilder outstr, int outstrmax);
+[DllImport("connectcodefont.dll", EntryPoint = "Encode_EAN13")]
+public static extern int Encode_EAN13(String instr, int humantext, StringBuilder outstr, int outstrmax);
+[DllImport("connectcodefont.dll", EntryPoint = "RetrieveOptionalString_EAN13")]
+public static extern int RetrieveOptionalString_EAN13(String instr, int humantext, int strtype, StringBuilder outstr, int outstrmax);
+[DllImport("connectcodefont.dll", EntryPoint = "Encode_UPCA")]
+public static extern int Encode_UPCA(String instr, int humantext, StringBuilder outstr, int outstrmax);
+[DllImport("connectcodefont.dll", EntryPoint = "Encode_EAN8")]
+public static extern int Encode_EAN8(String instr, StringBuilder outstr, int outstrmax);
+[DllImport("connectcodefont.dll", EntryPoint = "Encode_UCCEAN")]
+public static extern int Encode_UCCEAN(String instr, StringBuilder outstr, int outstrmax);
+[DllImport("connectcodefont.dll", EntryPoint = "Encode_Code128A")]
+public static extern int Encode_Code128A(String instr, StringBuilder outstr, int outstrmax);
+[DllImport("connectcodefont.dll", EntryPoint = "Encode_Code128B")]
+public static extern int Encode_Code128B(String instr, StringBuilder outstr, int outstrmax);
+[DllImport("connectcodefont.dll", EntryPoint = "Encode_Code128C")]
+public static extern int Encode_Code128C(String instr, StringBuilder outstr, int outstrmax);
+[DllImport("connectcodefont.dll", EntryPoint = "Encode_UPCE")]
+public static extern int Encode_UPCE(String instr, int humantext, StringBuilder outstr, int outstrmax);
+[DllImport("connectcodefont.dll", EntryPoint = "Encode_EXT2")]
+public static extern int Encode_EXT2(String instr, StringBuilder outstr, int outstrmax);
+[DllImport("connectcodefont.dll", EntryPoint = "Encode_GS1DataBar14")]
+public static extern int Encode_GS1DataBar14(String instr, StringBuilder outstr, int outstrmax);
+[DllImport("connectcodefont.dll", EntryPoint = "Encode_GS1DataBarLimited")]
+public static extern int Encode_GS1DataBarLimited(String instr, StringBuilder outstr, int outstrmax);
+[DllImport("connectcodefont.dll", EntryPoint = "Encode_GS1DataBarExpanded")]
+public static extern int Encode_GS1DataBarExpanded(String instr, StringBuilder outstr, int outstrmax);
+[DllImport("connectcodefont.dll", EntryPoint = "Encode_GS1DataBarTruncated")]
+public static extern int Encode_GS1DataBarTruncated(String instr, StringBuilder outstr, int outstrmax);
+[DllImport("connectcodefont.dll", EntryPoint = "Encode_GS1DataBarStacked")]
+public static extern int Encode_GS1DataBarStacked(String instr, StringBuilder outstr, int outstrmax);
+[DllImport("connectcodefont.dll", EntryPoint = "Encode_GS1DataBarStackedOmni")]
+public static extern int Encode_GS1DataBarStackedOmni(String instr, StringBuilder outstr, int outstrmax);
+[DllImport("connectcodefont.dll", EntryPoint = "Encode_GS1DataBarExpandedStacked")]
+public static extern int Encode_GS1DataBarExpandedStacked(String instr, int numSegmentsPerRow, StringBuilder outstr, int outstrmax);
+
+
+
